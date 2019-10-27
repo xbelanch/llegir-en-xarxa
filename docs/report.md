@@ -40,7 +40,6 @@ Deixem aquí una llista de referències de videojocs basats en aquest gènere de
 * [Simulacra 2](https://store.steampowered.com/app/1011190/SIMULACRA_2/)
 * [Alt-Frequencies](https://www.theverge.com/2019/5/19/18625057/alt-frequencies-audio-mystery-game-time-travel-accidental-queens-normal-another-lost-phone)
 * [10 best texting games and text-based games for Android!](https://www.androidauthority.com/best-texting-games-text-based-games-android-926860/)
-* 
 
 ## Especificacions mòbil fictici
 
@@ -78,7 +77,40 @@ En aquesta secció s'inclou la llista de característiques del mòbil fictici qu
 ## Disseny de la interfície
 
 
+
 ## Tecnologia
+
+Possibles opcions:
+
+### Progressive web app
+
+Segons una primera avaluació del producte, es proposa l'ús de la tecnologia *progressive web app*. Sense haver d'entrar en detalls ([Why Progressive Web Apps](https://medium.com/the-web-tub/why-progressive-web-apps-a2c74bd6afdc)), aquest enfocament hauria de permetre l'agilitat suficient per desenvolupar les diferents parts, fonamentalment visual i lògica.
+
+Una possible llibreria seria [Onsen UI](https://onsen.io/), que conté una llarga llista de components UI per a la creació de la interfície de la _web app_.
+
+D'altra banda, s'inclou una sèrie de _demos_ (amb codi font) basats en HTML5, CSS3 i Javascript que, en certa manera, poden ser de gran ajut en la creació de la interfície de la novel·la visual del miniop:
+
+* [Mobile Phone Simulator](https://github.com/RGladys/Mobile-Phone-Simulator)
+* [Icons IOS](https://codepen.io/tessat/pen/dqcCo)
+* [Google Android Lollipop](https://codepen.io/simoberny/pen/LVBgyE)
+* [Android Lock Screen](https://codepen.io/khadkamhn/pen/EVaJLy)
+* [Direct Messaging](https://codepen.io/supah/pen/jqOBqp)
+
+### Javascript Game Engine
+
+És també una opció pensant en aquesta [demo realitzada amb PhaserJS](https://phaser.io/examples/v3/view/scenes/drag-scenes-demo#), però s'ajustava més a la metàfora de sistema operatiu fictici.
+
+
+### MYOE (Make Your Own Engine) and CYOL (Choose Your Own Libraries) 
+
+Per últim, pensar en la creació d'un web engine perquè permeti genera "visuals novels" similars a la dels exemples. 
+
+Exemples de projectes similars: 
+
+* [Monogatari Visual Novel Engine](https://monogatari.io/)
+* [Awesome-Visual-Novel-Engine](https://github.com/kserks/Awesome-Visual-Novel-Engine)
+
+
 
 
 ## Cronograma

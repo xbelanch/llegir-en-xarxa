@@ -1,4 +1,4 @@
-# Referències
+#  Referències
 
 Recull de referències, inspiració o idees que ajudi a la definició del disseny del miniop. 
 
@@ -11,6 +11,7 @@ Recull de referències, inspiració o idees que ajudi a la definició del dissen
 * [Vindue 98](https://codepen.io/milesmanners/pen/MOEjBa): Pen inspirat en el mític sistema de finestres de Windows 98.
 * [Windows 95](https://codepen.io/DylanMacnab/pen/xEEOyZ): Recreació bàsica del sistema de finestres de Windows 95.
 * [Jquery windows 98 recreation](https://codepen.io/penry/pen/xEPKpj): Una recreació del sistema de finestres del Windows 98 realitzada amb JQuery.
+* [Secret Little Haven is a game about old computers, community, creativity, fandom, gender, and the internet.](https://ristar.itch.io/secret-little-haven)
 
 ## Video games
 
@@ -37,7 +38,7 @@ Recull de referències, inspiració o idees que ajudi a la definició del dissen
 
 ## Javascript Game Engines
 
-* [https://github.com/collections/javascript-game-engines](https://github.com/collections/javascript-game-engines)
+* [https://github.com/collections/javascript-game-engines](https://github.com/collections/javascript-game-Engines)
 
 
 https://onsen.io/
