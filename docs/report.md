@@ -91,10 +91,14 @@ Una possible llibreria seria [Onsen UI](https://onsen.io/), que conté una llarg
 D'altra banda, s'inclou una sèrie de _demos_ (amb codi font) basats en HTML5, CSS3 i Javascript que, en certa manera, poden ser de gran ajut en la creació de la interfície de la novel·la visual del miniop:
 
 * [Mobile Phone Simulator](https://github.com/RGladys/Mobile-Phone-Simulator)
+* [Android v1.0 built rm11048294](https://codepen.io/biustudio/pen/gqVNKo)
 * [Icons IOS](https://codepen.io/tessat/pen/dqcCo)
 * [Google Android Lollipop](https://codepen.io/simoberny/pen/LVBgyE)
 * [Android Lock Screen](https://codepen.io/khadkamhn/pen/EVaJLy)
 * [Direct Messaging](https://codepen.io/supah/pen/jqOBqp)
+* [Interactive CSS3 iPhone 6](https://codepen.io/MorenoDiDomenico/pen/jEyKxK)
+* [WhatsApp in Pure CSS and JS](https://codepen.io/zenorocha/pen/eZxYOK)
+* [Phone Gallery - grid switcher](https://codepen.io/simonpatrat/pen/meMJmx)
 
 ### Javascript Game Engine
 
@@ -109,8 +113,6 @@ Exemples de projectes similars:
 
 * [Monogatari Visual Novel Engine](https://monogatari.io/)
 * [Awesome-Visual-Novel-Engine](https://github.com/kserks/Awesome-Visual-Novel-Engine)
-
-
 
 
 ## Cronograma
