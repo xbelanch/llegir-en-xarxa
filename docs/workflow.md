@@ -69,7 +69,41 @@ Segons autoria, en relació a l'article, hi ha tres opcions per continuar el min
 ALERT: Com coi l'estudiant lliga el text anterior amb aquestes opcions?
 
 
+## Passatge 5 (Llegir és cosa teva)
 
+Text en construcció. Roberto Bolaño. Testimonis Pétit. Text breu + carrusel.
+
+## Passatge 6 (Llegir és un verb d'acció)
+
+>De vegades s’ha acusat els lectors -els lectors de ficció, especialment- de ser mandrosos, de buscar egoistament en els llibres una fugida de la pròpia realitat.
+>
+>Tanmateix, com llegim en l’article de Garcés, la vida lectora, si bé exigeix solitud, no sembla que cerqui l’aïllament social, sinó que, al contrari, propicia trobades i genera tot de moviments impensats entre les persones…
+>
+>testimonis Pétit
+>El roig i el negre, d’Stendhal
+>fragments sobre lectura
+
+
+## Passatge 7 (Llegim com podem)?
+
+>Tanmateix, llegir és també un anar fent des de la precarietat idiomàtica, contra l'adreçador del mercat, i en un indret entre milers al món, perquè llegim en funció de les llengües en què podem fer-ho, del fons bibliogràfic al qual podem accedir i en un context socioeconòmic concret.
+>
+>Abans que les obres ens arriben o no, s’han pres moltes decisions: què s’editarà i què es traduirà, si podrem accedir-hi des de les biblioteques públiques, o no; si podrem triar la manera com les adquirirem i si això ho tindrem a l’abast. I el més important: si podrem disposar del nostre temps per a llegir-les i, com més va més, dels dispositius i la connexió per a fer-ho...
+>
+>Així mateix, és cert que els lectors estem sempre amatents a detectar les escletxes a través de les quals traspassar moltes d’aquestes barreres, creades, com diu Marina Garcés, amb el propòsit de neutralitzar la lectura, bé sigui per destrucció, per distracció o per codificació.
+
+NOTE: ara mateix, només trobo dues opcions: transformar aquests textos en notes personals (jugar amb la idea que no forma part del miniop tot i que és el miniop) o "reconvertir" el text en un xat (suposo que això significaria un evident trastorn del contingut?).
+
+
+## Passatge 8
+
+Aquest és íntegrament un "Atura't i comparteix", és a dir, un recurs propi dels miniops que interpel·la a l'estudiant a "realitzar una determinada activitat" dins de l'aula dels miniops.
+
+Entenc que aquest passatge és independent de la selecció del passatge anterior?
+
+## Passatge 9 
+
+:?
 
 
 
