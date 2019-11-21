@@ -41,7 +41,15 @@ Recull de referències, inspiració o idees que ajudi a la definició del dissen
 * [https://github.com/collections/javascript-game-engines](https://github.com/collections/javascript-game-Engines)
 
 
-https://onsen.io/
+## Web puzzle/riddle games
+
+
+* [Fancy Island - Japanese horror puzzle game *Warning: A LOT of jumpscares*](https://www.reddit.com/r/WebGames/comments/3qu3n6/fancy_island_japanese_horror_puzzle_game_warning/)
+* [Notpron](http://notpron.org/notpron/)
+* [The Story Behind The Web’s Weirdest, Hardest Riddle](https://www.fastcompany.com/3036599/the-story-behind-the-webs-weirdest-hardest-riddle)
+* [E.B.O.N.Y.](https://ebonyriddle.com/)
+* [Reddit: Weird, creepy puzzle websites like notpron?](https://www.reddit.com/r/ifyoulikeblank/comments/6h7m5d/iil_weird_creepy_puzzle_websites_like_notpron/)
+* [7 Online Riddle Games to Keep You Glued to Your Computer](https://www.makeuseof.com/tag/6-online-riddle-games-glued-computer/)
 
 
 
