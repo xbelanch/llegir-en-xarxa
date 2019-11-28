@@ -1,5 +1,6 @@
 # Workflow
 
+
 Aquest document té com a objectiu l'encaix dels continguts del miniop dins de la proposta d'un mòbil fictici.
 
 
@@ -12,7 +13,7 @@ El passatge 0 representa l'inici del miniop. Segons consta al DCM (Document de C
 Aquest text planteja un problema per definir un punt de partida en el context del mòbil. Una possible solució seria per definir el principi del miniop:
 
 1. Pantalla inicial on es mostra (fotografia? il·lustració?) la taula d'una biblioteca on descansa un mòbil al costat de llibres, apunts...
-2. La pantalla del mòbil s'encen. L'usuari clica sobre aquest: la pantalla del mòbil (descartem el seu aspecte físic) està bloquejada per . Mostra una notícia flotant agenda que informa **miniop Llegir en xarxa**
+2. La pantalla del mòbil s'encén. L'usuari clica sobre aquest: la pantalla del mòbil (descartem el seu aspecte físic) està bloquejada per . Mostra una notícia flotant agenda que informa **miniop Llegir en xarxa**
 3. Hi ha l'opció de tornar a la pantalla d'inici, ja que el "jugador" no sap quina és.
 3. En tornar a la pantalla d'inici, pot clicar als diferents papers o llibres. Un d'aquests podria ser la citat de Borges del **passatge 1**. NOTE: L'any d'aquesta cita, podria funcionar com la contrasenya per accedir-hi al curs?
 4. NOTE: Es podria trobar una fotografia de Borges on també permetes esbrinar la contrasenya del mòbil? 
@@ -27,7 +28,7 @@ Un cop desbloquejat el mòbil, el "jugador" accedeix a la pantalla d'inici on es
 
 Aquest esdeveniment recorda a l'usuari que cal que comenci el miniop de Llegir en Xarxa. Inclou una adreça web i un avís que cal configura la wifi de la biblioteca, ja que a dins de la mateixa no té senyal de dades (o molt baix).
 
-Quan clica a l'adreça web, s'obre el navegador però aquest informa que no és accesible ja que no té connectivitat a la xarxa. NOTE: En aquest moment caldria pensar en un nou repte per endevinar quina és la contrasenya del wifi dela biblioteca. En aquest moments s'interpel·la a l'estudiant que cerqui dins de les diferents apps del mòbil. En la de correu trobarà un missatge antic de la biblioteca on s'especifica aquesta contrasenya?
+Quan clica a l'adreça web, s'obre el navegador però aquest informa que no és accessible ja que no té connectivitat a la xarxa. NOTE: En aquest moment caldria pensar en un nou repte per endevinar quina és la contrasenya del wifi de la biblioteca. En aquest moments s'interpel·la a l'estudiant que cerqui dins de les diferents apps del mòbil. En la de correu trobarà un missatge antic de la biblioteca on s'especifica aquesta contrasenya?
 
 Un cop configuri la contrasenya de la wifi de la biblioteca, podrà accedir al curs del miniop
 

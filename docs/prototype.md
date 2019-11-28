@@ -16,12 +16,18 @@ Quins possibles elements hauríen d'estar presents a la interfície del mòbil?
 * Diari/Notes
 
 
-Possibles reptes:
+## Possibles reptes
 
 * Connectar-se a la xarxa wifi de la biblioteca per accedir-hi per navegar per la xarxa
 * Esdeveniments de calendaris on hi ha lectures de llibres.
 * Notes amb reflexions, preguntes.
+* QR code per desar l'estat del passatges?
+
+## Eines wireframing
+
+* [Figma](figma.com)
+* [Draw.io](https://www.draw.io/)
+* [MyDraft.cc](https://mydraft.cc/)
 
 
-qr code per desar l'estat del passatges 
 
