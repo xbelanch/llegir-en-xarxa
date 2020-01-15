@@ -1,0 +1,5 @@
+* LLegir en xarxa
+** Desenvolupament web
+*** TODO Valorar l'ús de Phaser + Ionic 4 com a entorn de desenvolupamet PWA
+** Disseny de reptes
+** Documentació
