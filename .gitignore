@@ -3,3 +3,8 @@
 .#*.*
 docs/#*#
 docs/.#*
+defs/
+*.ts
+GPATH
+GRTAGS
+GTAGS
