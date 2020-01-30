@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ca">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +9,20 @@
     <link href="https://ioc.xtec.cat/educacio/educacio/templates/ioc/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
     <title>Miniop -- Llegir en xarxa</title>
 </head>
+
 <body>
     <div id="container">
-      <div id="game"></div>
+        <div id="game"></div>
     </div>
 
     <!-- Phaser: stable version 3.22.0 "Kohaku" -->
     <!-- Downloaded from: https://phaser.io/download/stable -->
-    <script src ="js/libs/phaser.min.js"></script>
-
+    <script src="js/libs/phaser.min.js"></script>
     <!-- Where everything starts -->
+    <script src="js/scenes/boot.js"></script>
+    <script src="js/scenes/loadscreen.js"></script>
+    <script src="js/scenes/ingame.js"></script>
     <script src="js/main.js"></script>
-    
 </body>
+
 </html>

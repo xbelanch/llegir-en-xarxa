@@ -3,3 +3,11 @@
 *** TODO Valorar l'ús de Phaser + Ionic 4 com a entorn de desenvolupamet PWA
 ** Disseny de reptes
 ** Documentació
+
+* lostphone
+** TODO Fullscreen on Mobile? 
+  https://rexrainbow.github.io/phaser3-rex-notes/docs/site/fullscreen/#toggle 
+** TODO Scale minWidth, minHeight a l'arxiu de configuració... com funciona?
+** TODO Incloure un shader al background per no fer-lo tan avorrit?
+** Store Scene Data
+   https://phaser.io/examples/v3/view/components/data/store-scene-data#
