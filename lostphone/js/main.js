@@ -17,9 +17,12 @@ function runGame(width, height)
           height: height,
           fullscreenTarget: 'container'
         },
-    scene: [Boot, LoadScreen]
-      };
+    scene: [Boot, LoadScreen, Test]
+  };
+  
   new Phaser.Game(config);
+
+  
 }
 
 // Check screen size and set width and height properly values

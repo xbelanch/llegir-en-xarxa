@@ -20,10 +20,11 @@ class Boot extends Phaser.Scene {
         t.scene.start('loadScreen');
       }
     })
+
   }
 
   init(){
-    // Enter fullscreen?
-    this.scale.on('enterfullscreen', function() {});
+    
   }
+
 }
