@@ -4,36 +4,49 @@ class LoadScreen extends Phaser.Scene {
   }
 
   init(){
-    // Informació bàsica en pantalla
-    var fullscreen = this.sys.game.device.fullscreen;
-    var text = this.add.text(0, 0, '', {fontFamily: 'roboto', fontSize: 24, color: '#cfcfcf', linespacing: -13 });
-    text.setText([
-      'Game Title: ' + titleGame,
-      'Version: ' + gameVersion,
-      'Fullscreen avalaible?: ' + fullscreen.available
-    ]);
-
-    // Fullscreen mode
-    // Source: https://codepen.io/samme/pen/deKZjx
-    // @Note: Aquesta opció hauria de formar part del conjunt
-    // de preferències del sistema del mòbil?
-    var canvas = this.sys.game.canvas;
-    var startBtn = document.createElement('button');
-    var stopBtn = document.createElement('button');
-
-    startBtn.textContent = 'Start Fullscreen';
-    stopBtn.textContent = 'Stop Fullscreen';
-
-    canvas.parentNode.appendChild(startBtn);
-    canvas.parentNode.appendChild(stopBtn);
+    // recuperem el valor del directori img
+    this.imgFolder = this.registry.get('imgfolder');
+    // recuperem el logo per ubicar el text correctament
+    this.pepe = this.textures.get('logo-pepe').getSourceImage();
+  }
+  
+  preload(){
+    // Saltem a l'escena següent, en el moment de completar
+    // la càrrega d'assets (imatges, audios, animacions, vídeos...)
+    // ara mateix, anem a l'escena 'test'
+    // this.load.on('complete', ()=>{
+    //   this.scene.start('test');
+    // }, this);
     
-    startBtn.addEventListener('click', function () {
-      if (document.fullscreenElement) { return; }
-      canvas[fullscreen.request]();
-    });    
+    // Mostra la barra de progrés on inclou logo i text style
+    this.load.on('progress', this.updateLoad, this);
+    let logo = this.add.image(
+      // @NOTE:
+      // L'origen de coordenades de la imatge és... al centre de la imatge!
+      this.game.config.width / 2,
+      this.game.config.height / 3,
+      'logo-pepe');
+    let style = {
+      fontFamily: 'roboto',
+      fontSize: 20,
+      color: '#ffffff',
+      linespacing: -10 };
+    this.text_loading = this.add.text(
+      logo.x - this.pepe.width / 2,
+      logo.y + logo.height / 2,
+      'Miniop iniciatlitzant-se...',
+      style);
 
-    // Maybe?
-  this.scene.start('test');
+    // Carrega en memòria tots els arxius del miniop
+    // --- Icons
+    // test icons from https://www.iconfinder.com/iconsets/down_to_earth_PNG
+    this.load.image('clock', 'assets/icons/iconfinder_G_Clock_87148_192.png');
+  }
+
+  
+  // --- Mètodes privats
+  updateLoad(progress){
+    this.text_loading.text = `Miniop iniciatlitzant-se... ${Math.round(progress * 100)}%`;
   }
 
 }

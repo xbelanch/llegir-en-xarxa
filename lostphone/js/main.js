@@ -1,3 +1,6 @@
+// Globals
+// @NOTE: Segurament que, més endavant, aquestes variables globals
+// formaran part d'un arxiu json
 var titleGame = "Llegir en xarxa";
 var gameVersion = "0.0.1";
 
@@ -10,32 +13,26 @@ function runGame(width, height)
           parent: 'game',
           mode: Phaser.Scale.FIT,
           autoCenter: Phaser.Scale.CENTER_BOTH,
-          // #1 Sembla que no funciona?
-          // minWidth: width,
-          // maxWidth: height,
           width: width,
           height: height,
           fullscreenTarget: 'container'
         },
     scene: [Boot, LoadScreen, Test]
   };
-  
   new Phaser.Game(config);
-
-  
 }
 
-// Check screen size and set width and height properly values
+// Detecta la mida de pantalla i determina els valors més òptims segons aquella
 window.onload = function(){
   let clientHeight = document.getElementById('container').clientHeight;
   // Per defecte, Galaxy S5 dimensions
   let width = 512;
   let height = 732;
-  // well, students are visiting the web on a desktop or laptop
-  if (clientHeight > 900)
+  // Altrament, mides de Desktop o portàtil
+  if (clientHeight > 700)
   {
-    width = 912;
-    height = 1464;
+    width = 895;
+    height = 1280;
   }
   runGame(width, height);
 };

@@ -13,3 +13,6 @@
 ** TODO Incloure un shader al background per no fer-lo tan avorrit?
 ** Store Scene Data
    https://phaser.io/examples/v3/view/components/data/store-scene-data#
+** TODO Work with scroller:
+   http://zynga.github.io/scroller/
+   https://jdnichollsc.github.io/Phaser-Kinetic-Scrolling-Plugin/
