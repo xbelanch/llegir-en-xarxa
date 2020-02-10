@@ -1,35 +1,3 @@
-// Scene for testing purpose
-
-class Test extends Phaser.Scene {
-  constructor(){ super('test'); }
-
-  preload()
-  {
-
-  }
-  
-  create()
-  {
-    // add icons to the main window
-    var iconClock = this.add.image(32, 32, 'clock').setOrigin(0);
-
-    // Add functionality
-    iconClock.on('pointerup', function() {
-      openApp(Clock);
-    }, this);
-    
-  }
-
-  // openApp function
-  openApp(func) {
-    log("App clock");
-    var app = new func(); // what?
-//    this.scene.add(app); 
-  }  
-}
-
-
-
   // // Informació bàsica en pantalla
   //   var fullscreen = this.sys.game.device.fullscreen;
   //   var text = this.add.text(0, 0, '', {fontFamily: 'roboto', fontSize: 24, color: '#cfcfcf', linespacing: -13 });

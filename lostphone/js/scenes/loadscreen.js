@@ -14,9 +14,9 @@ class LoadScreen extends Phaser.Scene {
     // Saltem a l'escena següent, en el moment de completar
     // la càrrega d'assets (imatges, audios, animacions, vídeos...)
     // ara mateix, anem a l'escena 'test'
-    // this.load.on('complete', ()=>{
-    //   this.scene.start('test');
-    // }, this);
+    this.load.on('complete', ()=>{
+      this.scene.start('homeScreen');
+    }, this);
     
     // Mostra la barra de progrés on inclou logo i text style
     this.load.on('progress', this.updateLoad, this);
@@ -32,7 +32,7 @@ class LoadScreen extends Phaser.Scene {
       color: '#ffffff',
       linespacing: -10 };
     this.text_loading = this.add.text(
-      logo.x - this.pepe.width / 2,
+      logo.x - logo.width / 2,
       logo.y + logo.height / 2,
       'Miniop iniciatlitzant-se...',
       style);
@@ -41,6 +41,7 @@ class LoadScreen extends Phaser.Scene {
     // --- Icons
     // test icons from https://www.iconfinder.com/iconsets/down_to_earth_PNG
     this.load.image('clock', 'assets/icons/iconfinder_G_Clock_87148_192.png');
+    
   }
 
   
@@ -48,5 +49,4 @@ class LoadScreen extends Phaser.Scene {
   updateLoad(progress){
     this.text_loading.text = `Miniop iniciatlitzant-se... ${Math.round(progress * 100)}%`;
   }
-
 }
