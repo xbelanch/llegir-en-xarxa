@@ -17,7 +17,7 @@ function runGame(width, height)
           height: height,
           fullscreenTarget: 'container'
         },
-    scene: [Boot, LoadScreen, HomeScreen]
+    scene: [Boot, LoadScreen, HomeScreen, ClockApp]
   };
   new Phaser.Game(config);
 }
