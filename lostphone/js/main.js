@@ -8,7 +8,7 @@ function runGame(width, height)
 {
   var config = {
         type: Phaser.WEBGL,
-        backgroundColor: 0x343434,
+        backgroundColor: 0x0,
         scale: {
           parent: 'game',
           mode: Phaser.Scale.FIT,
@@ -17,7 +17,7 @@ function runGame(width, height)
           height: height,
           fullscreenTarget: 'container'
         },
-    scene: [Boot, LoadScreen, HomeScreen, ClockApp]
+    scene: [Boot, LoadScreen, HomeScreen, ClockApp, GalleryApp, SystemApp]
   };
   new Phaser.Game(config);
 }

@@ -5,7 +5,7 @@ class ClockApp extends Phaser.Scene {
 
   create(){
     let t = this;
-    console.log("Wow!");
+    console.log("Clock App is active");
   }
 
 }

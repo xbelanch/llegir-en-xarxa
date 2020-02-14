@@ -4,10 +4,7 @@ class HomeScreen extends Phaser.Scene {
     super('homeScreen');
     this.active;
     this.currentScene;
-    this.playerName = "";
-    this.currentDate = new Date();
-    this.version = "0.0.1";
-    this.onGame = false;
+    this.iconAppRellotge;
   }
 
   init(){
@@ -16,42 +13,58 @@ class HomeScreen extends Phaser.Scene {
   
   create(){
     let t = this;
+    // Pintem la pantalla d'inici amb les Apps disponibles
     t.addIconApps();
   }
 
   // --- Home Screen Apps
-  addIconApps(){
+  addIconApps()
+  {
     let t = this;
     let s = t.sc;
-    t.clockIconApp = new IconApp(this, 32 * s, 32 * s, 'clock');
-    t.clockIconApp.on('pointerdown', function(e) { t.scene.start('clockApp'); });
-    // @NOTE: No és la solució que m'agrada, però funciona
-    // dit d'una altra manera, m'agradaria encapsular dins de la classe IconApp
-    // la funcionalitat de canviar d'escena
-    // *: https://phaser.discourse.group/t/cant-figure-out-how-i-can-change-the-scene/5141
-    // *: http://labs.phaser.io/edit.html?src=src/scenes/tutorial/scene%20controller.js&v=3.22.0    
-  }
-}
+    t.createIconApp('Rellotge', 'clockApp', 'clock', 32 * s, 32 * s);
+    t.createIconApp('Configuració', 'systemApp', 'system', 148 * s, 32 * s);
+    t.createIconApp('Fotos', 'galleryApp', 'gallery', 272 * s, 32 * s);
+  
 
-class IconApp extends Phaser.GameObjects.Image {
-  constructor(scene, x, y, sprite) {
-    super(scene, x, y, sprite);
-    this.setInteractive();
-    this.setOrigin(0);
-    this.setAlpha(0.5);
-    this.init();
-    this.scene.add.existing(this);
+    // @NOTE: Cal estudiar aquest exemple:
+    // http://labs.phaser.io/edit.html?src=src/scenes/tutorial/scene%20controller.js&v=3.22.0    
   }
-
-  init(){
+  
+  createIconApp(label, scene, texture, x, y)
+  {
     let t = this;
+    let iconApp = t.add.image(x, y, texture).setOrigin(0);
+    iconApp.setInteractive();
+    iconApp.setData('name', name);
+    iconApp.setData('scene', scene);
+    iconApp.setData('active', false);
+
+    // Label
+    iconApp.label = this.add.text(
+      iconApp.x + (iconApp.width / 2),
+      iconApp.y + iconApp.height + 24,
+      label,
+      this.style);
+    iconApp.label.setOrigin(0.5);
+    iconApp.label.setFontSize(24);
+    iconApp.label.setFontFamily('roboto');
+    iconApp.label.setShadow(2, 2, 0x3f3f3f, 0.4);
+
     // --- Interaction with the icon
-    t.on('pointerover', function(event){
-      this.setTint(0xff0000);
+    iconApp.on('pointerover', function(event){
+      iconApp.setTint(0xff0000);
     });
 
-    t.on('pointerout', function(event){
-      this.clearTint();
+    iconApp.on('pointerout', function(event){
+      iconApp.clearTint();
     });
+
+    iconApp.on('pointerdown', function(event) {
+      t.scene.start(scene);
+    });
+
+    t['iconApp' + name] = iconApp; 
   }
+
 }

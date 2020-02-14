@@ -34,19 +34,21 @@ class LoadScreen extends Phaser.Scene {
     this.text_loading = this.add.text(
       logo.x - logo.width / 2,
       logo.y + logo.height / 2,
-      'Miniop iniciatlitzant-se...',
+      'IOC Free Operating System',
       style);
 
     // Carrega en memòria tots els arxius del miniop
     // --- Icons
-    // test icons from https://www.iconfinder.com/iconsets/down_to_earth_PNG
-    this.load.image('clock', 'assets/icons/iconfinder_G_Clock_87148_192.png');
+    // test icons from https://www.iconfinder.com/iconsets/circle-icons-1
+    this.load.image('clock', `assets/icons/${this.imgFolder}/iconfinder_clock_1055090.png`);
+    this.load.image('system', `assets/icons/${this.imgFolder}/iconfinder_gear_1055051.png`);
+    this.load.image('gallery', `assets/icons/${this.imgFolder}/iconfinder_image_1055042.png`);
     
   }
 
   
   // --- Mètodes privats
   updateLoad(progress){
-    this.text_loading.text = `Miniop iniciatlitzant-se... ${Math.round(progress * 100)}%`;
+    this.text_loading.text = `IOC Free Operating System... ${Math.round(progress * 100)}%`;
   }
 }

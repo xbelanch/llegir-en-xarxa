@@ -1,4 +1,16 @@
-  // // Informació bàsica en pantalla
+class SystemApp extends Phaser.Scene {
+  constructor(){
+    super('systemApp');
+  }
+
+  create(){
+    let t = this;
+    console.log("System App is active");
+  }
+}
+
+
+// // Informació bàsica en pantalla
   //   var fullscreen = this.sys.game.device.fullscreen;
   //   var text = this.add.text(0, 0, '', {fontFamily: 'roboto', fontSize: 24, color: '#cfcfcf', linespacing: -13 });
   //   text.setText([
