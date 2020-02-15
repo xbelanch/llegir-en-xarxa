@@ -4,15 +4,17 @@
 ** Disseny de reptes
 ** Documentació
 
-* lostphone
+* Lostphone
 ** TODO Fullscreen on Mobile? 
   https://rexrainbow.github.io/phaser3-rex-notes/docs/site/fullscreen/#toggle 
   Maybe... https://codepen.io/samme/pen/deKZjx però òbviament, cal llavors la
   inclusió d'un botó que gestioni l'acció del fullscreen en entorns de desktop
 ** TODO Scale minWidth, minHeight a l'arxiu de configuració... com funciona?
 ** TODO Incloure un shader al background per no fer-lo tan avorrit?
-** Store Scene Data
+   Example: https://codepen.io/7linternational/pen/OJLEEpZx
+** TODO Store Scene Data
    https://phaser.io/examples/v3/view/components/data/store-scene-data#
 ** TODO Work with scroller:
    http://zynga.github.io/scroller/
    https://jdnichollsc.github.io/Phaser-Kinetic-Scrolling-Plugin/
+** TODO Implement Swipe to add more apps: https://codepen.io/jdnichollsc/pen/ZGoNKg

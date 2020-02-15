@@ -22,10 +22,14 @@ class HomeScreen extends Phaser.Scene {
   {
     let t = this;
     let s = t.sc;
+    // First row
     t.createIconApp('Rellotge', 'clockApp', 'clock', 32 * s, 32 * s);
     t.createIconApp('Configuració', 'systemApp', 'system', 148 * s, 32 * s);
     t.createIconApp('Fotos', 'galleryApp', 'gallery', 272 * s, 32 * s);
-  
+    // Second row
+    t.createIconApp('Calendari', 'calendarApp', 'calendar', 32 * s, 148 * s);
+    t.createIconApp('Podcasts', 'audioApp', 'audio', 148 * s, 148 * s);
+    t.createIconApp('Temps', 'weatherApp', 'weather', 272 * s, 148 * s);
 
     // @NOTE: Cal estudiar aquest exemple:
     // http://labs.phaser.io/edit.html?src=src/scenes/tutorial/scene%20controller.js&v=3.22.0    
