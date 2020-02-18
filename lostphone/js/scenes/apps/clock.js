@@ -16,6 +16,9 @@ class ClockApp extends Phaser.Scene {
     t.date = new Date();
     console.log("Clock App is active: " + t.date);
 
+    // Set a new background color for 'game' container
+    document.getElementById('game').style.backgroundColor = '#000';
+    
     // Add clock to the upper center of the screen
     t.clock = this.add.text(
       100,
@@ -38,7 +41,9 @@ class ClockApp extends Phaser.Scene {
     t.dayofthemonth.setFontSize(64);
     t.dayofthemonth.setColor('#efefef');
 
-    // ShaderToy?
+    // Add shader snow
+    // @ This shader will work for weather
+    // Sunny / Rainy / Cloudly / Snow
     let shaderRain = `
     precision mediump float;
     uniform float time;
@@ -85,6 +90,17 @@ class ClockApp extends Phaser.Scene {
     let baseRainShader = new Phaser.Display.BaseShader("shaderRain", shaderRain);
     // https://photonstorm.github.io/phaser3-docs/Phaser.GameObjects.Shader.html
     let backgroundShader = this.add.shader(baseRainShader, 0, 0, 895, 1280).setOrigin(0);
+
+
+    // Set foreground image
+    t.add.image(0, 0, 'foreground-phone').setOrigin(0);
+
+    // @TODO: Add navigation buttons
+    // Add Home icon
+    t.add.image((t.game.config.width / 2) - 64, t.game.config.height - 160, 'home').setOrigin(0).setInteractive().on('pointerdown', function(event) {
+      t.scene.start('homeScreen');
+    });
+
   }
 
   update(time, delta)

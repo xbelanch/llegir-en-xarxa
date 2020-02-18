@@ -26,12 +26,12 @@ function runGame(width, height)
 window.onload = function(){
   let clientHeight = document.getElementById('container').clientHeight;
   // Per defecte, Galaxy S5 dimensions
-  let width = 512;
-  let height = 732;
+  let width = 400;
+  let height = 640;
   // Altrament, mides de Desktop o portàtil
-  if (clientHeight > 700)
+  if (clientHeight > 640)
   {
-    width = 895;
+    width = 800;
     height = 1280;
   }
   runGame(width, height);

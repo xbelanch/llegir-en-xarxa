@@ -18,3 +18,8 @@
    http://zynga.github.io/scroller/
    https://jdnichollsc.github.io/Phaser-Kinetic-Scrolling-Plugin/
 ** TODO Implement Swipe to add more apps: https://codepen.io/jdnichollsc/pen/ZGoNKg
+** TODO Custom cursor:
+   https://phaser.discourse.group/t/custom-cursor-based-on-a-png-image/5251
+   https://phaser.io/examples/v3/category/input/cursors
+** TODO Background shader
+   https://phaser.discourse.group/t/applying-shader-to-image-on-the-foreground/1629
