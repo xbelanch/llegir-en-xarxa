@@ -36,6 +36,8 @@ class HomeScreen extends Phaser.Scene {
     
     // Definim el cursor
     // #1 https://phaser.discourse.group/t/custom-cursor-based-on-a-png-image/5251
+    // source: https://photonstorm.github.io/phaser3-docs/Phaser.Input.InputPlugin.html#setDefaultCursor
+    this.input.setDefaultCursor("url(" + `assets/cursors/${this.registry.get('imgfolder')}/cursor.png`+ "), pointer");
 
     // Add Home icon
     t.add.image((t.game.config.width / 2) - 64, t.game.config.height - 160, 'home').setOrigin(0).setInteractive().on('pointerdown', function(event) {
