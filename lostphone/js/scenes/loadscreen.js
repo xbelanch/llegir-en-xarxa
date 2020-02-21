@@ -39,13 +39,20 @@ class LoadScreen extends Phaser.Scene {
     this.text_loading.setColor('#efefef');
 
     // Carrega en memòria tots els arxius del miniop
+
+    // --- Sounds
+    // Recorda que caldrà organitzar els diferents audios en un audioSprite?
+    this.load.audio('click', 'assets/sounds/433641__dersuperanton__click-sound.mp3');
+
     // --- Backgrounds
     this.load.image('background-homescreen', `assets/img/${this.imgFolder}/background_homescreen.png`);
     this.load.image('foreground-phone', `assets/img/${this.imgFolder}/foreground_phone.png`);
     // --- Cursor
     this.load.image('cursor', `assets/icons/${this.imgFolder}/cursor.png`);
-    // --- General Icons
+
+    // --- Homescreen buttons
     this.load.image('home', `assets/icons/${this.imgFolder}/iconfinder_House_2638333.png`);
+
     // --- Icons Apps
     // test icons from https://www.iconfinder.com/iconsets/circle-icons-1
     this.load.image('clock', `assets/icons/${this.imgFolder}/iconfinder_clock_1055090.png`);

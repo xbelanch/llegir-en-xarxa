@@ -96,13 +96,24 @@ class ClockApp extends Phaser.Scene {
     t.add.image(0, 0, 'foreground-phone').setOrigin(0);
 
     // @TODO: Add navigation buttons
-    // Add Home icon
-    t.add.image((t.game.config.width / 2) - 64, t.game.config.height - 160, 'home').setOrigin(0).setInteractive().on('pointerdown', function(event) {
-      t.scene.start('homeScreen');
-    });
-
+    t.addPhoneButtons();
   }
 
+  // --- HOME SCREEN OBJECTS ---
+  // ---------------------------
+
+  addPhoneButtons()
+  {
+    let t = this;
+    let s = t.sc;
+    // Add Home icon
+    t.btHome = new Button(t, ((t.game.config.width / 2) - 64), (t.game.config.height - 160), 'home');
+    t.btHome.on('pointerdown', () => {
+      t.btHome.click();
+      t.scene.start('homeScreen');
+      });
+  }
+  
   update(time, delta)
   {
     let t = this;
