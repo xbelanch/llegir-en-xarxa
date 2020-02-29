@@ -10,36 +10,20 @@ class ClockApp extends Phaser.Scene {
   "July", "August", "September", "October", "November", "December"];
   }
 
+  init()
+  {
+    let t = this;
+    t.scene.stop('HomeScreen');
+    t.scene.bringToTop('PhoneUI');
+  }
+  
   create()
   {
     let t = this;
-    t.date = new Date();
     console.log("Clock App is active: " + t.date);
 
     // Set a new background color for 'game' container
-    document.getElementById('game').style.backgroundColor = '#000';
-    
-    // Add clock to the upper center of the screen
-    t.clock = this.add.text(
-      100,
-      100,
-      `${('0' + t.date.getHours()).slice(-2)}:${('0' + t.date.getMinutes()).slice(-2)}:${('0' + t.date.getSeconds()).slice(-2)}`
-    );
-    t.clock.setOrigin(0);
-    t.clock.setFontFamily('roboto');
-    t.clock.setFontSize(128);
-    t.clock.setColor('#efefef');
-
-    // Add day and month
-    t.dayofthemonth = this.add.text(
-      100,
-      256,
-      `${t.days[t.date.getDay()]}, ${t.date.getDate()} ${t.months[t.date.getMonth()]}`
-    );
-    t.dayofthemonth.setOrigin(0);
-    t.dayofthemonth.setFontFamily('roboto');
-    t.dayofthemonth.setFontSize(64);
-    t.dayofthemonth.setColor('#efefef');
+    document.getElementById('game').style.backgroundColor = '#000';    
 
     // Add shader snow
     // @ This shader will work for weather
@@ -91,34 +75,7 @@ class ClockApp extends Phaser.Scene {
     // https://photonstorm.github.io/phaser3-docs/Phaser.GameObjects.Shader.html
     let backgroundShader = this.add.shader(baseRainShader, 0, 0, 895, 1280).setOrigin(0);
 
-
-    // Set foreground image
-    t.add.image(0, 0, 'foreground-phone').setOrigin(0);
-
-    // @TODO: Add navigation buttons
-    t.addPhoneButtons();
   }
 
-  // --- HOME SCREEN OBJECTS ---
-  // ---------------------------
-
-  addPhoneButtons()
-  {
-    let t = this;
-    let s = t.sc;
-    // Add Home icon
-    t.btHome = new Button(t, ((t.game.config.width / 2) - 64), (t.game.config.height - 160), 'home');
-    t.btHome.on('pointerdown', () => {
-      t.btHome.click();
-      t.scene.start('homeScreen');
-      });
-  }
-  
-  update(time, delta)
-  {
-    let t = this;
-    t.date = new Date();
-    t.clock.text = `${('0' + t.date.getHours()).slice(-2)}:${('0' + t.date.getMinutes()).slice(-2)}:${('0' + t.date.getSeconds()).slice(-2)}`;
-  }
-  
+   
 }

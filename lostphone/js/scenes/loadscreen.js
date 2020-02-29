@@ -15,7 +15,7 @@ class LoadScreen extends Phaser.Scene {
     // la càrrega d'assets (imatges, audios, animacions, vídeos...)
     // ara mateix, anem a l'escena 'test'
     this.load.on('complete', ()=>{
-      this.scene.start('homeScreen');
+      this.scene.start('HomeScreen');
     }, this);
     
     // Mostra la barra de progrés on inclou logo i text style
@@ -46,12 +46,8 @@ class LoadScreen extends Phaser.Scene {
 
     // --- Backgrounds
     this.load.image('background-homescreen', `assets/img/${this.imgFolder}/background_homescreen.png`);
-    this.load.image('foreground-phone', `assets/img/${this.imgFolder}/foreground_phone.png`);
     // --- Cursor
     this.load.image('cursor', `assets/icons/${this.imgFolder}/cursor.png`);
-
-    // --- Homescreen buttons
-    this.load.image('home', `assets/icons/${this.imgFolder}/iconfinder_House_2638333.png`);
 
     // --- Icons Apps
     // test icons from https://www.iconfinder.com/iconsets/circle-icons-1

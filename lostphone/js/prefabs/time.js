@@ -3,7 +3,6 @@ class Time extends Phaser.GameObjects.Text
   constructor(scene, x, y, fontsize)
   {
     super(scene, x, y);
-    this.date;
     this.fontsize = fontsize;
     this.days = ["Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte", "Diumenge"];
     this.months = ["Gener", "Febrer", "March", "April", "May", "June",
