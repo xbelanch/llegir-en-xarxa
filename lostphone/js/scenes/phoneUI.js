@@ -38,8 +38,6 @@ class PhoneUI extends Phaser.Scene {
     t.time.update();
   }
 
-  // @TODO: Cal que reculli l'scene active per aturar-la en el moment
-  // que tornem al HomeScreen
   addPhoneButtons()
   {
     let t = this;
@@ -47,14 +45,16 @@ class PhoneUI extends Phaser.Scene {
     // Add Home icon
     t.buttonHome = new Button(t, ((t.game.config.width / 2) - 64), (t.game.config.height - 160), 'home');
     t.buttonHome.on('pointerdown', () => {
+      // stop the active app and back to the home screen
+      let activeApp = t.registry.get('activeApp');
+      if (activeApp)
+      {
+        t.scene.stop(activeApp);
+        console.log(activeApp + 'is stopped');
+        t.scene.launch('HomeScreen');
+      }
+      // sound and back to home screen
       t.buttonHome.click();
-      // --- Exemple del que haurem de refactoritzar
-      var isVisible = t.scene.isVisible('clockApp');
-      console.log(isVisible);
-      if (isVisible)
-        t.scene.stop('clockApp');
-      // --- 
-      t.scene.launch('HomeScreen');
     });
   }
 

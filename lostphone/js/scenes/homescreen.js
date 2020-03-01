@@ -7,17 +7,16 @@ class HomeScreen extends Phaser.Scene {
 
   init(){
     let t = this;
+
     // Recuperem el valor d'escala
     t.sc = this.registry.get('scale');
+
     // Definim el color del fons de pantalla de navegador
     t.gameId = document.getElementById('game');
     t.gameId.style.backgroundColor = '#421737';
+
     // Definim el cursor
     this.input.setDefaultCursor("url(" + `assets/cursors/${this.registry.get('imgfolder')}/cursor.png`+ "), pointer");
-
-    // Aturem el clock App? Sipe, i la resta d'Apps...
-    t.scene.stop('clockApp');
-    
   }
 
   create(){

@@ -13,14 +13,13 @@ class ClockApp extends Phaser.Scene {
   init()
   {
     let t = this;
-    t.scene.stop('HomeScreen');
     t.scene.bringToTop('PhoneUI');
   }
   
   create()
   {
     let t = this;
-    console.log("Clock App is active: " + t.date);
+    console.log("Clock App is active: " + t.scene.isVisible(t));
 
     // Set a new background color for 'game' container
     document.getElementById('game').style.backgroundColor = '#000';    

@@ -28,7 +28,10 @@ class IconApp extends Phaser.GameObjects.Image
 
     t.on('pointerdown', function(event) {
       t.scene.sound.play('click');
-      t.scene.scene.start(t.app);
+      t.scene.scene.stop('HomeScreen');
+      // Registrem l'app com a "activa"
+      t.scene.registry.set('activeApp', t.app);
+      t.scene.scene.switch(t.app);
     });    
   } 
   
