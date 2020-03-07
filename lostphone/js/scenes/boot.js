@@ -14,8 +14,12 @@ class Boot extends Phaser.Scene {
       this.registry.set('scale', 1);
     }
   }
-  
+
   preload(){
+    // Carreguem els json necessaris
+    this.load.json('config', 'config/config.json');
+    this.load.json('apps', 'config/apps.json');
+
     // Incorporem la llibreria webfont per tal de treballar sempre amb la font roboto
     // independentment si el client la té o no instal·lada.
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
@@ -24,7 +28,7 @@ class Boot extends Phaser.Scene {
     this.load.image('logo-pepe', `assets/img/${this.imgFolder}/logo-pepe.png`);
   }
 
-  create(){    
+  create(){
     let t = this;
     // Carrrega la font roboto, com qualsevol altra font
     // necessària per altres motius...

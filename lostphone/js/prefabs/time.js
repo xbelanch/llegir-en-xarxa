@@ -25,7 +25,7 @@ class Time extends Phaser.GameObjects.Text
 
   create()
   {
-    
+
   }
 
   update()

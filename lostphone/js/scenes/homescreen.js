@@ -5,6 +5,15 @@ class HomeScreen extends Phaser.Scene {
     super('HomeScreen');
   }
 
+  preload() {
+    // For every app, load config
+    var apps = this.cache.json.get('apps');
+
+    for (var app in apps) {
+      this.load.json(apps[app]['type'], `config/apps/${apps[app]['type']}.json`);
+    }
+  }
+
   init(){
     let t = this;
 
@@ -45,24 +54,27 @@ class HomeScreen extends Phaser.Scene {
     t.add.image(0, 0, 'background-homescreen').setOrigin(0);
   }
 
-  
+
   // --- Home Screen Apps
   addIconApps()
   {
     let t = this;
     let s = t.sc;
 
-    // First row
-    t.clockIconApp = new IconApp(t, 'Rellotge', 'clockApp', 'clock', s * 45,  90 * s);
-    t.systemIconApp = new IconApp(t, 'Configuració', 'systemApp', 'system', s * 165, 90 * s);
-    t.galleryIconApp = new IconApp(t, 'Fotos', 'galleryApp', 'gallery', s * 290, 90 * s);
+    var apps = this.cache.json.get('apps');
 
-    // Second row
-    t.calendarIconApp = new IconApp(t, 'Calendari', 'calendarApp', 'calendar', s * 45, s * 200);
-    t.audioIconApp = new IconApp(t, 'Podcasts', 'audioApp', 'audio', 165 * s, s * 200);
-    t.weatheIconApp = new IconApp(t, 'Temps', 'weatherApp', 'weather', 290 * s, s * 200);
-
-    // Third row
+    var i = 0;
+    for (var app in apps) {
+        new IconApp(
+          t,
+          apps[app]["name"],
+          apps[app]["type"]+"App",
+          apps[app]["type"],
+          s * (45 + (120 * (i % 3))), // Posició X (rota cada 3 posicions)
+          s * (90 + (110 * (Math.floor(i / 3))))  // Posició Y (augmenta cada 3 icones)
+        );
+        i++;
+    }
 
     // @NOTE: Cal estudiar aquest exemple:
     // http://labs.phaser.io/edit.html?src=src/scenes/tutorial/scene%20controller.js&v=3.22.0
