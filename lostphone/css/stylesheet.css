@@ -20,3 +20,7 @@ body {
 	font-family: roboto;
 	src: url(../assets/fonts/roboto/Roboto-Regular.ttf) format("truetype");
   }
+
+.chrome {
+    color: white;
+}

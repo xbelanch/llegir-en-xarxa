@@ -19,7 +19,7 @@ class Time extends Phaser.GameObjects.Text
     t.setOrigin(0.5);
     t.setFontFamily('roboto');
     t.setFontSize(t.fontsize);
-    t.setFontStyle('bold');
+    t.setFontStyle('normal');
     t.setColor('#efefef');
   }
 

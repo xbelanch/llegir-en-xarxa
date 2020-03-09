@@ -7,7 +7,7 @@ class MyDate extends Phaser.GameObjects.Text
     this.fontsize = fontsize;
     this.format = format; // numbered | text
     this.days = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"];
-    this.months = ["Gener", "Febrer", "March", "April", "May", "June",
+    this.months = ["Gener", "Febrer", "Març", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
     this.init();
     this.scene.add.existing(this);
@@ -18,26 +18,22 @@ class MyDate extends Phaser.GameObjects.Text
     let t = this;
     t.date = new Date();
     if (t.format == 'numbered')
-      t.text = `${t.date.getDate()}/${t.date.getMonth() + 1}/${t.date.getFullYear()}`;
+      t.text = `${('0' + t.date.getDate()).slice(-2)}/${('0' + (t.date.getMonth() + 1)).slice(-2)}/${t.date.getFullYear()}`;
     else
       t.text = `${t.days[t.date.getDay()]}/${t.months[t.date.getMonth()]}/${t.date.getFullYear()}`;
 
     t.setOrigin(0.5);
     t.setFontFamily('roboto');
     t.setFontSize(t.fontsize);
-    t.setFontStyle('bold');
+    t.setFontStyle('normal');
     t.setColor('#efefef');
   }
 
   create()
   {
-
   }
 
   update()
   {
-    // let t = this;
-    // t.date = new Date();
-    // t.text = `${('0' + t.date.getHours()).slice(-2)}:${('0' + t.date.getMinutes()).slice(-2)}`;
   }
 }

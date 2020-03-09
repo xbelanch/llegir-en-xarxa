@@ -17,7 +17,10 @@ function runGame(width, height)
           height: height,
           fullscreenTarget: 'container'
         },
-    scene: [Boot, LoadScreen, HomeScreen, PhoneUI, ClockApp] // , , GalleryApp, SystemApp, CalendarApp, AudioApp, WeatherApp, MailApp, TodoApp
+        dom: {
+          createContainer: true
+        },
+    scene: [Boot, LoadScreen, HomeScreen, PhoneUI, Wifi, ClockApp] // , , GalleryApp, SystemApp, CalendarApp, AudioApp, WeatherApp, MailApp, TodoApp
   };
   new Phaser.Game(config);
 }
