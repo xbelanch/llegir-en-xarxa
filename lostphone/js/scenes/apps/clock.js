@@ -2,27 +2,35 @@ class ClockApp extends Phaser.Scene {
   constructor()
   {
     super('clockApp');
+    this.config;
     this.date;
     this.clock;
     this.dayofthemonth;
     this.days = ["Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte", "Diumenge"];
-    this.months = ["Gener", "Febrer", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"];
+    this.months = [
+      "Gener", "Febrer", "March",
+      "April", "May", "June",
+      "July", "August", "September",
+      "October", "November", "December"
+    ];
   }
 
   init()
   {
     let t = this;
     t.scene.bringToTop('PhoneUI');
+
+    // Load config
+    t.config = t.cache.json.get('clock');
   }
-  
+
   create()
   {
     let t = this;
     console.log("Clock App is active: " + t.scene.isVisible(t));
 
     // Set a new background color for 'game' container
-    document.getElementById('game').style.backgroundColor = '#000';    
+    document.getElementById('game').style.backgroundColor = t.config['style']['background-color'];
 
     // Add shader snow
     // @ This shader will work for weather
@@ -34,7 +42,7 @@ class ClockApp extends Phaser.Scene {
     varying vec2 fragCoord;
 
       void mainImage(out vec4 color, vec2 coord) {
-          
+
             float snow = 0.0;
     float gradient = (1.0-float(coord.y / resolution.x))*0.4;
     float random = fract(sin(dot(coord.xy,vec2(12.9898,78.233)))* 43758.5453);
@@ -59,8 +67,8 @@ class ClockApp extends Phaser.Scene {
                     }
                 }
             }
-    
-    
+
+
             color = vec4(snow)+gradient*vec4(0.4,0.8,1.0,0.0) + random*0.01;
          }
 
@@ -76,5 +84,5 @@ class ClockApp extends Phaser.Scene {
 
   }
 
-   
+
 }

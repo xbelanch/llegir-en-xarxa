@@ -21,7 +21,7 @@ class MyDate extends Phaser.GameObjects.Text
       t.text = `${t.date.getDate()}/${t.date.getMonth() + 1}/${t.date.getFullYear()}`;
     else
       t.text = `${t.days[t.date.getDay()]}/${t.months[t.date.getMonth()]}/${t.date.getFullYear()}`;
-      
+
     t.setOrigin(0.5);
     t.setFontFamily('roboto');
     t.setFontSize(t.fontsize);
@@ -31,7 +31,7 @@ class MyDate extends Phaser.GameObjects.Text
 
   create()
   {
-    
+
   }
 
   update()

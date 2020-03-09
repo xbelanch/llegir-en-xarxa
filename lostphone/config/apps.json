@@ -1,0 +1,42 @@
+[
+    {
+        "type" : "clock",
+        "name" : "Rellotge",
+        "icon" : "iconfinder_clock_1055090.png"
+    },
+    {
+        "type" : "system",
+        "name" : "Configuració",
+        "icon" : "iconfinder_gear_1055051.png"
+    },
+    {
+        "type" : "gallery",
+        "name" : "Fotos",
+        "icon" : "iconfinder_image_1055042.png"
+    },
+    {
+        "type" : "calendar",
+        "name" : "Calendari",
+        "icon" : "iconfinder_calendar_1055101.png"
+    },
+    {
+        "type" : "audio",
+        "name" : "Podcasts",
+        "icon" : "iconfinder_music_1055020.png"
+    },
+    {
+        "type" : "weather",
+        "name" : "Temps",
+        "icon" : "iconfinder_cloud_1055089.png"
+    },
+    {
+        "type" : "mail",
+        "name" : "Correu",
+        "icon" : "iconfinder_mail_1055030.png"
+    },
+    {
+        "type" : "todo",
+        "name" : "To do",
+        "icon" : "iconfinder_check_1055094.png"
+    }
+]
