@@ -46,6 +46,7 @@ class LoadScreen extends Phaser.Scene {
 
     // --- Backgrounds
     this.load.image('background-homescreen', `assets/img/${this.imgFolder}/background_homescreen.png`);
+    this.load.image('background-wifi', `assets/img/${this.imgFolder}/background_wifi.jpg`);
     // --- Cursor
     this.load.image('cursor', `assets/icons/${this.imgFolder}/cursor.png`);
 

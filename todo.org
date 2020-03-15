@@ -9,6 +9,7 @@
   https://rexrainbow.github.io/phaser3-rex-notes/docs/site/fullscreen/#toggle 
   Maybe... https://codepen.io/samme/pen/deKZjx però òbviament, cal llavors la
   inclusió d'un botó que gestioni l'acció del fullscreen en entorns de desktop
+  More resources: https://codepen.io/gyzkard/pen/PvXBxm
 ** TODO Scale minWidth, minHeight a l'arxiu de configuració... com funciona?
 ** TODO Incloure un shader al background per no fer-lo tan avorrit?
    Example: https://codepen.io/7linternational/pen/OJLEEpZx

@@ -27,7 +27,7 @@ class PhoneUI extends Phaser.Scene {
   {
     let t = this;
     let s = t.sc;
-        // Set foreground image
+    // Set foreground image
     t.add.image(0, 0, 'foreground-phone').setOrigin(0);
     // Add clock at the top of the phone
     t.date = new MyDate(t, (t.game.config.width / 2), 20, 18, 'numbered');
