@@ -1,5 +1,5 @@
 class MailApp extends Phaser.Scene {
-    constructor(){
+    constructor() {
         super('mailApp');
         this.config;
     }

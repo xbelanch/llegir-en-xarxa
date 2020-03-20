@@ -20,12 +20,6 @@ class Boot extends Phaser.Scene {
     this.load.json('config', 'config/config.json');
     this.load.json('apps', 'config/apps.json');
 
-    // Load the game if saved before
-    this.game.loadSave('autosave');
-
-    // Turn on autosave
-    this.game.autosaveOn();
-
     // Incorporem la llibreria webfont per tal de treballar sempre amb la font roboto
     // independentment si el client la té o no instal·lada.
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
@@ -36,6 +30,18 @@ class Boot extends Phaser.Scene {
 
   create(){
     let t = this;
+
+    this.game.state = {};
+    const apps = this.cache.json.get('apps');
+    for (let i=0; i<apps.length; i++) {
+        this.game.state[apps[i]['type']] = {};
+    }
+    // Load the game if saved before
+    this.game.loadSave('autosave');
+
+    // Turn on autosave
+    //this.game.autosaveOn();
+
     // Carrrega la font roboto, com qualsevol altra font
     // necessària per altres motius...
     WebFont.load({

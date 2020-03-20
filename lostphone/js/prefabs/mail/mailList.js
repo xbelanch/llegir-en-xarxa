@@ -40,10 +40,7 @@ class MailListObject extends Phaser.GameObjects.GameObject
             elements.push(line);
         }
 
-        console.log(elements);
-
         const container = this.scene.add.container(elements);
-        console.log(container.getAll());
         this.addDragableZone(container);
     }
 

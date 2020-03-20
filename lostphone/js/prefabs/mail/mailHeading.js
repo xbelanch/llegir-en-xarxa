@@ -7,6 +7,12 @@ class MailHeadingObject extends Phaser.GameObjects.Text
             + mail['content']['subject'];
 
         super(scene, x, y, text_content, text_style);
+
+        this.checked = scene.game.getState('mail', mail['id']) !== undefined;
+
+        if (!this.checked) {
+            this.setColor('#ff0000');
+        }
         this.setClickable(config, mail);
         scene.add.existing(this);
     }
@@ -15,17 +21,19 @@ class MailHeadingObject extends Phaser.GameObjects.Text
         this.setInteractive();
 
         this.on('pointerover', function(event){
-          this.setAlpha(0.7);
+            this.setAlpha(0.7);
         });
 
         this.on('pointerout', function(event){
-          this.setAlpha(1.0);
+            this.setAlpha(1.0);
         });
 
         this.on('pointerdown', function(event) {
-          this.scene.sound.play('click');
+            this.scene.sound.play('click');
+            this.scene.game.saveState('mail', mail['id'], true);
+            this.setColor('#ffffff');
 
-          new MailObject(this.scene, config, mail);
+            new MailObject(this.scene, config, mail);
         });
     }
 }
