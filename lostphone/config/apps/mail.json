@@ -21,7 +21,7 @@
             "id": "M002",
             "content": {
                 "sender": "Persona 2",
-                "subject": "Tema",
+                "subject": "Vestibulum elementum et",
                 "body": "Segon mail"
             },
             "condition": "M001"
@@ -30,10 +30,10 @@
             "id": "M003",
             "content": {
                 "sender": "Persona 3",
-                "subject": "Tema",
+                "subject": "Consectetur adipiscing elit",
                 "body": "Segon mail"
             },
-            "condition": "M002"
+            "condition": "M001"
         },
         {
             "id": "M004",
@@ -42,7 +42,7 @@
                 "subject": "Tema",
                 "body": "Segon mail"
             },
-            "condition": "M003"
+            "condition": "M001"
         },
         {
             "id": "M005",
@@ -69,7 +69,7 @@
                 "subject": "Tema",
                 "body": "Segon mail"
             },
-            "condition": "M006"
+            "condition": "M005"
         },
         {
             "id": "M008",
@@ -78,7 +78,7 @@
                 "subject": "Tema",
                 "body": "Segon mail"
             },
-            "condition": "M007"
+            "condition": "M005"
         },
         {
             "id": "M009",
@@ -87,7 +87,7 @@
                 "subject": "Tema",
                 "body": "Segon mail"
             },
-            "condition": "M008"
+            "condition": "M005"
         }
     ]
 }

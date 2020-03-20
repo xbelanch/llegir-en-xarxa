@@ -8,7 +8,7 @@ class MailHeadingObject extends Phaser.GameObjects.Text
 
         super(scene, x, y, text_content, text_style);
 
-        this.checked = scene.game.getState('mail', mail['id']) !== undefined;
+        this.checked = scene.game.getState('complete', mail['id']) !== undefined;
 
         if (!this.checked) {
             this.setColor('#ff0000');
@@ -30,7 +30,7 @@ class MailHeadingObject extends Phaser.GameObjects.Text
 
         this.on('pointerdown', function(event) {
             this.scene.sound.play('click');
-            this.scene.game.saveState('mail', mail['id'], true);
+            this.scene.game.saveState('complete', mail['id'], true);
             this.setColor('#ffffff');
 
             new MailObject(this.scene, config, mail);

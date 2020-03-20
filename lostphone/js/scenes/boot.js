@@ -33,6 +33,7 @@ class Boot extends Phaser.Scene {
 
     this.game.state = {};
     const apps = this.cache.json.get('apps');
+    this.game.state['complete'] = {};
     for (let i=0; i<apps.length; i++) {
         this.game.state[apps[i]['type']] = {};
     }

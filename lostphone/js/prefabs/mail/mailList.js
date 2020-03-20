@@ -20,6 +20,13 @@ class MailListObject extends Phaser.GameObjects.GameObject
 
         for (let i=0; i<mails.length; i++) {
 
+            // Check if we have to show it
+            if (mails[i].condition !== null) {
+                if (this.scene.game.getState('complete', mails[i].condition) === undefined) {
+                    continue;
+                }
+            }
+
             mail = new MailHeadingObject(
                 this.scene,
                 config,
