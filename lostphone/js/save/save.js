@@ -41,7 +41,7 @@ Phaser.Game.prototype.loadSave = function(key) {
  * Autosave on
  */
 Phaser.Game.prototype.autosaveOn = function(interval) {
-    if (interval === undefined) interval = 5000;
+    if (interval === undefined) interval = 30000;
     var self = this;
     this.autosaveTimer = setInterval(function() {
         console.log("Autosaving...");
