@@ -15,7 +15,12 @@ class MailObject extends Phaser.GameObjects.GameObject
 
         var graphics = this.scene.make.graphics();
         graphics.fillStyle(0x202020);
-        graphics.fillRect(40, 220, this.scene.game.config.width-80, this.scene.game.config.height);
+        graphics.fillRect(
+            40,
+            220,
+            this.scene.game.config.width-80,
+            this.scene.game.config.height
+        );
         graphics.setDepth(1);
         this.scene.add.existing(graphics);
 
@@ -49,16 +54,12 @@ class MailObject extends Phaser.GameObjects.GameObject
             }
         });
 
-
-
         // Add close button
         var close = this.scene.add.sprite(this.scene.game.config.width - 80, 260, 'close');
         close.setInteractive().setDepth(1);
 
         close.on('pointerdown', function (pointer) {
             this.scene.sound.play('click');
-            //this.scene.registry.destroy();
-            //this.scene.events.off();
             this.scene.scene.restart();
         });
     }

@@ -78,7 +78,7 @@
                 "subject": "Tema",
                 "body": "Segon mail"
             },
-            "condition": "M005"
+            "condition": ["M005","M006"]
         },
         {
             "id": "M009",

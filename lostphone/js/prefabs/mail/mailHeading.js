@@ -8,15 +8,17 @@ class MailHeadingObject extends Phaser.GameObjects.Text
 
         super(scene, x, y, text_content, text_style);
 
-        this.checked = scene.game.getState('complete', mail['id']) !== undefined;
-
+        // Mirem si està llegit
+        this.checked = this.scene.game.checkCondition(mail['id']);
         if (!this.checked) {
             this.setColor('#ff0000');
         }
+
         this.setClickable(config, mail);
         scene.add.existing(this);
     }
 
+    // Fer la capçalera del mail clickable
     setClickable(config, mail) {
         this.setInteractive();
 

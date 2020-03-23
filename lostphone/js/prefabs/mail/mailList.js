@@ -21,10 +21,8 @@ class MailListObject extends Phaser.GameObjects.GameObject
         for (let i=0; i<mails.length; i++) {
 
             // Check if we have to show it
-            if (mails[i].condition !== null) {
-                if (this.scene.game.getState('complete', mails[i].condition) === undefined) {
-                    continue;
-                }
+            if (!this.scene.game.checkCondition(mails[i].condition)) {
+                continue;
             }
 
             mail = new MailHeadingObject(
@@ -55,10 +53,10 @@ class MailListObject extends Phaser.GameObjects.GameObject
         const graphics = this.scene.add.graphics();
         graphics.lineStyle(2, 0xffffff, 1);
         graphics.lineBetween(x1, y1, x2, y2);
-
         return graphics;
     }
 
+    // TO DO: fer l'scroll
     addDragableZone(container) {
 
     }

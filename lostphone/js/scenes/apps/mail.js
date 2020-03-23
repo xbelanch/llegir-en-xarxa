@@ -21,7 +21,12 @@ class MailApp extends Phaser.Scene {
 
         // Set a new background color for 'game' container
         document.getElementById('game').style.backgroundColor = t.config['style']['background-color'];
-        t.add.text(92, 128, t.config['appName'], { color: '#eae17f', fontFamily: 'Roboto', fontSize: '64px'});
+        t.add.text(
+            92,
+            128,
+            t.config['appName'],
+            { color: '#eae17f', fontFamily: 'Roboto', fontSize: '64px'}
+        );
         this.listMails();
     }
 

@@ -1,10 +1,40 @@
+/**
+ * Save a state and save the game
+ */
 Phaser.Game.prototype.saveState = function(app, key, value) {
     this.state[app][key] = value;
     this.save('autosave');
 }
 
+/**
+ * Get a state
+ */
 Phaser.Game.prototype.getState = function(app, key) {
     return this.state[app][key];
+}
+
+/**
+ * Check if condition is fulfilled
+ */
+Phaser.Game.prototype.checkCondition = function(conditions) {
+    let complete = true;
+
+    if (conditions === null) {
+        return complete;
+    }
+
+    if (!Array.isArray(conditions)) {
+        conditions = [conditions];
+    }
+
+    for (let i=0; i<conditions.length; i++) {
+        if (!this.getState('complete', conditions[i])) {
+            complete = false;
+            break;
+        }
+    }
+
+    return complete;
 }
 
 /**
