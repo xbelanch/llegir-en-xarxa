@@ -20,7 +20,7 @@ function runGame(width, height)
         dom: {
           createContainer: true
         },
-    scene: [Boot, LoadScreen, HomeScreen, PhoneUI, Wifi, ClockApp] // , , GalleryApp, SystemApp, CalendarApp, AudioApp, WeatherApp, MailApp, TodoApp
+    scene: [Boot, LoadScreen, HomeScreen, PhoneUI, Wifi, ClockApp, MailApp] // , , GalleryApp, SystemApp, CalendarApp, AudioApp, WeatherApp, MailApp, TodoApp
   };
   new Phaser.Game(config);
 }
