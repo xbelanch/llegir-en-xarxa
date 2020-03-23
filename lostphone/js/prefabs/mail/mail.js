@@ -57,8 +57,8 @@ class MailObject extends Phaser.GameObjects.GameObject
 
         close.on('pointerdown', function (pointer) {
             this.scene.sound.play('click');
-            this.scene.registry.destroy();
-            this.scene.events.off();
+            //this.scene.registry.destroy();
+            //this.scene.events.off();
             this.scene.scene.restart();
         });
     }
