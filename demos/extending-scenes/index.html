@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <title>Phaser3 -- Extending scenes?</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="format-detection" content="telephone=no">
+    <style>
+     html,
+     body {
+       margin: 0;
+       padding: 0;
+       image-rendering: optimizeSpeed;              /* Older versions of FF */
+       image-rendering: -moz-crisp-edges;           /* FF 6.0+ */
+       image-rendering: -webkit-optimize-contrast;  /* Webkit (non standard naming) */
+       image-rendering: -o-crisp-edges;             /* OS X & Windows Opera (12.02+) */
+       image-rendering: crisp-edges;                /* Possible future browsers. */
+       -ms-interpolation-mode: nearest-neighbor;    /* IE (non standard naming) */
+       image-rendering: pixelated;                  /* Chrome 41 */
+     }
+    </style>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  </head>
+
+  <body style="background-color: grey;">
+    <div id="phone" style="display: block; width: 100%; text-align: center">
+    </div>
+
+    <!-- Phaser: stable version 3.22.0 "Kohaku" -->
+    <!-- Downloaded from: https://phaser.io/download/stable -->
+    <script src="js/libs/phaser.min.js"></script>
+    <!-- Scenes -->
+    <script type="text/javascript" src="./js/scenes/BootScreen.js"></script>
+    <script type="text/javascript" src="./js/scenes/Phone.js"></script>
+    <script type="text/javascript" src="./js/scenes/PhoneUI.js"></script>
+    <script type="text/javascript" src="./js/scenes/HomeScreen.js"></script>
+
+    <!-- Prefabs -->
+    <script type="text/javascript" src="./js/prefabs/App.js"></script>
+    <script type="text/javascript" src="./js/prefabs/Time.js"></script>
+
+    <!-- Apps -->
+    <script type="text/javascript" src="./js/prefabs/apps/Clock.js"></script>
+        
+    <!-- Main -->
+    <script type="text/javascript" src="./js/main.js"></script>
+  </body>
+
+</html>
+
