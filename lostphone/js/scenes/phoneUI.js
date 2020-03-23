@@ -4,14 +4,14 @@ class PhoneUI extends Phaser.Scene {
   constructor()
   {
     super({key: 'PhoneUI', active: true});
-    
+
   }
 
   init()
   {
     this.imgFolder = this.registry.get('imgfolder');
   }
-  
+
 
   preload()
   {
@@ -22,7 +22,7 @@ class PhoneUI extends Phaser.Scene {
     t.load.image('wifi-off', `assets/icons/${this.imgFolder}/iconfinder_ic_signal_wifi_off_48px_352130.png`);
     t.load.image('wifi-on', `assets/icons/${this.imgFolder}/iconfinder_icon-wifi_211944.png`);
   }
-  
+
   create()
   {
     let t = this;
@@ -31,7 +31,7 @@ class PhoneUI extends Phaser.Scene {
     t.add.image(0, 0, 'foreground-phone').setOrigin(0);
     // Add clock at the top of the phone
     t.date = new MyDate(t, (t.game.config.width / 2), 20, 18, 'numbered');
-    t.time = new Time(t, (t.game.config.width / 2), 52, 48);  
+    t.time = new Time(t, (t.game.config.width / 2), 52, 48);
     // Add buttons
     t.addPhoneButtons();
   }
@@ -56,7 +56,7 @@ class PhoneUI extends Phaser.Scene {
       t.scene.launch('wifi');
       t.buttonHome.click();
     });
-    
+
     // Add Home icon and basic interaction
     let homeIcon = t.textures.get('home').getSourceImage();
     t.buttonHome = new Button(t, ((t.game.config.width / 2) - (homeIcon.width / 2) ), (t.game.config.height - homeIcon.height - (homeIcon.height / 4)), 'home');
@@ -66,7 +66,7 @@ class PhoneUI extends Phaser.Scene {
       if (activeApp)
       {
         t.scene.stop(activeApp);
-        console.log(activeApp + 'is stopped');
+        this.log(activeApp + ' is stopped');
         t.scene.launch('HomeScreen');
       }
       // sound and back to home screen
@@ -74,6 +74,5 @@ class PhoneUI extends Phaser.Scene {
     });
   }
 
-  
-}
 
+}

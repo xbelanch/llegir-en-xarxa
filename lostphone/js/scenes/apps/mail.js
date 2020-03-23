@@ -17,7 +17,7 @@ class MailApp extends Phaser.Scene {
 
     create() {
         let t = this;
-        console.log("Mail App is active");
+        this.log("Mail App is active");
 
         // Set a new background color for 'game' container
         document.getElementById('game').style.backgroundColor = t.config['style']['background-color'];

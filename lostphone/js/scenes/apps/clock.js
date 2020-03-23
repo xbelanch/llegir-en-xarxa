@@ -27,7 +27,7 @@ class ClockApp extends Phaser.Scene {
   create()
   {
     let t = this;
-    console.log("Clock App is active: " + t.scene.isVisible(t));
+    this.log("Clock App is active: " + t.scene.isVisible(t));
 
     // Set a new background color for 'game' container
     document.getElementById('game').style.backgroundColor = t.config['style']['background-color'];

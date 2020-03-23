@@ -5,7 +5,7 @@ class SystemApp extends Phaser.Scene {
 
   create(){
     let t = this;
-    console.log("System App is active");
+    this.log("System App is active");
   }
 }
 
@@ -32,9 +32,8 @@ class SystemApp extends Phaser.Scene {
 
   //   canvas.parentNode.appendChild(startBtn);
   //   canvas.parentNode.appendChild(stopBtn);
-    
+
   //   startBtn.addEventListener('click', function () {
   //     if (document.fullscreenElement) { return; }
   //     canvas[fullscreen.request]();
-  //   });    
-
+  //   });
