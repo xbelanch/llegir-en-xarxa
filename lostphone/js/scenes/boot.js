@@ -30,6 +30,10 @@ class Boot extends Phaser.Scene {
 
   create(){
     let t = this;
+    var config = this.cache.json.get('config');
+    this.game.debug = config['debug'];
+
+    this.log("Debug started");
 
     this.game.state = {};
     const apps = this.cache.json.get('apps');
