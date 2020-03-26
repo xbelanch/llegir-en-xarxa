@@ -5,6 +5,6 @@ class CalendarApp extends Phaser.Scene {
 
   create(){
     let t = this;
-    console.log("Calendqar App is active");
+    this.log("Calendqar App is active");
   }
 }

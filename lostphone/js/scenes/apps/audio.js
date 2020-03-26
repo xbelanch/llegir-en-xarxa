@@ -5,6 +5,6 @@ class AudioApp extends Phaser.Scene {
 
   create(){
     let t = this;
-    console.log("Audio App is active");
+    this.log("Audio App is active");
   }
 }

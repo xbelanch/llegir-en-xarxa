@@ -5,6 +5,6 @@ class WeatherApp extends Phaser.Scene {
 
   create(){
     let t = this;
-    console.log("Weather App is active");
+    this.log("Weather App is active");
   }
 }
