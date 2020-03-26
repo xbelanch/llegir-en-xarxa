@@ -12,7 +12,7 @@ class Wifi extends Phaser.Scene {
     // Load HTML form
     t.load.html('wifiform', 'assets/html/wifiform.html');
   }
-  
+
   init()
   {
     let t = this;
@@ -21,7 +21,7 @@ class Wifi extends Phaser.Scene {
     // està en l'app Time i clica WiFi, apareix renderitzat l'app Time
     // Fes seqüència -> Time -> WiFi -> HomeScreen i veuràs el resultat
   }
-  
+
   create()
   {
     let t = this;
@@ -29,13 +29,13 @@ class Wifi extends Phaser.Scene {
     // First of all, add the background picture
     t.addBackgroundImage();
 
-    
+
     // Title of the app
     // @TODO: Must include it at json config
     t.add.text(92, 128, 'Xarxes Wi-Fi', { color: '#eae17f', fontFamily: 'Roboto', fontSize: '64px'});
 
-    
-    
+
+
     // @TODO: Same of this
     let xarxes = [
       {nom : 'Biblioteca', estat: 'protegida', type: 'active'},
@@ -44,9 +44,9 @@ class Wifi extends Phaser.Scene {
     ];
 
     // Definir un text-globus de notificació.
-    // @TODO: Prefab -- 
+    // @TODO: Prefab --
     let message = this.add.text(92,0, 'Fora de cobertura').setColor('#eae17f').setFontFamily('Roboto').setFontSize('48px');
-    
+
     for (let xarxa of xarxes)
     {
       let p = this.add.text(92, 320 + (xarxes.indexOf(xarxa) * 92), xarxa.nom)
@@ -68,7 +68,7 @@ class Wifi extends Phaser.Scene {
                   // p.disableInteractive();
                 }
               });
-            }          
+            }
           });
       this.add.text(92, p.y + 48, xarxa.estat).setColor('#eae17f').setFontFamily('Roboto').setFontSize('32px').setFontStyle('bold italic');
     }
@@ -92,13 +92,13 @@ class Wifi extends Phaser.Scene {
         // Check if Password is correct
         if (inputPassword.value === '1234')
         {
-          
+
         } else {
           // @TODO: Mostrar missatge error en pantalla
           // Utilitzar la class .invalid de Bootstrap?
           let incorrect = formWiFiPassword.getChildByName('error').node;
-          console.log(incorrect.innerText);
-          
+          this.log(incorrect.innerText);
+
         }
       }
       if (event.target.name === 'Cancelar') {

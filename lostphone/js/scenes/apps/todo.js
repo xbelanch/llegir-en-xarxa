@@ -5,6 +5,6 @@ class TodoApp extends Phaser.Scene {
 
   create(){
     let t = this;
-    console.log("Todo App is active");
+    this.log("Todo App is active");
   }
 }

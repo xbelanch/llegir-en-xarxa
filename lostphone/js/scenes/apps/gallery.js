@@ -5,7 +5,7 @@ class GalleryApp extends Phaser.Scene {
 
   create(){
     let t = this;
-    console.log("Gallery App is active");
+    this.log("Gallery App is active");
   }
 
 }
