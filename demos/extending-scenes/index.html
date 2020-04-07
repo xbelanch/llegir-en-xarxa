@@ -26,17 +26,28 @@
   </head>
 
   <body style="background-color: grey;">
-    <div id="phone" style="display: block; width: 100%; text-align: center">
+    <div id="phone-canvas" style="display: block; width: 100%; text-align: center">
     </div>
 
     <!-- Phaser: stable version 3.22.0 "Kohaku" -->
     <!-- Downloaded from: https://phaser.io/download/stable -->
     <script src="js/libs/phaser.min.js"></script>
+
+    <!-- WebFontLoader -->
+    <!-- Source: https://github.com/typekit/webfontloader -->
+    <!-- a bit older -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"></script>
+    
+    
     <!-- Scenes -->
-    <script type="text/javascript" src="./js/scenes/BootScreen.js"></script>
+    <script type="text/javascript" src="./js/scenes/Bootstrap.js"></script>
+    <script type="text/javascript" src="./js/scenes/Preload.js"></script>   
     <script type="text/javascript" src="./js/scenes/Phone.js"></script>
     <script type="text/javascript" src="./js/scenes/PhoneUI.js"></script>
     <script type="text/javascript" src="./js/scenes/HomeScreen.js"></script>
+
+    <!-- UI -->
+    <script type="text/javascript" src="./js/ui/WebFontFile.js"></script>
 
     <!-- Prefabs -->
     <script type="text/javascript" src="./js/prefabs/App.js"></script>
@@ -44,7 +55,17 @@
 
     <!-- Apps -->
     <script type="text/javascript" src="./js/prefabs/apps/Clock.js"></script>
-        
+
+    <!-- Constants -->
+    <script type="text/javascript" src="./js/consts/Colors.js"></script>
+    <script type="text/javascript" src="./js/consts/SceneKeys.js"></script>
+    <script type="text/javascript" src="./js/consts/ElementKeys.js"></script>
+    <script type="text/javascript" src="./js/consts/GameEvents.js"></script>
+    
+    <!-- Config -->
+    <script type="text/javascript" src="./js/Config.js"></script>
+    <script type="text/javascript" src="./js/registerScenes.js"></script>
+
     <!-- Main -->
     <script type="text/javascript" src="./js/main.js"></script>
   </body>
