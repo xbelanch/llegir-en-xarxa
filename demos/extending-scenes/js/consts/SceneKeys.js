@@ -4,6 +4,8 @@ const SceneKeys =
   Preload : 'preload',
   Phone : 'phone',
   PhoneUI : 'phoneUI',
-  HomeScreen : 'homescreen'
+  HomeScreen : 'homescreen',
+  WiFi : 'wifiApp',
+  Clock : 'clockApp'
 }
  

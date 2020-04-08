@@ -1,30 +1,26 @@
 class HomeScreen extends Phaser.Scene
 {
-  constructor()
-  {
-    super({
-      key : 'homescreen'
-    });
-  }
-
   preload()
   {
-
   }
 
   init()
   {
-    let t = this;
+    // Determinem que la pantalla d'inici sigui la visible i activa
+    SceneManager.active = SceneKeys.HomeScreen;
   }
   
   create()
   {
-    console.log("HomeScreen is active");
-
     let t = this;
+    // Obtenim l'amplada i alçada del canvas del joc
+    let { width, height } = t.sys.game.canvas;
+
+    const x = width / 2;
+    const y = height / 2;
 
     // Add a simple sad lofi wallpaper
-    let wallpaper = t.add.image(0, 0, 'homescreen-wallpaper').setOrigin(0);
+    let wallpaper = t.add.image(x, y, 'homescreen-wallpaper').setOrigin(0.5, 0.5);
 
     // Display the icon apps
 
@@ -33,11 +29,11 @@ class HomeScreen extends Phaser.Scene
 
   }
   
-  createApp(func, handle)
-  {
-    let t = this;
-    let app = new func(handle);
-    t.scene.add(handle, app, true);
-  }
+  // createApp(func, handle)
+  // {
+  //   let t = this;
+  //   let app = new func(handle);
+  //   t.scene.add(handle, app, true);
+  // }
 
 }

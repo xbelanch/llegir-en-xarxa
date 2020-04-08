@@ -2,11 +2,9 @@ class Phone extends Phaser.Scene
 {
   constructor()
   {
-    super({
-      key : 'phone'
-    });
+    super();
   }
-
+  
   preload()
   {
 
@@ -15,17 +13,15 @@ class Phone extends Phaser.Scene
   init()
   {
     let t = this;
-    // Display Phone UI
-    t.scene.launch('phoneui');
-    t.scene.launch('homescreen');
-
+    // Iniciem en paral·lel les escenes
+    // del Homescreen i UI del Phone
+    const PhoneUI = t.scene.launch(SceneKeys.PhoneUI);
+    const HomeScreen = t.scene.launch(SceneKeys.HomeScreen);
   }
   
   create()
   {
     let t = this;
     console.log("Phone Game is active");
-  }
-
-  
+  }  
 }

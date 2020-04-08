@@ -1,10 +1,13 @@
+//
+// --- PhoneUI
+//
+
 class PhoneUI extends Phaser.Scene
 {
   constructor()
   {
-    super({
-      key : 'phoneui'
-    });
+    super( {key : 'phoneUI'} );
+    // --- private variables
     this.time;
     this.wifi;
     this.homescreen;
@@ -18,57 +21,105 @@ class PhoneUI extends Phaser.Scene
   create()
   {
     let t = this;
+    
+    // PhoneUI sempre estarà per sobre de la resta d'escenes
     t.scene.bringToTop();
 
-    // get the game canvas size
+    // Obtenim l'amplada i alçada del canvas del joc
     let { width, height } = t.sys.game.canvas;
 
-    // Display the UI
-    let phoneui_front_top = t.add.image(0, 0, 'phoneui', 'phoneui-front-top').setOrigin(0);
-    let phoneui_front_bottom = t.add.image(0, 0, 'phoneui', 'phoneui-front-bottom').setOrigin(0);
-    phoneui_front_bottom.y = height - phoneui_front_bottom.height;
+    const x = width * 0.5;
+    const y = height * 0.3;
 
-    // --- Buttons
+    // --- Basic UI top - bottom
+    // Mostrem la part superior i inferior de fons on s'ubicaran
+    // els botons comuns del mòbil (home, back, clock, bateria, wifi...)
+    const heightFrontBottomPhoneUI = t.textures.getFrame('phoneui', 'phoneui-front-bottom').height;
+    
+    let phoneui_front_top = t.add.image(x, 0, 'phoneui', 'phoneui-front-top')
+        .setScale(DPR)
+        .setOrigin(0.5, 0);
+    let phoneui_front_bottom = t.add.image(x, height - heightFrontBottomPhoneUI, 'phoneui', 'phoneui-front-bottom')
+        .setScale(DPR)
+        .setOrigin(0.5, 0);
+
     // --- Wifi
-    t.wifi = t.add.image(16, 8, 'phoneui', 'wifi-icon-lock').setOrigin(0).setScale(0.5);
+    // @TODO Aquest factor d'escala dependrà de les dimensions de pantalla
+    // Ara mateix només contemplem desktop amplada > 1024
+    let factorScale = 0.5;
+    t.wifi = t.add.image(x - (phoneui_front_top.width / 2), 0, 'phoneui', 'wifi-icon-lock')
+      .setScale(DPR * factorScale)
+      .setOrigin(-0.1)
+      .setInteractive()
+      .on('pointerdown', function(){
+        t.wifi.tint = 0xffff00;
+      })
+      .on('pointerup', function(){
+        t.wifi.tint = 0xffffff;
+        // Aturem l'escena de homescreen i iniciem l'app de
+        // configuració de la WiFi del mòbil
+        if (SceneManager.active != SceneKeys.Clock)
+        {
+          t.scene.stop(SceneKeys.HomeScreen);
+          t.scene.launch(SceneKeys.Clock, {
+            toScene: SceneKeys.Clock,
+            fromScene : SceneKeys.HomeScreen });          
+        }
+      })
+    ;
 
-    // --- Home
-    t.homescreen = t.add.image(0, 0, 'phoneui', 'phoneui-home-button').setOrigin(0);
-    t.homescreen.y = height - (t.homescreen.height * 1.5);
-    t.homescreen.x = (width / 2) - (t.homescreen.width / 2);
-    t.homescreen.setInteractive();
-    t.homescreen.setData('scene', 'homescreen');
-    t.homescreen.setData('isVisible', true);
-    t.homescreen.on('pointerover', function(){
-      t.homescreen.tint = 0xff0000;
-    });
-    t.homescreen.on('pointerout', function(){
-      t.homescreen.clearTint();
-    });
-    t.homescreen.on('pointerdown', function(){
-      t.homescreen.tint = 0xff00ff;
-    });
-    t.homescreen.on('pointerup', function(){
-      t.setActiveScene(t.homescreen);
-    });
+    // --- Home button
+    // Cada vegada que l'usuari el clica, torna a la homeScreen
+    // i atura l'anterior scene en actiu
+    t.homescreen = t.add.image(x, height - (heightFrontBottomPhoneUI * 0.3), 'phoneui', 'phoneui-home-button')
+      .setOrigin(0.5, 0.5)
+      .setScale(DPR)
+      .setInteractive()
+      .on('pointerover', function(){
+        t.homescreen.tint = 0xff0000;
+      })
+      .on('pointerout', function(){
+        t.homescreen.clearTint();
+      })
+      .on('pointerdown', function(){
+        t.homescreen.tint = 0xff00ff;
+      })
+      .on('pointerup', function(){
+        // @TODO: Aturar l'escena app activa
+        // i mostrar el homescreen
+        if (SceneManager.active != SceneKeys.HomeScreen)
+        {
+          t.scene.stop(SceneManager.active)
+          t.scene.launch(SceneKeys.HomeScreen);
+        }
+        // t.setActiveScene(t.homescreen);
+      });
 
     
-    // Display a simple digital clock
-    t.time = new Time(t, 0, 0, 'font', 0xffffff).setScale(0.5);
-    t.time.x = (width / 2) - (t.time.width / 2);
-
+    // --- Rellotge digital a la part superior del mòbil
+    const fontSize = 24;
+    t.time = new Time(t, x, fontSize, {
+      fontFamily: 'Roboto',
+      fontSize,
+      color: '#ffffff',
+      align: 'center'
+    })
+      .setOrigin(0.5, 0.5)
+      .setScale(DPR);
   }
-
+b
   update(delta, time)
   {
     let t = this;
     t.time.update();
   }
 
+  // --- Private methods
   setActiveScene(btn)
   {
     let t = this;
-    t.currentScene = this.scene.get(btn.getData('scene'));
+    // @TODO 
+    /*
     if (t.scene.isVisible(t.currentScene))
     {
       console.log(btn.getData('scene') + ' is visible');
@@ -81,6 +132,6 @@ class PhoneUI extends Phaser.Scene
       console.log(btn.getData('scene') + ' is active');
       t.scene.stop(t.currentScene);
     }
-  }
-  
+    */
+  }  
 }

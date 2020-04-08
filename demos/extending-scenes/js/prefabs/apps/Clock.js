@@ -1,21 +1,32 @@
-class ClockApp extends App
+//
+// --- Clock App
+//
+
+class Clock extends App
 {
-  constructor(handle)
+  constructor()
   {
     super();
-    this.id = handle;    
   }
+
+  // @NOTE:
+  // Recorda que els mètodes preload i init estan derivats de la class App
   
   create()
   {
     let t = this;
-    console.log(t.id + ' is created');
-
+  
     // Playing with a sad Bart
     let { width, height } = t.sys.game.canvas;
-    let bart = t.add.image(0, 0, 'bart').setOrigin(0).setScale(1);
-    bart.x = (width / 2 ) - (bart.width / 2);
-    bart.y = (height / 2 ) - (bart.height / 2);
+    let x = width / 2;
+    let y = height / 2;
+    let bart = t.add.image(x, y, 'clock-wallpaper')
+        .setOrigin(0.5, 0.5);
+  }
+
+  update(delta, time)
+  {
+    let t = this;
   }
 }
 

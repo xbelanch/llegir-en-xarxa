@@ -1,13 +1,8 @@
-class Time extends Phaser.GameObjects.BitmapText
+class Time extends Phaser.GameObjects.Text
 {
-  constructor(scene, x, y, font, color)
+  constructor(scene, x, y, font)
   {
-    super(scene, x, y, font);
-    this.setOrigin(0);
-    this.setScale(1);
-    // Set color
-    this.tint = color;
-      
+    super(scene, x, y, '', font);
     this.init();
     this.scene.add.existing(this);
   }
