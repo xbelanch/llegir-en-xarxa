@@ -6,8 +6,12 @@ class HomeScreen extends Phaser.Scene
 
   init()
   {
+    let t = this;
     // Determinem que la pantalla d'inici sigui la visible i activa
     SceneManager.active = SceneKeys.HomeScreen;
+    // PhoneUI sempre estarà per sobre de la resta d'escenes
+    t.scene.bringToTop(SceneKeys.PhoneUI);
+
   }
   
   create()

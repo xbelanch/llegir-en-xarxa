@@ -21,10 +21,7 @@ class PhoneUI extends Phaser.Scene
   create()
   {
     let t = this;
-    
-    // PhoneUI sempre estarà per sobre de la resta d'escenes
-    t.scene.bringToTop();
-
+   
     // Obtenim l'amplada i alçada del canvas del joc
     let { width, height } = t.sys.game.canvas;
 
@@ -34,20 +31,34 @@ class PhoneUI extends Phaser.Scene
     // --- Basic UI top - bottom
     // Mostrem la part superior i inferior de fons on s'ubicaran
     // els botons comuns del mòbil (home, back, clock, bateria, wifi...)
+    /*
     const heightFrontBottomPhoneUI = t.textures.getFrame('phoneui', 'phoneui-front-bottom').height;
-    
     let phoneui_front_top = t.add.image(x, 0, 'phoneui', 'phoneui-front-top')
         .setScale(DPR)
         .setOrigin(0.5, 0);
     let phoneui_front_bottom = t.add.image(x, height - heightFrontBottomPhoneUI, 'phoneui', 'phoneui-front-bottom')
         .setScale(DPR)
         .setOrigin(0.5, 0);
+    */
+    // @NOTE: https://viewportsizer.com/devices/
+    // Cal adaptar aquestes mides fixes a la versió Desktop/Mobile?
+    // Tal com ja es té en compte en la versió lostphone
+    // Per obtenir els 552 pixels d'amplada es calcula a través d'una simple regla de tres
+    // 1. Obtenir l'alçada disponible de l'àrea de render del navegador (per exemple, 983 px)
+    // 2. 983 -> 640
+    //     x  -> 360
+    // x = 552    
+    let phone_top_bar = this.add.rectangle(x, 0, 552 * DPR, 40 * DPR, DarkColor, 0.8)
+        .setOrigin(0.5, 0);
+    let phone_bottom_bar = this.add.rectangle(x, height, 552 * DPR, 60 * DPR, DarkColor, 1.0)
+        .setOrigin(0.5, 1.0);
 
     // --- Wifi
     // @TODO Aquest factor d'escala dependrà de les dimensions de pantalla
     // Ara mateix només contemplem desktop amplada > 1024
     let factorScale = 0.5;
-    t.wifi = t.add.image(x - (phoneui_front_top.width / 2), 0, 'phoneui', 'wifi-icon-lock')
+    // t.wifi = t.add.image(x - (phoneui_front_top.width / 2), 0, 'phoneui', 'wifi-icon-lock')
+    t.wifi = t.add.image(x - (phone_top_bar.width / 2), 0, 'phoneui', 'wifi-icon-lock')
       .setScale(DPR * factorScale)
       .setOrigin(-0.1)
       .setInteractive()
@@ -71,7 +82,8 @@ class PhoneUI extends Phaser.Scene
     // --- Home button
     // Cada vegada que l'usuari el clica, torna a la homeScreen
     // i atura l'anterior scene en actiu
-    t.homescreen = t.add.image(x, height - (heightFrontBottomPhoneUI * 0.3), 'phoneui', 'phoneui-home-button')
+    // t.homescreen = t.add.image(x, height - (heightFrontBottomPhoneUI * 0.3), 'phoneui', 'phoneui-home-button')
+    t.homescreen = t.add.image(x, height - (phone_bottom_bar.height / 2), 'phoneui', 'phoneui-home-button')
       .setOrigin(0.5, 0.5)
       .setScale(DPR)
       .setInteractive()
@@ -97,10 +109,9 @@ class PhoneUI extends Phaser.Scene
 
     
     // --- Rellotge digital a la part superior del mòbil
-    const fontSize = 24;
-    t.time = new Time(t, x, fontSize, {
+    t.time = new Time(t, x, phone_top_bar.height / 2, {
       fontFamily: 'Roboto',
-      fontSize,
+      fontSize : 22 * DPR,
       color: '#ffffff',
       align: 'center'
     })
@@ -112,6 +123,15 @@ b
   {
     let t = this;
     t.time.update();
+  }
+
+  // @TODO: Llegir la documentació si és realment
+  // aquesta l'opció per sempre disposar de l'UI per sobre
+  // de la resta d'escenes.
+  refresh()
+  {
+    let t = this;
+    t.scene.bringToTop();
   }
 
   // --- Private methods
