@@ -27,17 +27,32 @@ class HomeScreen extends Phaser.Scene
     let wallpaper = t.add.image(x, y, 'homescreen-wallpaper').setOrigin(0.5, 0.5);
 
     // Display the icon apps
-
-    // Create the app if click the icon
-    // t.createApp(ClockApp, 'clockApp');
-
+    let clockApp = t.add.image(width / 2 - 150, y - 250, 'clockApp')
+        .setOrigin(0.5, 0.5)
+        .setScale(DPR * 0.75)
+        .setInteractive()
+        .on('pointerdown', function(){
+          clockApp.tint = 0xffff00;
+        })
+        .on('pointerup', function(){
+            t.scene.stop(SceneKeys.HomeScreen);
+            t.scene.launch(SceneKeys.Clock, {
+            toScene: SceneKeys.Clock,
+            fromScene : SceneKeys.HomeScreen });          
+        });
+    let podcastApp = t.add.image(width / 2, y - 250, 'podcastApp')
+        .setOrigin(0.5, 0.5)
+        .setScale(DPR * 0.75)
+        .setInteractive()
+        .on('pointerdown', function(){
+          podcastApp.tint = 0xffff00;          
+        })
+        .on('pointerup', function(){
+            t.scene.stop(SceneKeys.HomeScreen);
+            t.scene.launch(SceneKeys.Podcast, {
+            toScene: SceneKeys.Podcast,
+            fromScene : SceneKeys.HomeScreen });                    
+        });
   }
-  
-  // createApp(func, handle)
-  // {
-  //   let t = this;
-  //   let app = new func(handle);
-  //   t.scene.add(handle, app, true);
-  // }
-
+ 
 }

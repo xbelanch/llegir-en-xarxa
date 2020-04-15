@@ -10,12 +10,7 @@ class App extends Phaser.Scene
     this.MyApp = 'This is an App';
     this.From;
   }
-      
-  preload()
-  {
-    
-  }
-  
+        
   init(data)
   {
     let t = this;

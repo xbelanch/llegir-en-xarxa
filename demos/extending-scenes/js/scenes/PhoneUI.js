@@ -69,11 +69,11 @@ class PhoneUI extends Phaser.Scene
         t.wifi.tint = 0xffffff;
         // Aturem l'escena de homescreen i iniciem l'app de
         // configuració de la WiFi del mòbil
-        if (SceneManager.active != SceneKeys.Clock)
+        if (SceneManager.active != SceneKeys.WiFi)
         {
           t.scene.stop(SceneKeys.HomeScreen);
-          t.scene.launch(SceneKeys.Clock, {
-            toScene: SceneKeys.Clock,
+          t.scene.launch(SceneKeys.WiFi, {
+            toScene: SceneKeys.WiFi,
             fromScene : SceneKeys.HomeScreen });          
         }
       })

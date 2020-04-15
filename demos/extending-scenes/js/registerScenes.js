@@ -10,4 +10,5 @@ const registerScenes = (game) => {
   scene.add(SceneKeys.HomeScreen, HomeScreen);
   scene.add(SceneKeys.WiFi, WiFi);
   scene.add(SceneKeys.Clock, Clock);
+  scene.add(SceneKeys.Podcast, Podcast);
 }

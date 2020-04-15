@@ -6,6 +6,7 @@ const SceneKeys =
   PhoneUI : 'phoneUI',
   HomeScreen : 'homescreen',
   WiFi : 'wifiApp',
-  Clock : 'clockApp'
+  Clock : 'clockApp',
+  Podcast : 'podcastApp'
 }
  

@@ -16,7 +16,7 @@ class WiFi extends App
   create()
   {
     let t = this;
-    console.log(t.MyApp + t.From);
+    console.log(t.MyApp + ' ' + t.From);
     t.myPrivate();
   }
 }
