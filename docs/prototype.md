@@ -14,6 +14,7 @@ Quins possibles elements hauríen d'estar presents a la interfície del mòbil?
 * Navegador web
 * Correu
 * Diari/Notes
+* WiFi
 
 
 ## Possibles reptes

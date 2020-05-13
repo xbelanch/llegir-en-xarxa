@@ -7,6 +7,7 @@ class Preload extends Phaser.Scene
     // load resources
     this.load.image('clockApp', 'assets/img/clockApp.png');
     this.load.image('podcastApp', 'assets/img/podcastApp.png');
+    this.load.image('calculatorApp', 'assets/img/calculatorApp.png');
     this.load.image('bart', 'assets/img/bart.png');
     this.load.image('clock-wallpaper', 'assets/img/homer.jpg');
     this.load.image('podcast-wallpaper', 'assets/img/podcast-wallpaper.jpg');

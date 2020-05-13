@@ -48,7 +48,7 @@ class PhoneUI extends Phaser.Scene
     // 2. 983 -> 640
     //     x  -> 360
     // x = 552    
-    let phone_top_bar = this.add.rectangle(x, 0, 552 * DPR, 40 * DPR, DarkColor, 0.8)
+    let phone_top_bar = this.add.rectangle(x, 0, 552 * DPR, 40 * DPR, DarkColor, 1.0)
         .setOrigin(0.5, 0);
     let phone_bottom_bar = this.add.rectangle(x, height, 552 * DPR, 60 * DPR, DarkColor, 1.0)
         .setOrigin(0.5, 1.0);
@@ -71,10 +71,11 @@ class PhoneUI extends Phaser.Scene
         // configuració de la WiFi del mòbil
         if (SceneManager.active != SceneKeys.WiFi)
         {
-          t.scene.stop(SceneKeys.HomeScreen);
+          t.scene.stop(SceneManager.active);
           t.scene.launch(SceneKeys.WiFi, {
             toScene: SceneKeys.WiFi,
-            fromScene : SceneKeys.HomeScreen });          
+            fromScene : SceneKeys.active});
+          SceneKeys.active = SceneKeys.WiFi;
         }
       })
     ;
@@ -103,6 +104,7 @@ class PhoneUI extends Phaser.Scene
         {
           t.scene.stop(SceneManager.active)
           t.scene.launch(SceneKeys.HomeScreen);
+          SceneKeys.active = SceneKeys.HomeScreen;
         }
         // t.setActiveScene(t.homescreen);
       });

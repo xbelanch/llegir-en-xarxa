@@ -40,6 +40,21 @@ class HomeScreen extends Phaser.Scene
             toScene: SceneKeys.Clock,
             fromScene : SceneKeys.HomeScreen });          
         });
+
+    let calculatorApp = t.add.image(width / 2 + 150, y - 250, 'calculatorApp')
+        .setOrigin(0.5, 0.5)
+        .setScale(DPR * 0.75)
+        .setInteractive()
+        .on('pointerdown', function(){
+          calculatorApp.tint = 0xffff00;
+        })
+        .on('pointerup', function(){
+            t.scene.stop(SceneKeys.HomeScreen);
+            t.scene.launch(SceneKeys.Calculator, {
+            toScene: SceneKeys.Calculator,
+            fromScene : SceneKeys.HomeScreen });          
+        });
+
     let podcastApp = t.add.image(width / 2, y - 250, 'podcastApp')
         .setOrigin(0.5, 0.5)
         .setScale(DPR * 0.75)

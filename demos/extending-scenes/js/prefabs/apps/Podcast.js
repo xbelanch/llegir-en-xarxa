@@ -22,7 +22,6 @@ class Podcast extends App
     this.progressMap;
     this.playlist;
   }
-
   // @NOTE:
   // Recorda que el mètode init forma part de la class App
   // @TODO: Cal que aquesta informació s'inclogui posteriorment al json de configuració
@@ -101,8 +100,8 @@ class Podcast extends App
         } else {
           current.play();
         } 
-      }),
-      t.createButton.call(this, '⏹', function(){
+      }),      
+      t.createButton.call(t, '⏹', function(){
         t.audio.stopAll();
       }),
       t.createButton.call(t, '⏮', function(){
@@ -150,7 +149,7 @@ class Podcast extends App
       ].join('  ');
     }));
   }
-
+  
   createButton(text, callback)
   {
     return this.add

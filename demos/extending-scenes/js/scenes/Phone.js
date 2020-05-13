@@ -17,6 +17,7 @@ class Phone extends Phaser.Scene
     // del Homescreen i UI del Phone
     const PhoneUI = t.scene.launch(SceneKeys.PhoneUI);
     const HomeScreen = t.scene.launch(SceneKeys.HomeScreen);
+    SceneKeys.active = SceneKeys.HomeScreen;
   }
   
   create()

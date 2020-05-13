@@ -7,6 +7,7 @@ const SceneKeys =
   HomeScreen : 'homescreen',
   WiFi : 'wifiApp',
   Clock : 'clockApp',
-  Podcast : 'podcastApp'
+  Podcast : 'podcastApp',
+  Calculator: 'calculatorApp'
 }
  

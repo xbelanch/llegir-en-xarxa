@@ -16,7 +16,7 @@ class App extends Phaser.Scene
     let t = this;
     // Indiquem l'app com a activa
     SceneManager.active = data.toScene;
-    console.log(SceneManager.active);
+    console.table(SceneManager);
     // Aturem l'app que vingui de l'anterior - habitualment del homescreen
     t.scene.stop(data.fromScene);
 
