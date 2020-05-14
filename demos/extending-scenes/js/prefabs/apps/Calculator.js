@@ -49,7 +49,7 @@ class Calculator extends App
     var displayResult = null;
     // @TODO: Size of rectangle related to the phone screen
     // At the moment 552 pixels :-/
-    var rectangle_width = (552 * DPR) / 4;
+    var rectangle_width = (552 * 1) / 4;
     var rectangle_height = rectangle_width;
     
     var xoffset = t.x;
@@ -135,7 +135,9 @@ class Calculator extends App
 
     // Clean value display
     if (c === 'C')
-      t.calculator.displayValue = '0';
+    {
+      t.clear();
+    }
 
     if (/^\d+$/.test(c))
       t.inputDigit(c);
@@ -212,7 +214,31 @@ class Calculator extends App
   {
     let t = this;
     // update display Value
-    t.g_displayText.text = t.calculator.displayValue;    
+    
+    // If number higher than 15 ---> error
+    if (t.calculator.displayValue.length > 15) {
+      t.g_displayText.text = 'Error';
+      t.clear();
+      return;
+    }
+    
+    //Hack for . and - (UGLY!)
+    if(t.calculator.displayValue[t.calculator.displayValue.length-1] === '.') {
+      t.g_displayText.text = '.' + t.calculator.displayValue.replace('.','');
+    } else if(t.calculator.displayValue[0] === '-') {
+      t.g_displayText.text = t.calculator.displayValue.replace('-','')+'-';
+    } else {
+      t.g_displayText.text = t.calculator.displayValue;    
+    }
+  }
+  
+  clear()
+  {
+    let t = this;
+    t.calculator.displayValue = '0';
+    t.calculator.firstOperand = null;
+    t.calculator.waitingForSecondOperand = null;
+    t.operator = null; 
   }
   
 }
