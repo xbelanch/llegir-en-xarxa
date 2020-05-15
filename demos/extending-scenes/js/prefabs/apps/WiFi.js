@@ -85,8 +85,9 @@ class WiFi extends App
         {
           console.log("La red está protegida por contraseña");
         } else {          
-          if (t.isMessageActive)
+          if (t.isMessageActive) {
             return;
+          }
           console.log("Fuera del alcanze. Conexión no disponible");
           t.outOfRangeMessage();
         }
@@ -111,7 +112,9 @@ class WiFi extends App
       repeat: 0,
       hold: 750,
       onStart : t.onStartHandler,
+      onStartScope: t,
       onComplete: t.onCompleteHandler,
+      onCompleteScope: t,
       onCompleteParams: [ t.message ]
     });
   }
@@ -120,6 +123,7 @@ class WiFi extends App
   {
     let t = this;
     t.isMessageActive = true;
+    console.log(t.isMessageActive);
   }
 
   onCompleteHandler(tween, targets, myMessage)
