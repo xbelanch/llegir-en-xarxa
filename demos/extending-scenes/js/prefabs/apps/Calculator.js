@@ -49,7 +49,7 @@ class Calculator extends App
     var displayResult = null;
     // @TODO: Size of rectangle related to the phone screen
     // At the moment 552 pixels :-/
-    var rectangle_width = (552 * 1) / 4;
+    var rectangle_width = (552 * DPR) / 4;
     var rectangle_height = rectangle_width;
     
     var xoffset = t.x;
