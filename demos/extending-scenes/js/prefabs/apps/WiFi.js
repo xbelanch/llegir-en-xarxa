@@ -1,9 +1,6 @@
 //
 // --- Wifi App
 //
-
-
-
 class WiFi extends App
 {
   constructor()
@@ -23,6 +20,7 @@ class WiFi extends App
       ["MyBo-XONE", "Fora de l\'abast"],
       ["MiWiFI_2dcX", "Fora de l\'abast"]
     ];
+    this.xarxa = [];
     this.message = null;
     this.isMessageActive = false;
   }
@@ -33,10 +31,10 @@ class WiFi extends App
     this.load.image('pepe', 'assets/img/pepe.png');
     this.load.image('tmp-wallpaper', 'assets/img/tmp-wallpaper.png');
   }
-  
+
   // @NOTE:
   // Recorda que els mètodes preload i init estan derivats de la class App
-  
+
   create()
   {
     let t = this;
@@ -46,8 +44,7 @@ class WiFi extends App
     t.x = width / 2;
     t.y = height / 2;
     var pepe = t.add.sprite(64, 64, 'pepe').setOrigin(0.5);
-    
-    t.pad = t.add.container(0, 0);
+
     var container = [];
     // Add a wallpaper or whatever
     let wallpaper = t.add.image(t.x, t.y, 'tmp-wallpaper')
@@ -56,12 +53,12 @@ class WiFi extends App
     // Add and set false display out of range message
     // @TODO: Make a class or prefab!
     // ref: https://phaser.discourse.group/t/how-to-remove-text/742
-    
+
     t.message = t.add.text(t.x - 220, -50, "Fora de l'abast. Connexió no disponible", {
       fill : '#ff0',
       font : '24px cursive'
     }).setOrigin(0).setVisible(false);
-    
+
     // Display the wifi names avalaibles
     var offset = 0;
     var xarxa = [];
@@ -69,22 +66,23 @@ class WiFi extends App
     {
       var name = t.xarxes[i];
 
-      xarxa[i] = t.add.text(t.x - 256, t.y + (i * 64) + offset - 256, name, {
+      t.xarxa[i] = t.add.text(t.x - 256, t.y + (i * 64) + offset - 256, name, {
         fill : '#fff',
         font : '24px cursive'
       })
           .setInteractive()
           .setOrigin(0);
 
-      // 
-      xarxa[i].on('pointerdown', function(){
+      //
+      t.xarxa[i].on('pointerdown', function(){
 
         // ho sé, molt cutre
         var firstLetter = t.xarxes[0][0][0];
-        if (this.text[0] === firstLetter) 
+        if (this.text[0] === firstLetter)
         {
           console.log("La red está protegida por contraseña");
-        } else {          
+          t.showPad();
+        } else {
           if (t.isMessageActive) {
             return;
           }
@@ -92,9 +90,40 @@ class WiFi extends App
           t.outOfRangeMessage();
         }
       });
-      
+
       offset += 64;
     }
+  }
+
+  showPad()
+  {
+    let t = this;
+
+    // Create numpad
+    t.pad = new NumberPad(t, 0, t.height, {
+      buttons: this.buttons,
+      maxLength: 4
+    });
+
+
+    t.tweens.add({
+      targets: t.pad,
+      y: 0,
+      duration: 700,
+      ease: 'Power2',
+      onStart : function(){
+          // Desactivem interacció dels elements
+          t.pad.disableInteractive();
+          for (var i = 0; i < t.xarxa.length; i++)
+          {
+              t.xarxa[i].disableInteractive();
+          }
+      },
+      onComplete: function(){
+          // Activem només la del Pad
+          t.pad.setInteractive();
+      }
+    });
   }
 
 
@@ -102,7 +131,7 @@ class WiFi extends App
   {
     let t = this;
     t.message.setVisible(true);
-    
+
     t.tweens.add({
       targets: t.message,
       y: 70,
@@ -132,5 +161,14 @@ class WiFi extends App
     t.isMessageActive = false;
     console.log(t.isMessageActive);
     myMessage.setVisible(false);
+  }
+
+  afterNumPadDestroy() {
+      let t = this;
+      for (var i = 0; i < t.xarxa.length; i++)
+      {
+          // Un cop destruit el Pad, tornem a activar les xarxes
+          t.xarxa[i].setInteractive();
+      }
   }
 }
