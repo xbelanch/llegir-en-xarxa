@@ -1,0 +1,34 @@
+Notes:
+
+* [DONE] S'ha actualitzat a la versió 3.24.1 "Rem" de Phaser
+* [DONE] S'inclou la versió 1.6.28 de Web Font Loader
+* [DONE] Es descarta ara per ara l'ús de la llibreria Bootstrap.
+* [DONE] Es crear el directori js/utils on s'ubicarà eines d'ajut com el debug.js i el save.js
+* [DONE] La configuració general de l'app està inclosa dins de l'app.js
+* [DONE] El text apareix blurry en el canvas - html5 @TODO: https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas
+* [DONE] S'inclou en l'arxiu de configuració app.json la key i class de les escenes-apps
+* [DONE] Es modifica el cursor per una emprenta de dit (fingerprint)
+* [DONE] S'afegeix la icona de volume (on/off).
+* [DONE] Es fa servir aquesta eina per a la creació d'atlas: https://gammafp.com/tool/atlas-packer/
+* [DONE] Es crea arxiu de configuració de les apps de Wifi
+* [DONE] Es trasllada com a mètodes privats el display de popups a l'App.js perquè sigui d'ús general.
+* [DONE] Es crea el prefab Popup.js
+* [DONE] Wifi.js cal disableInteraction de les xarxes quan aparegui el popup de contrasenya.
+* [DONE] Wifi.js es crea un pad numeric per introduir la contrasenya
+* [DONE] Es crea el prefab textbutton.js
+* [DONE] Es connecta la wifi, es modifica la icona del phoneUI.
+* [DONE] Es creen els templates bàsics de les apps Calcultor, Calendar, Mail, Notes i Podcast
+* [DONE] S'ha traslladat l'app Mail de legacy.
+* [DONE] S'inclou la variable state per tal de garantir el desar l'estat de joc.
+* [DONE] Es crea utils/common.js per tal d'agrupar aquells mètodes que poden ser d'ús general per a totes les escenes.
+* [DONE] S'inclou l'app Podcast
+* [DONE] S'ha incorporat save.js - password  segons la branch de Kenneth
+* [DONE]: No hi ha manera que funcioni el log personalitzat. Resolt: (martes 29/09/2020 21:18) 
+* [DONE]: https://github.com/xbelanch/llegir-en-xarxa/compare/password (martes 29/09/2020 21:19)
+* [TODO]: App calculator
+* [TODO]: Cal veure si és possible "refactoritzar" el mètode create() de les apps, ja que totes fan gairebé el mateix (background)
+* [TODO]: Cal carregar en el bootstrap les pistes d'àudio. Ara les carrega en el moment de carregar l'app
+* [TODO]: Cal implementar silenci ;)
+* [TODO]: Cal implementar deslliçador per avançar/enderrere la pista d'àudio
+* [TODO]: Cal redissenyar la interfície de l'app Podcast.
+* [TODO]: Pendent de merge amb la branca master... 

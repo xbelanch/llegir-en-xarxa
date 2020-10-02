@@ -1,0 +1,45 @@
+{
+  "style" : { "background-color" : "#333" },
+  "locale"  : {
+    "subject":"Assumpte: ",
+    "from":"De: "
+  },
+  "mails" : [
+    {
+      "id" : "m001",
+      "from" : "Persona 1",
+      "subject" : "Llegeix",
+      "date" : "22/11/2020",
+      "body" : "Lorem ipsum dolor",
+      "attach" :null,
+      "condition" : null
+    },
+    {
+      "id" : "m002",
+      "from" : "Persona 2",
+      "subject" : "De que va aquest miniop?",
+      "date" : "28/11/2020",
+      "body" : "Vestibulum elementum est",
+      "attach" :null,
+      "condition" : "m001"
+    },
+    {
+      "id" : "m003",
+      "from" : "Persona 3",
+      "subject" : "Instruccions de l'IOC",
+      "date" : "8/12/2020",
+      "body" : "Vestibulum elementum est",
+      "attach" :null,
+      "condition" : "m002"
+    },
+    {
+      "id" : "m004",
+      "from" : "Persona 4",
+      "subject" : "Normes de convivència lectora",
+      "date" : "10/12/2020",
+      "body" : "Vestibulum elementum est",
+      "attach" :null,
+      "condition" : ["m001", "m002", "m003"]
+    }
+  ]
+}

@@ -1,12 +1,12 @@
 class MailListObject extends Phaser.GameObjects.GameObject
 {
-    constructor(scene, config, mails) {
+  constructor(scene, config) {
         super(scene, 'mailList');
-        this.print(config, mails);
+    this.print(config);
         scene.add.existing(this);
     }
 
-    print(config, mails) {
+  print(config) {
         const margin_line = 50;
         const margin_text_left = 92;
         const margin_text_top = 20;
@@ -16,19 +16,20 @@ class MailListObject extends Phaser.GameObjects.GameObject
 
         let elements = [];
         let mail = null;
-        let line = null;
+      let line = null;
 
-        for (let i=0; i<mails.length; i++) {
+    for (let i=0; i<config.mails.length; i++) {
 
             // Check if we have to show it
-            if (!this.scene.game.checkCondition(mails[i].condition)) {
+            if (!this.scene.game.checkCondition(config.mails[i].condition)) {
                 continue;
             }
 
+          
             mail = new MailHeadingObject(
                 this.scene,
                 config,
-                mails[i],
+                config.mails[i],
                 margin_text_left,
                 initial_pos+(i*box_height) + margin_text_top,
                 text_style
@@ -41,12 +42,14 @@ class MailListObject extends Phaser.GameObjects.GameObject
                 initial_pos + (i*box_height)
             );
 
-            elements.push(mail);
+            // elements.push(mail);
             elements.push(line);
         }
+    /*
 
-        const container = this.scene.add.container(elements);
-        this.addDragableZone(container);
+        // const container = this.scene.add.container(elements);
+        // this.addDragableZone(container);
+        */
     }
 
     addLine(x1, y1, x2, y2) {

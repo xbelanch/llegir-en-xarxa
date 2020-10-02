@@ -1,78 +1,121 @@
-// Le HUD or UI Scene?
+// ---
+// --- PhoneUI.js
+// ---
 
-class PhoneUI extends Phaser.Scene {
+class PhoneUI extends Phaser.Scene
+{
   constructor()
   {
-    super({key: 'PhoneUI', active: true});
-
+    super();
+    this.time;
+    this.wifi_signal_icon;
   }
-
+  
   init()
   {
-    this.imgFolder = this.registry.get('imgfolder');
-  }
-
-
-  preload()
-  {
-    let t = this;
-    t.load.image('foreground-phone', `assets/img/${this.imgFolder}/foreground_phone.png`);
-    t.load.image('home', `assets/icons/${this.imgFolder}/iconfinder_House_2638333.png`);
-    //@TODO: falten icones wifi 400x640
-    t.load.image('wifi-off', `assets/icons/${this.imgFolder}/iconfinder_ic_signal_wifi_off_48px_352130.png`);
-    t.load.image('wifi-on', `assets/icons/${this.imgFolder}/iconfinder_icon-wifi_211944.png`);
+    
   }
 
   create()
   {
     let t = this;
-    let s = t.sc;
-    // Set foreground image
-    t.add.image(0, 0, 'foreground-phone').setOrigin(0);
-    // Add clock at the top of the phone
-    t.date = new MyDate(t, (t.game.config.width / 2), 20, 18, 'numbered');
-    t.time = new Time(t, (t.game.config.width / 2), 52, 48);
-    // Add buttons
-    t.addPhoneButtons();
+    let Phone = t.game.config;
+    let heightTopBar = 42;
+    let heightBottomBar = 64;
+
+    // Display top and bottom bars
+    let phoneTopBar = t.add.rectangle(0, 0, Phone.width, heightTopBar, 0x1c1c1c, 1.0).setOrigin(0);
+    let phoneBottomBar = t.add.rectangle(0, Phone.height - heightBottomBar, Phone.width, heightBottomBar, 0x0, 1.0).setOrigin(0);
+
+    // WiFi icon
+    t.wifi_signal_icon = t.add.image(8, 2, 'phone_ui_icons_states',
+                                       t.registry.get('unlockWifi') ? 'wifi-signal-on' : 'wifi-signal-off')
+        .setScale(0.75)
+        .setInteractive()
+        .on('pointerover', function(){
+          this.tint = 0xaaaaaa;
+        })
+        .on('pointerout', function(){
+          this.tint = 0xffffff;
+        })
+        .on('pointerup', function(){
+          var activeApp = t.registry.get('activeApp');
+          if (activeApp != 'wifiApp')
+          {
+            t.scene.stop(activeApp);
+            t.scene.launch('wifiApp');
+          }
+        });
+
+    // Volume icon
+    let volume_icon = t.add.image(Phone.width - 48, 2, 'phone_ui_icons_states',
+                                  t.registry.get('unlockVolume') ? 'volume-signal-on' : 'volume-signal-off')
+        .setScale(0.75)
+        .setInteractive()
+        .on('pointerover', function(){
+          this.tint = 0xaaaaaa;
+        })
+        .on('pointerout', function(){
+          this.tint = 0xffffff;
+        })
+        .on('pointerup', function(){
+          t.registry.set('unlockVolume',  t.registry.get('unlockVolume') ? false : true);
+          // update icon?
+          if (t.registry.get('unlockVolume'))
+          {
+              this.setTexture('phone_ui_icons_states', 'volume-signal-on');
+          } else {
+              this.setTexture('phone_ui_icons_states', 'volume-signal-off');
+          }
+        });
+    
+    // Home button
+    var circle = new Phaser.Geom.Circle(Math.floor(Phone.width / 2), Phone.height - Math.floor(heightBottomBar / 2), Math.floor(heightBottomBar / 2.5));
+    var graphics = t.add.graphics({ fillStyle: { color: 0xffffff } });
+    graphics.fillCircleShape(circle);
+
+    t.input.on('pointermove', function (pointer) {
+      graphics.clear();
+
+      if(circle.contains(pointer.x, pointer.y))
+      {
+        graphics.fillStyle(0xaaaaaa);
+      }
+      else
+      {
+        graphics.fillStyle(0xffffff);
+      }
+      graphics.fillCircleShape(circle);
+    });
+
+    t.input.on('pointerdown', function(pointer){
+      var activeApp = t.registry.get('activeApp');
+      if(circle.contains(pointer.x, pointer.y))
+      {
+        if (activeApp != 'homescreen');
+        t.scene.stop(activeApp);
+        //t.scene.transition({ target: 'homescreen', duration: 1000 });
+        t.scene.launch('homescreen');
+      }
+    });
+    
+    
+    // Clock
+    t.time = new Time(t, Math.floor(Phone.width / 2), Math.floor(heightTopBar / 2), {
+      fontFamily: 'Roboto',
+      fontSize : 22,
+      color: '#ffffff',
+      align: 'center'
+    })
+      .setOrigin(0.5, 0.5)
+      .setResolution(2);
   }
 
-  update()
+
+  update(delta, time)
   {
     let t = this;
     t.time.update();
   }
-
-  addPhoneButtons()
-  {
-    let t = this;
-    let s = t.sc;
-    // Add wifi button
-    // at the moment if off
-    let wifiIcon = t.textures.get('wifi-off').getSourceImage();
-    t.buttonWiFi = new Button(t, wifiIcon.width, 8, 'wifi-off');
-    t.buttonWiFi.on('pointerdown', () => {
-      t.registry.set('activeApp', 'wifi');
-      t.scene.stop('HomeScreen');
-      t.scene.launch('wifi');
-      t.buttonHome.click();
-    });
-
-    // Add Home icon and basic interaction
-    let homeIcon = t.textures.get('home').getSourceImage();
-    t.buttonHome = new Button(t, ((t.game.config.width / 2) - (homeIcon.width / 2) ), (t.game.config.height - homeIcon.height - (homeIcon.height / 4)), 'home');
-    t.buttonHome.on('pointerdown', () => {
-      // stop the active app and back to the home screen
-      let activeApp = t.registry.get('activeApp');
-      if (activeApp)
-      {
-        t.scene.stop(activeApp);
-        this.log(activeApp + ' is stopped');
-        t.scene.launch('HomeScreen');
-      }
-      // sound and back to home screen
-      t.buttonHome.click();
-    });
-  }
-
 
 }

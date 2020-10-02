@@ -1,0 +1,63 @@
+[
+  {
+    "type" : "clock",
+    "class": "Clock",
+    "name" : "Rellotge",
+    "icon" : "clockApp.png"
+  },
+  {
+    "type" : "system",
+    "name" : "Configuració",
+    "icon" : "configApp.png"
+  },
+  {
+    "type" : "gallery",
+    "name" : "Fotos",
+    "icon" : "photosApp.png"
+  },
+  {
+    "type" : "calendar",
+    "name" : "Calendari",
+    "icon" : "calendarApp.png"
+  },
+  {
+    "type" : "audio",
+    "name" : "Podcasts",
+    "icon" : "podcastApp.png"
+  },
+  {
+    "type" : "calculator",
+    "name" : "Calculadora",
+    "icon" : "calculatorApp.png"
+  },
+  {
+    "type" : "mail",
+    "name" : "Correu",
+    "icon" : "mailApp.png"
+  },
+  {
+    "type" : "tasks",
+    "name" : "Tasques",
+    "icon" : "tasksApp.png"
+  },
+  {
+    "type" : "messages",
+    "name" : "Missatges",
+    "icon" : "messagesApp.png"
+  },
+  {
+    "type" : "music",
+    "name" : "Música",
+    "icon" : "musicApp.png"
+  },
+  {
+    "type" : "notes",
+    "name" : "Notes",
+    "icon" : "notesApp.png"
+  },
+  {
+    "type" : "videos",
+    "name" : "Vídeos",
+    "icon" : "videosApp.png"
+  }
+] 
