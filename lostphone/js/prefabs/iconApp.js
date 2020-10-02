@@ -1,15 +1,19 @@
+// --- IconApp
+//
+//
+
 class IconApp extends Phaser.GameObjects.Image
 {
   constructor(scene, label, app, frame, x, y)
   {
     super(scene, x, y, frame);
+    this.app = app;
     this.setInteractive();
     this.setOrigin(0);
-    this.setData('name', name);
-    this.setData('app', app);
-    this.setData('active', false);
+    // this.setData('name', name);
+    // this.setData('app', app);
+    // this.setData('active', false);
     this.addLabel(label);
-    this.app = app;
     this.init();
     this.scene.add.existing(this);
   }
@@ -27,31 +31,38 @@ class IconApp extends Phaser.GameObjects.Image
     });
 
     t.on('pointerdown', function(event) {
-      t.scene.sound.play('click');
-      t.scene.scene.stop('HomeScreen');
+      // t.scene.sound.play('click');
+      t.scene.scene.stop('homescreen');
       // Registrem l'app com a "activa"
       t.scene.registry.set('activeApp', t.app);
-      t.scene.scene.switch(t.app);
+      // Utilitzem el launch per evitar perdre el running del PhoneUI
+      t.scene.scene.launch(t.app);
     });    
   } 
-  
+
+  // -- @TODO:
+  // Cal esbrinar la manera de gestionar el blurry del text
+  // Referències:
+  // https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas
+  // https://phaser.discourse.group/t/text-becomes-blurry-on-scaling/1367  
   addLabel(text)
   {
     let t = this;
     let label = t.scene.add.text(
       t.x + (t.width / 2),
-      t.y + t.height + (t.scene.game.config.height > 640 ? 24 : 12),
+      t.y + t.height + (t.scene.game.config.height > 640 ? 16 : 12),
       text);
     label.setOrigin(0.5);
-    t.scene.game.config.height > 640 ? label.setFontSize(24) : label.setFontSize(14); 
-    label.setFontFamily('roboto');
+    t.scene.game.config.height > 640 ? label.setFontSize(16) : label.setFontSize(10); 
+    label.setFontFamily('Roboto');
     label.setShadow(2, 2, 0x3f3f3f, 0.4);
+    label.setResolution(2);
+
   }
 
   // Basic sound interaction
-  click(){
-    this.scene.sound.play('click');
-  }
+  // click(){
+  //   this.scene.sound.play('click');
+  // }
   
 }
-

@@ -1,0 +1,65 @@
+{
+  "frames" :
+  [
+    {
+      "filename" : "wifi-signal-on",
+      "frame" :
+      {
+        "w" : 48,
+        "h" : 48,
+        "x" : 0,
+        "y" : 0
+      },
+      "anchor" :
+      {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    {
+      "filename" : "wifi-signal-off",
+      "frame" :
+      {
+        "w" : 48,
+        "h" : 48,
+        "x" : 48,
+        "y" : 0
+      },
+      "anchor" :
+      {
+        "x" : 0,
+        "y" : 0
+      }
+    },    
+    {
+      "filename" : "volume-signal-on",
+      "frame" :
+      {
+        "w" : 48,
+        "h" : 48,
+        "x" : 0,
+        "y" : 48
+      },
+      "anchor" :
+      {
+        "x" : 0,
+        "y" : 0
+      }
+    },    
+    {
+      "filename" : "volume-signal-off",
+      "frame" :
+      {
+        "w" : 48,
+        "h" : 48,
+        "x" : 48,
+        "y" : 48
+      },
+      "anchor" :
+      {
+        "x" : 0,
+        "y" : 0
+      }
+    }    
+  ]
+}

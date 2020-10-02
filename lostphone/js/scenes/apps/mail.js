@@ -1,37 +1,56 @@
-class MailApp extends Phaser.Scene {
-    constructor() {
-        super('mailApp');
-        this.config;
-    }
+//--
+//-- Mail.js
+//--
+//-- @Note:
+//-- @Todo:
+//-- @From:
 
-    preload() {
-        this.load.image('close', `assets/icons/${this.registry.get('imgfolder')}/iconfinder_18_Close_106227.png`);
-    }
 
-    init() {
-        let t = this;
-        t.scene.bringToTop('PhoneUI');
-        // Load config
-        t.config = t.cache.json.get('mail');
-    }
+class MailApp extends App
+{
+  constructor()
+  {
+    super();
+    this.config = null;
+  }
 
-    create() {
-        let t = this;
-        this.log("Mail App is active");
+  preload()
+  {
+    let t = this;
+    t.colors = t.cache.json.get('config').colors;
+    t.config = t.cache.json.get('mail');
 
-        // Set a new background color for 'game' container
-        document.getElementById('game').style.backgroundColor = t.config['style']['background-color'];
-        t.add.text(
-            92,
-            128,
-            t.config['appName'],
-            { color: '#eae17f', fontFamily: 'Roboto', fontSize: '64px'}
-        );
-        this.listMails();
-    }
+  }
+  
+  init()
+  {
+    let t = this;
+    t.registry.set('activeApp', 'mailApp');    
+  }
 
-    listMails() {
-        let mails = this.config['events'];
-        new MailListObject(this, this.config, mails);
-    }
+  create()
+  {
+    // --- This need to refactor?
+    let t = this;
+    let { width, height } = t.getPhoneDimensions();
+    t.width = width;
+    t.height = height;
+    t.x = width / 2;
+    t.y = height / 2;
+    let scale = t.getImageScale('home-wallpaper');
+    let wallpaper = t.add.image(t.x, t.y, 'home-wallpaper')
+        .setOrigin(0.5, 0.5)
+        .setScale(scale.w, scale.h);
+    t.graphics = t.add.graphics();
+
+    // --- Display a list mails
+    t.listMails();
+  }
+
+  listMails()
+  {
+    let t = this;
+    new MailListObject(t, t.config);
+  }
+
 }

@@ -1,10 +1,11 @@
 class MailHeadingObject extends Phaser.GameObjects.Text
 {
     constructor(scene, config, mail, x, y, text_style) {
-        const text_content = config['lang']['sender']
-            + mail['content']['sender'] + '\n'
-            + config['lang']['subject']
-            + mail['content']['subject'];
+      const text_content = config['locale']['from']
+           + mail['from'] + '\n'
+             + config['locale']['subject']
+           + mail['subject'];
+
 
         super(scene, x, y, text_content, text_style);
 
@@ -31,7 +32,7 @@ class MailHeadingObject extends Phaser.GameObjects.Text
         });
 
         this.on('pointerdown', function(event) {
-            this.scene.sound.play('click');
+            // this.scene.sound.play('click');
             this.scene.game.saveState('complete', mail['id'], true);
             this.setColor('#ffffff');
 

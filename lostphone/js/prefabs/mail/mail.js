@@ -7,11 +7,11 @@ class MailObject extends Phaser.GameObjects.GameObject
 
     print(config, mail) {
 
-        const heading = config['lang']['sender']
-            + mail['content']['sender'] + '\n'
-            + config['lang']['subject']
-            + mail['content']['subject'];
-        const content = mail['content']['body'];
+        const heading = config['locale']['from']
+            + mail['from'] + '\n'
+            + config['locale']['subject']
+            + mail['subject'];
+        const content = mail['body'];
 
         var graphics = this.scene.make.graphics();
         graphics.fillStyle(0x202020);
@@ -59,7 +59,7 @@ class MailObject extends Phaser.GameObjects.GameObject
         close.setInteractive().setDepth(1);
 
         close.on('pointerdown', function (pointer) {
-            this.scene.sound.play('click');
+            // this.scene.sound.play('click');
             this.scene.scene.restart();
         });
     }
