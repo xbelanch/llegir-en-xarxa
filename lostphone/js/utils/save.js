@@ -149,7 +149,8 @@ Phaser.Game.prototype.loadSave = function(key) {
     if (key === undefined) key = 'default';
     var state = localStorage.getItem('save-'+key);
     if (state) {
-        this.unserialize(state);
+        this.updateURL(state);
+        this.unserialize(atob(state));
     }
     console.log('Loaded ' +key);
 };

@@ -70,6 +70,13 @@ class Bootstrap extends Phaser.Scene
 
     t.log("Debug started");
 
+    // --- Initialize Phone apps state
+    const apps = t.cache.json.get('apps');
+    Phone.state['complete'] = {};
+    for (let i = 0; i < apps.length; i++) {
+      Phone.state[apps[i].type] = {};
+    }
+
     // ---  Check if password via URL
     const passValue = Phone.getPassword();
     if (passValue) {
@@ -78,13 +85,6 @@ class Bootstrap extends Phaser.Scene
 
     // --- Load the game if saved before
     Phone.loadSave('autosave');
-
-    // --- Initialize Phone apps state
-    const apps = t.cache.json.get('apps');
-    Phone.state['complete'] = {};
-    for (let i = 0; i < apps.length; i++) {
-      Phone.state[apps[i].type] = {};
-    }
     
     let x = Math.round(Phone.config.width * 0.5);
     let y = Math.round(Phone.config.height * 0.5);
