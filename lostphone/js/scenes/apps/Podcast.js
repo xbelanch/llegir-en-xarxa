@@ -16,6 +16,7 @@ class PodcastApp extends App
     this.audio;
     this.progressBar;
     this.progressBox;
+    this.progressCursor;
     this.seekBar;
     this.loadingText;
     this.text;
@@ -93,6 +94,7 @@ class PodcastApp extends App
         t.audio.stopAll();
         t.progressBox.destroy();
         t.progressBar.destroy();
+        t.progressCursor.destroy();
       }),
       t.createButton.call(t, '⏮', function(){
         var prev = t.playlist.previous || t.playlist.last;
@@ -148,21 +150,27 @@ class PodcastApp extends App
     if (t.progressBar !== undefined) {
       t.progressBar.clear();
       t.progressBar.fillStyle(0xffff00, 1);
+      t.progressCursor.clear();
+      t.progressCursor.fillStyle(0xffffff, 1);
 
       t.playlist.list.map(function(s, i){
-        if (s.isPlaying) {
+        if (s.isPlaying || s.isPaused) {
           t.progressBar.fillRect(
             x - (width*0.4),
             height - 220,
             Math.round((width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
             20
           );
+ 
+          t.progressCursor.fillRect(
+            x - (width*0.4) + Math.round((width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
+            height - 225,
+            3,
+            30
+          );
         }
       });
-    }
-
-
-    
+    }    
   }
   
   createButton(text, callback)
@@ -181,17 +189,22 @@ class PodcastApp extends App
     let y = height / 2;
     t.progressBar = this.add.graphics();
     t.progressBox = this.add.graphics();
+    t.progressCursor = this.add.graphics();
     t.progressBox.fillStyle(0x222222, 0.8);
     t.progressBox.fillRect(x - (width*0.4), height - 220, width *0.8, 20);
-    t.progressBox.setInteractive();
-    t.progressBox.on('pointerdown',function(event) {
-      console.log(event);
-    });
-  }
+    t.progressCursor.fillStyle(0xffffff, 1);
+    t.progressCursor.fillRect(x - (width*0.4), height - 225, 3, 30);
 
-  dragPosition(pointer, localX, localY, event)
-  {
-    console.log(pointer + ' / ' + localX + ' / ' + localY + ' / ' + event);
+    let zone = this.add.zone(x - (width*0.4), height - 220, width *0.8, 20)
+      .setOrigin(0)
+      .setInteractive();
+
+    zone.on('pointerdown', function(event) {
+      let current = t.playlist.current || t.playlist.first;
+      let seconds = Math.round(((event.downX - width*0.1) / (width*0.8))*current.duration.toFixed(1));
+      current.stop();
+      current.play('',{seek: seconds})
+    });
   }
     
 }
