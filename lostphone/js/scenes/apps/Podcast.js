@@ -15,6 +15,7 @@ class PodcastApp extends App
     super();
     this.audio;
     this.progressBar;
+    this.progressBox;
     this.seekBar;
     this.loadingText;
     this.text;
@@ -83,11 +84,15 @@ class PodcastApp extends App
         } else if (current.isPlaying) {
           current.pause();
         } else {
+          t.createBar();
           current.play();
         } 
+  
       }),      
       t.createButton.call(t, '⏹', function(){
         t.audio.stopAll();
+        t.progressBox.destroy();
+        t.progressBar.destroy();
       }),
       t.createButton.call(t, '⏮', function(){
         var prev = t.playlist.previous || t.playlist.last;
@@ -126,6 +131,10 @@ class PodcastApp extends App
   refresh()
   {
     let t = this;
+    let { width, height } = t.getPhoneDimensions();
+    let x = width / 2;
+    let y = height / 2;
+
     // pintem en pantalla els tracks disponibles
     t.text.setText(t.playlist.list.map(function(s, i){
       return [
@@ -135,6 +144,25 @@ class PodcastApp extends App
         `${s.seek.toFixed(1)}/${s.duration.toFixed(1)}`
       ].join('  ');
     }));
+
+    if (t.progressBar !== undefined) {
+      t.progressBar.clear();
+      t.progressBar.fillStyle(0xffff00, 1);
+
+      t.playlist.list.map(function(s, i){
+        if (s.isPlaying) {
+          t.progressBar.fillRect(
+            x - (width*0.4),
+            height - 220,
+            Math.round((width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
+            20
+          );
+        }
+      });
+    }
+
+
+    
   }
   
   createButton(text, callback)
@@ -144,5 +172,26 @@ class PodcastApp extends App
       .setInteractive()
       .on('pointerdown', callback);
   }  
+
+  createBar()
+  {
+    let t = this;
+    let { width, height } = t.getPhoneDimensions();
+    let x = width / 2;
+    let y = height / 2;
+    t.progressBar = this.add.graphics();
+    t.progressBox = this.add.graphics();
+    t.progressBox.fillStyle(0x222222, 0.8);
+    t.progressBox.fillRect(x - (width*0.4), height - 220, width *0.8, 20);
+    t.progressBox.setInteractive();
+    t.progressBox.on('pointerdown',function(event) {
+      console.log(event);
+    });
+  }
+
+  dragPosition(pointer, localX, localY, event)
+  {
+    console.log(pointer + ' / ' + localX + ' / ' + localY + ' / ' + event);
+  }
     
 }
