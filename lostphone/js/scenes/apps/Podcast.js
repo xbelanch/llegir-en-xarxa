@@ -16,6 +16,7 @@ class PodcastApp extends App
     this.audio;
     this.progressBar;
     this.seekBar;
+    this.loadingText;
     this.text;
     this.tracks;
     this.progressMap;
@@ -28,6 +29,14 @@ class PodcastApp extends App
     let { width, height } = t.getPhoneDimensions();
     let x = width / 2;
     let y = height / 2;
+    let scale = t.getImageScale('home-wallpaper');
+    let wallpaper = t.add.image(x, y, 'home-wallpaper')
+        .setOrigin(0.5, 0.5)
+        .setScale(scale.w, scale.h);
+    t.graphics = t.add.graphics();
+    t.loadingText = t.add.text(x, y, 'Loading...')
+      .setOrigin(0.5, 0.5)
+      .setDepth(0);
     
     t.tracks = t.cache.json.get('tracks');
 
@@ -48,12 +57,8 @@ class PodcastApp extends App
     let { width, height } = t.getPhoneDimensions();
     let x = width / 2;
     let y = height / 2;
-    let scale = t.getImageScale('home-wallpaper');
-    let wallpaper = t.add.image(x, y, 'home-wallpaper')
-        .setOrigin(0.5, 0.5)
-        .setScale(scale.w, scale.h);
-    t.graphics = t.add.graphics();
-
+    
+    t.loadingText.destroy();
 
     // Mmmmmm...
     t.text = t.add.text(x, y, 'Tracks loaded!')
