@@ -13,8 +13,8 @@ function newGame(width, height)
       parent : 'game',
       mode : Phaser.Scale.FIT,
       autoCenter : Phaser.Scale.CENTER_BOTH,
-      width: width,
-      height: height
+      width: width * window.devicePixelRatio,
+      height: height * window.devicePixelRatio
     },
     plugins: {
       global: [
