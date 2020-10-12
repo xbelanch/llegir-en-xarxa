@@ -16,6 +16,8 @@ class IconApp extends Phaser.GameObjects.Image
     this.addLabel(label);
     this.init();
     this.scene.add.existing(this);
+
+    this.setScale(this.scene.registry.get('scaleRatio'));
   }
 
   init()

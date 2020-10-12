@@ -2,6 +2,7 @@
 // 
 
 const DPR = window.devicePixelRatio;
+const MAX_DPR = 2;
 
 class Bootstrap extends Phaser.Scene
 {
@@ -22,6 +23,8 @@ class Bootstrap extends Phaser.Scene
       t.registry.set('imgFolder', '560x1024'); // 0.5468 aspect ratio
       t.registry.set('scale', 1);
     }
+
+    t.registry.set('scaleRatio', window.devicePixelRatio / MAX_DPR);
   }
   
   preload()

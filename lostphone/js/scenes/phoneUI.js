@@ -30,7 +30,7 @@ class PhoneUI extends Phaser.Scene
     // WiFi icon
     t.wifi_signal_icon = t.add.image(8, 2, 'phone_ui_icons_states',
                                        t.registry.get('unlockWifi') ? 'wifi-signal-on' : 'wifi-signal-off')
-        .setScale(0.75)
+        .setScale(this.registry.get('scaleRatio')*0.75)
         .setInteractive()
         .on('pointerover', function(){
           this.tint = 0xaaaaaa;
@@ -50,7 +50,7 @@ class PhoneUI extends Phaser.Scene
     // Volume icon
     let volume_icon = t.add.image(Phone.width - 48, 2, 'phone_ui_icons_states',
                                   t.registry.get('unlockVolume') ? 'volume-signal-on' : 'volume-signal-off')
-        .setScale(0.75)
+        .setScale(this.registry.get('scaleRatio')*0.75)
         .setInteractive()
         .on('pointerover', function(){
           this.tint = 0xaaaaaa;
