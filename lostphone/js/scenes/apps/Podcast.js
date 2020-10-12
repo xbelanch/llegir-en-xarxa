@@ -23,18 +23,19 @@ class PodcastApp extends App
     this.playlist;
   }
 
+  init()
+  {
+    let t = this;
+    super.init();
+    t.registry.set('activeApp', 'podcastApp');    
+  }
+
   preload()
   {
     let t = this;
-    let { width, height } = t.getPhoneDimensions();
-    let x = width / 2;
-    let y = height / 2;
-    let scale = t.getImageScale('home-wallpaper');
-    let wallpaper = t.add.image(x, y, 'home-wallpaper')
-        .setOrigin(0.5, 0.5)
-        .setScale(scale.w, scale.h);
-    t.graphics = t.add.graphics();
-    t.loadingText = t.add.text(x, y, 'Loading...')
+    super.preload();
+
+    t.loadingText = t.add.text(this.x, this.y, 'Loading...')
       .setOrigin(0.5, 0.5)
       .setDepth(0);
     
@@ -45,23 +46,15 @@ class PodcastApp extends App
     t.load.audio(t.tracks);    
   }
   
-  init()
-  {
-    let t = this;
-    t.registry.set('activeApp', 'podcastApp');    
-  }
-
   create()
   {
     let t = this;
-    let { width, height } = t.getPhoneDimensions();
-    let x = width / 2;
-    let y = height / 2;
+    super.create();
     
     t.loadingText.destroy();
 
     // Mmmmmm...
-    t.text = t.add.text(x, y, 'Tracks loaded!')
+    t.text = t.add.text(t.x, t.y, 'Tracks loaded!')
       .setOrigin(0.5, 0.5)
       .setDepth(0);
         
@@ -112,8 +105,8 @@ class PodcastApp extends App
     // el grup de butons
     // display the buttons on screen
     Phaser.Actions.GridAlign(buttons, {
-      x: x - 150, // @TODO: Recorda que aquest 552 és l'amplada de la pantalla i que cal modificar-la perquè aquesta s'adapti a les dimensions variables de les pantalles.
-      y: height - 120,
+      x: t.x - 150, // @TODO: Recorda que aquest 552 és l'amplada de la pantalla i que cal modificar-la perquè aquesta s'adapti a les dimensions variables de les pantalles.
+      y: t.height - 120,
       width: 20,
       height: 20,
       cellWidth: 500 / buttons.length,

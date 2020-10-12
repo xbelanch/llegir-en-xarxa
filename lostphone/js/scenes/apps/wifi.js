@@ -17,22 +17,25 @@ class WifiApp extends App
     this.password;
   }
 
-  preload()
-  {
-    let t = this;
-    t.colors = t.cache.json.get('config').colors;
-    t.config = t.cache.json.get('wifi');
-  }
-
   init()
   {
     let t = this;
+    super.init();
     t.registry.set('activeApp', 'wifiApp');    
+  }
+
+  preload()
+  {
+    let t = this;
+    super.preload();
+    t.colors = t.cache.json.get('config').colors;
+    t.config = t.cache.json.get('wifi');
   }
 
   create()
   {
     let t = this;
+    super.create();
     let Phone = t.game.config;
     const x = Math.round(Phone.width / 2);
     const y = Math.round(Phone.height / 2);

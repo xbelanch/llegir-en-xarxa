@@ -11,33 +11,26 @@ class ClockApp extends App
   constructor()
   {
     super();
-    this.x;
-    this.y;
     this.clockSize = 198;
-    this.width;
-    this.height;
     this.graphics;
   }
 
   init()
   {
     let t = this;
+    super.init();
     t.registry.set('activeApp', 'clockApp');    
+  }
+
+  preload()
+  {
+    super.preload();
   }
 
   create()
   {
     let t = this;
-    let { width, height } = t.getPhoneDimensions();
-    t.width = width;
-    t.height = height;
-    t.x = width / 2;
-    t.y = height / 2;
-    let scale = t.getImageScale('home-wallpaper');
-    let wallpaper = t.add.image(t.x, t.y, 'home-wallpaper')
-        .setOrigin(0.5, 0.5)
-        .setScale(scale.w, scale.h);
-    t.graphics = t.add.graphics();
+    super.create();
   }
 
   update(delta, time)
