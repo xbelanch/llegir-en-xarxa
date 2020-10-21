@@ -5,10 +5,10 @@ class Popup extends Phaser.GameObjects.Text
 {
   constructor(scene, text, params)
   {
-    super(scene, 0, 0, text);
+    super(scene, 0, -70, text);
+
     this.scene.add.existing(this);
     this.isActive = false;
   }
-
 
 }

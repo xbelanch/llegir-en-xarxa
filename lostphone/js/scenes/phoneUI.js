@@ -9,11 +9,19 @@ class PhoneUI extends Phaser.Scene
     super();
     this.time;
     this.wifi_signal_icon;
+    this.width;
+    this.height;
+    this.x;
+    this.y;
   }
   
   init()
   {
-    
+    let { width, height } = this.getPhoneDimensions();    
+    this.width = width;
+    this.height = height;
+    this.x = width / 2;
+    this.y = height / 2;
   }
 
   create()
@@ -114,11 +122,65 @@ class PhoneUI extends Phaser.Scene
       .setResolution(2);
   }
 
+  getPhoneDimensions()
+  {
+    let t = this;
+    let Phone = t.game.config;
+    return {
+      width : Phone.width,
+      height : Phone.height
+    };
+  }
+
 
   update(delta, time)
   {
     let t = this;
     t.time.update();
+    t.launchNotification();
+  }
+
+  launchNotification()
+  {
+    let t = this;
+    
+    if (t.game.lastmod !== undefined) {
+      t.game.lastmod = undefined;
+      t.displayPopup(new Popup(t,'New notification!'));
+    } 
+  }
+
+  displayPopup(popup)
+  {
+    let t = this;
+    t.tweens.add({
+      targets: popup,
+      y : 70,
+      duration : 500,
+      delay: 3000 + Math.random() * 4000, 
+      ease : 'Power2',
+      yoyo : true,
+      repeat : 0,
+      hold : 5000,
+      onStart : t.onStartHandler,
+      onStartScope : t,
+      onStartParams : [ popup ],
+      onComplete : t.onCompleteHandler,
+      onCompleteScope : t,
+      onCompleteParams : [ popup ]
+    });
+  } 
+
+  onStartHandler(tween, targets, popup)
+  {
+    popup.isActive = true;
+    popup.setVisible(true);
+  }
+
+  onCompleteHandler(tween, targets, popup)
+  {
+    popup.isActive = false;
+    popup.setVisible(false);
   }
 
 }

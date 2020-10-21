@@ -34,6 +34,9 @@ Phaser.Game.prototype.updateURL = function(value) {
  */
 Phaser.Game.prototype.saveState = function(app, key, value) {
     this.state[app][key] = value;
+    if (app == 'complete') {
+      this.lastmod = key
+    }
     this.save('autosave');
 };
 
