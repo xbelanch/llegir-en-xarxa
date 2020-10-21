@@ -146,7 +146,7 @@ class PhoneUI extends Phaser.Scene
     
     if (t.game.lastmod !== undefined) {
       t.game.lastmod = undefined;
-      t.displayPopup(new Popup(t,'New notification!'));
+      t.displayPopup(new Popup(t, 'New notification!', {icon:'mail'}));
     } 
   }
 
@@ -155,7 +155,7 @@ class PhoneUI extends Phaser.Scene
     let t = this;
     t.tweens.add({
       targets: popup,
-      y : 70,
+      y : 140,
       duration : 500,
       delay: 3000 + Math.random() * 4000, 
       ease : 'Power2',

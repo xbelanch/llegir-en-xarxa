@@ -72,12 +72,12 @@ class App extends Phaser.Scene
     let t = this;
     t.tweens.add({
       targets: popup,
-      y : 70,
+      y : 140,
       duration : 500,
       ease : 'Power2',
       yoyo : true,
       repeat : 0,
-      hold : 750,
+      hold : 2000,
       onStart : t.onStartHandler,
       onStartScope : t,
       onStartParams : [ popup ],
