@@ -48,6 +48,7 @@ class PhoneUI extends Phaser.Scene
         });
 
     // Volume icon
+    t.registry.set('unlockVolume', true);
     let volume_icon = t.add.image(Phone.width - 48, 2, 'phone_ui_icons_states',
                                   t.registry.get('unlockVolume') ? 'volume-signal-on' : 'volume-signal-off')
         .setScale(this.registry.get('scaleRatio')*0.75)
@@ -64,8 +65,10 @@ class PhoneUI extends Phaser.Scene
           if (t.registry.get('unlockVolume'))
           {
               this.setTexture('phone_ui_icons_states', 'volume-signal-on');
+              t.game.sound.mute = false;
           } else {
               this.setTexture('phone_ui_icons_states', 'volume-signal-off');
+              t.game.sound.mute = true;
           }
         });
     
