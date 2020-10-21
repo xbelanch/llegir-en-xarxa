@@ -38,7 +38,7 @@ class IconApp extends Phaser.GameObjects.Image
       // Registrem l'app com a "activa"
       t.scene.registry.set('activeApp', t.app);
       // Utilitzem el launch per evitar perdre el running del PhoneUI
-      t.scene.scene.launch(t.app);
+      t.scene.scene.run(t.app);
     });    
   } 
 

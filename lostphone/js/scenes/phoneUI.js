@@ -96,7 +96,7 @@ class PhoneUI extends Phaser.Scene
       if(circle.contains(pointer.x, pointer.y))
       {
         if (activeApp != 'homescreen');
-        t.scene.stop(activeApp);
+        t.scene.sleep(activeApp);
         //t.scene.transition({ target: 'homescreen', duration: 1000 });
         t.scene.launch('homescreen');
       }

@@ -148,13 +148,20 @@ class PodcastApp extends App
     }));
 
     if (t.progressBar !== undefined) {
-      t.progressBar.clear();
-      t.progressBar.fillStyle(0xffff00, 1);
-      t.progressCursor.clear();
-      t.progressCursor.fillStyle(0xffffff, 1);
+       t.progressBar.clear();
+       t.progressBar.fillStyle(0xffff00, 1);
+       t.progressCursor.clear();
+       t.progressCursor.fillStyle(0xffffff, 1);
+    }
+      
 
       t.playlist.list.map(function(s, i){
         if (s.isPlaying || s.isPaused) {
+
+          if (t.progressBar === undefined) {
+            t.createBar();
+          }
+
           t.progressBar.fillRect(
             x - (width*0.4),
             height - 220,
@@ -170,7 +177,7 @@ class PodcastApp extends App
           );
         }
       });
-    }    
+ 
   }
   
   createButton(text, callback)
