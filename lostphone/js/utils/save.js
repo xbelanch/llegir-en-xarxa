@@ -33,10 +33,10 @@ Phaser.Game.prototype.updateURL = function(value) {
  * Save a state and save the game
  */
 Phaser.Game.prototype.saveState = function(app, key, value) {
-    this.state[app][key] = value;
-    if (app == 'complete') {
-      this.lastmod = key
+    if (app == 'complete' && this.state[app][key] === undefined) {
+      this.lastmod = key;
     }
+    this.state[app][key] = value;
     this.save('autosave');
 };
 
