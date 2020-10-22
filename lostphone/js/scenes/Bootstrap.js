@@ -92,6 +92,9 @@ class Bootstrap extends Phaser.Scene
     let x = Math.round(Phone.config.width * 0.5);
     let y = Math.round(Phone.config.height * 0.5);
 
+    // Add old state for checking differences
+    Phone.lastmod = undefined;
+
     // --- Display logo - text - booting phone
     // Set scale first before display it
     t.log('DPR: ' +  DPR);

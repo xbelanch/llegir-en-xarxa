@@ -85,16 +85,17 @@ class PodcastApp extends App
         } else if (current.isPlaying) {
           current.pause();
         } else {
-          t.createBar();
           current.play();
         } 
   
       }),      
       t.createButton.call(t, '⏹', function(){
         t.audio.stopAll();
-        t.progressBox.destroy();
-        t.progressBar.destroy();
-        t.progressCursor.destroy();
+        if (t.progressBox !== undefined) {
+          t.progressBox.destroy();
+          t.progressBar.destroy();
+          t.progressCursor.destroy();
+        }
       }),
       t.createButton.call(t, '⏮', function(){
         var prev = t.playlist.previous || t.playlist.last;
@@ -158,7 +159,8 @@ class PodcastApp extends App
       t.playlist.list.map(function(s, i){
         if (s.isPlaying || s.isPaused) {
 
-          if (t.progressBar === undefined) {
+          
+          if (t.progressBar === undefined || !t.progressBar.active) {
             t.createBar();
           }
 

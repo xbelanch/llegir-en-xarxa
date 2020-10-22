@@ -9,11 +9,22 @@ class PhoneUI extends Phaser.Scene
     super();
     this.time;
     this.wifi_signal_icon;
+    this.width;
+    this.height;
+    this.x;
+    this.y;
+    this.notifications = [];
+    this.notificationOn = false;
+    this.nextDelay = 'random';
   }
   
   init()
   {
-    
+    let { width, height } = this.getPhoneDimensions();    
+    this.width = width;
+    this.height = height;
+    this.x = width / 2;
+    this.y = height / 2;
   }
 
   create()
@@ -114,11 +125,72 @@ class PhoneUI extends Phaser.Scene
       .setResolution(2);
   }
 
+  getPhoneDimensions()
+  {
+    let t = this;
+    let Phone = t.game.config;
+    return {
+      width : Phone.width,
+      height : Phone.height
+    };
+  }
+
 
   update(delta, time)
   {
     let t = this;
     t.time.update();
+    t.watchNotification();
+    t.launchNotification();
   }
 
+  watchNotification()
+  {
+    let t = this;
+    
+    // Don't do anything if game state has not been modified
+    if (t.game.lastmod !== undefined) {
+      let elements = t.game.getNewElements();
+      t.game.lastmod = undefined;
+
+      // TODO: Will overlap if multiple elements
+      for (let x in elements) {
+        this.notifications.push(new Popup(
+          t,
+          'New '+elements[x]['type']+': '+elements[x]['subject'],
+          { icon: elements[x]['type'] }
+        ));
+        this.log("Added notifications to queue.");
+      }
+    } 
+  }
+
+  launchNotification()
+  {
+    if (!this.notificationOn && this.notifications !== undefined && this.notifications.length > 0) {
+
+      this.notificationOn = true;
+      let notification = this.notifications[0];
+      this.notifications.splice(0, 1);
+
+      notification.display({
+        delay: this.nextDelay,
+        onComplete: this.onCompleteHandler,
+        onCompleteScope: this
+      });
+      this.log("Notification launched");
+    } else if (this.notificationOn) {
+      this.nextDelay = 0;
+    } else if (this.notifications === undefined || this.notifications.length === 0) {
+      this.nextDelay = 'random';
+    }
+  }
+
+  onCompleteHandler(tween, targets, popup)
+  {
+    popup.isActive = false;
+    popup.setVisible(false);
+    popup.destroy();
+    this.notificationOn = false;
+  }
 }
