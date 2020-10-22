@@ -24,9 +24,16 @@ Phaser.Game.prototype.getNewElements = function() {
         if (content !== undefined) {
             // Need to rethink this! mails is hardcoded
             for (let element in content[type+'s']) {
-                if (content[type+'s'][element]['condition'] === this.lastmod) {
-                    content['mails'][element]['type'] = type;
-                    items.push(content['mails'][element]);
+                let conditions = content[type+'s'][element]['condition'];
+
+                if (!Array.isArray(conditions)) {
+                    conditions = [conditions];
+                }
+                if (conditions.includes(this.lastmod)) {
+                    if (this.checkCondition(conditions)) {
+                        content[type+'s'][element]['type'] = type;
+                        items.push(content[type+'s'][element]);
+                    }
                 }
             }
         }
