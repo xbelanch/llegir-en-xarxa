@@ -145,9 +145,14 @@ class PhoneUI extends Phaser.Scene
     let t = this;
     
     if (t.game.lastmod !== undefined) {
+      let elements = t.game.getNewElements();
       t.game.lastmod = undefined;
-      let popup = new Popup(t, 'New notification!', {icon:'mail'});
-      popup.display({delay: 'random'});
+
+      // TODO: Will overlap if multiple elements
+      for (let x in elements) {
+        let popup = new Popup(t, 'New '+elements[x]['type']+': '+elements[x]['subject'], {icon:elements[x]['type']});
+        popup.display({delay: 'random'});
+      }
     } 
   }
 }
