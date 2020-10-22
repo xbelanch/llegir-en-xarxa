@@ -50,4 +50,49 @@ class Popup extends Phaser.GameObjects.Container
     this.isActive = false;
   }
 
+  display(params)
+  {
+    let t = this.scene;
+
+    let options = {
+      targets: this,
+      x : 0,
+      y : 140,
+      duration : 500,
+      delay: 0,
+      ease : 'Power2',
+      yoyo : true,
+      repeat : 0,
+      hold : 5000,
+      onStart : this.onStartHandler,
+      onStartScope : this,
+      onStartParams : [ this ],
+      onComplete : this.onCompleteHandler,
+      onCompleteScope : this,
+      onCompleteParams : [ this ]
+    };
+
+    for (let key in params) {
+        options[key] = params[key];
+
+        if (key === 'delay' && params[key] == 'random') {
+            options[key] = 3000 + Math.random() * 4000;
+        }
+    }
+
+    t.tweens.add(options);
+  }
+
+  onStartHandler(tween, targets, popup)
+  {
+    popup.isActive = true;
+    popup.setVisible(true);
+  }
+
+  onCompleteHandler(tween, targets, popup)
+  {
+    popup.isActive = false;
+    popup.setVisible(false);
+  }
+
 }

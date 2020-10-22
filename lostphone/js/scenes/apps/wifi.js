@@ -89,11 +89,13 @@ class WifiApp extends App
             if (t.outOfRangeMessage === undefined)
             {
               // Creem el popup
-              t.outOfRangeMessage = new Popup(t, this.getData('message'));              
+              t.outOfRangeMessage = new Popup(t, this.getData('message'));  
             }
             if (!t.outOfRangeMessage.isActive)
             {
-              t.displayPopup(t.outOfRangeMessage);
+              t.outOfRangeMessage.display({
+                hold: 2000
+              });
             }
             
           } else {

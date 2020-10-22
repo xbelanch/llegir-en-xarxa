@@ -66,36 +66,4 @@ class App extends Phaser.Scene
     }    
     return { w : scaleWidth, h : scaleHeight };
   }
-
-  displayPopup(popup)
-  {
-    let t = this;
-    t.tweens.add({
-      targets: popup,
-      y : 140,
-      duration : 500,
-      ease : 'Power2',
-      yoyo : true,
-      repeat : 0,
-      hold : 2000,
-      onStart : t.onStartHandler,
-      onStartScope : t,
-      onStartParams : [ popup ],
-      onComplete : t.onCompleteHandler,
-      onCompleteScope : t,
-      onCompleteParams : [ popup ]
-    });
-  } 
-
-  onStartHandler(tween, targets, popup)
-  {
-    popup.isActive = true;
-    popup.setVisible(true);
-  }
-
-  onCompleteHandler(tween, targets, popup)
-  {
-    popup.isActive = false;
-    popup.setVisible(false);
-  }
 }

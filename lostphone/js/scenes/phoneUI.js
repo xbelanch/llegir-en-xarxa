@@ -146,41 +146,8 @@ class PhoneUI extends Phaser.Scene
     
     if (t.game.lastmod !== undefined) {
       t.game.lastmod = undefined;
-      t.displayPopup(new Popup(t, 'New notification!', {icon:'mail'}));
+      let popup = new Popup(t, 'New notification!', {icon:'mail'});
+      popup.display({delay: 'random'});
     } 
   }
-
-  displayPopup(popup)
-  {
-    let t = this;
-    t.tweens.add({
-      targets: popup,
-      y : 140,
-      duration : 500,
-      delay: 3000 + Math.random() * 4000, 
-      ease : 'Power2',
-      yoyo : true,
-      repeat : 0,
-      hold : 5000,
-      onStart : t.onStartHandler,
-      onStartScope : t,
-      onStartParams : [ popup ],
-      onComplete : t.onCompleteHandler,
-      onCompleteScope : t,
-      onCompleteParams : [ popup ]
-    });
-  } 
-
-  onStartHandler(tween, targets, popup)
-  {
-    popup.isActive = true;
-    popup.setVisible(true);
-  }
-
-  onCompleteHandler(tween, targets, popup)
-  {
-    popup.isActive = false;
-    popup.setVisible(false);
-  }
-
 }
