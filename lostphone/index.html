@@ -4,14 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/llegir-en-xarxa.css">
+    <!-- <link rel="stylesheet" href="css/llegir-en-xarxa.css"> -->
     <title>Llegir en xarxa</title>
   </head>
 
   <body>
-    <div id="container">
-      <div id="game"></div>
-    </div>
+    <style>
+     html,
+     body {
+       height: 100%;
+       margin: 0;
+       background-color: #000000;
+       overflow: hidden;
+     }
+    </style>
+
+    <div id="phone"></div>
 
     <!-- Libs -->
     <!-- Phaser 3.23.0 "Ginro"  -->
@@ -25,41 +33,41 @@
     <script src="js/plugins/phaser-plugin-scene-watcher.umd.js"></script>
     
     <!-- Utils -->
-    <script src="js/utils/common.js"></script>
-    <script src="js/utils/debug.js"></script>
-    <script src="js/utils/save.js"></script>
     <script src="js/utils/webfontfile.js"></script>
+    <script src="js/utils/debug.js"></script>
+    <!-- <script src="js/utils/common.js"></script>
+         <script src="js/utils/save.js"></script>  -->
 
     <!-- Prefabs -->
-    <script src="js/prefabs/iconApp.js"></script>
-    <script src="js/prefabs/time.js"></script>
-    <script src="js/prefabs/popup.js"></script>
-    <script src="js/prefabs/textbutton.js"></script>
-    <script src="js/prefabs/pad/numberpad.js"></script>
-    <script src="js/prefabs/mail/mail.js"></script>
-    <script src="js/prefabs/mail/mailList.js"></script>
-    <script src="js/prefabs/mail/mailHeading.js"></script>
+    <!-- <script src="js/prefabs/iconApp.js"></script>
+         <script src="js/prefabs/time.js"></script>
+         <script src="js/prefabs/popup.js"></script>
+         <script src="js/prefabs/textbutton.js"></script>
+         <script src="js/prefabs/pad/numberpad.js"></script>
+         <script src="js/prefabs/mail/mail.js"></script>
+         <script src="js/prefabs/mail/mailList.js"></script>
+         <script src="js/prefabs/mail/mailHeading.js"></script> -->
     
     <!-- Scenes -->
-    <script type="text/javascript" src="./js/scenes/Bootstrap.js"></script>
-    <script type="text/javascript" src="./js/scenes/Preload.js"></script>
-    <script type="text/javascript" src="./js/scenes/Phone.js"></script>
-    <script type="text/javascript" src="./js/scenes/HomeScreen.js"></script>
-    <script type="text/javascript" src="./js/scenes/PhoneUI.js"></script>
-    <script type="text/javascript" src="./js/scenes/App.js"></script>
+    <!-- <script type="text/javascript" src="./js/scenes/Bootstrap.js"></script> -->
+    <!-- <script type="text/javascript" src="./js/scenes/Preload.js"></script>
+         <script type="text/javascript" src="./js/scenes/Phone.js"></script>
+         <script type="text/javascript" src="./js/scenes/HomeScreen.js"></script>
+         <script type="text/javascript" src="./js/scenes/PhoneUI.js"></script>
+         <script type="text/javascript" src="./js/scenes/App.js"></script> -->
 
     <!-- Apps -->
-    <script type="text/javascript" src="./js/scenes/apps/Clock.js"></script>
-    <script type="text/javascript" src="./js/scenes/apps/Wifi.js"></script>
-    <script type="text/javascript" src="./js/scenes/apps/Podcast.js"></script>
-    <script type="text/javascript" src="./js/scenes/apps/Calculator.js"></script>
-    <script type="text/javascript" src="./js/scenes/apps/Calendar.js"></script>
-    <script type="text/javascript" src="./js/scenes/apps/Notes.js"></script>
-    <script type="text/javascript" src="./js/scenes/apps/Mail.js"></script>
+    <!-- <script type="text/javascript" src="./js/scenes/apps/Clock.js"></script>
+         <script type="text/javascript" src="./js/scenes/apps/Wifi.js"></script>
+         <script type="text/javascript" src="./js/scenes/apps/Podcast.js"></script>
+         <script type="text/javascript" src="./js/scenes/apps/Calculator.js"></script>
+         <script type="text/javascript" src="./js/scenes/apps/Calendar.js"></script>
+         <script type="text/javascript" src="./js/scenes/apps/Notes.js"></script>
+         <script type="text/javascript" src="./js/scenes/apps/Mail.js"></script> -->
 
     
     <!-- Inici del miniop -->
-    <script src="js/phoneEvents.js"></script>
-    <script src="js/main.js"></script>
+    <!-- <script src="js/phoneEvents.js"></script> -->
+    <script src="js/main.js" type="module"></script>
   </body>
 </html>

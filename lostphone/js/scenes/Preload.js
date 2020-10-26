@@ -1,9 +1,16 @@
 // -- Preload.js
 //
 //
+import { assetsDPR } from '../main.js';
+import { PhoneEvents } from './Bootstrap.js';
 
-class Preload extends Phaser.Scene
+export default class Preload extends Phaser.Scene
 {
+  constructor()
+  {
+    super({ key: 'Preload'});
+  }
+  
   preload()
   {
     let t = this;
@@ -11,6 +18,7 @@ class Preload extends Phaser.Scene
     var startTimer = Date.now();
     
     // --- Load wallpapers
+    /*
     let imgFolder = t.registry.get('imgFolder');
     t.load.image('home-wallpaper', `assets/img/${imgFolder}/wallpapers/home-wallpaper.png`);
     t.load.image('another-wallpaper', `assets/img/${imgFolder}/wallpapers/another-wallpaper.png`);
@@ -29,13 +37,13 @@ class Preload extends Phaser.Scene
                    `assets/img/${imgFolder}/atlas/phone_ui_icons_states.json`);
     
     // --- Load lofi - music tracks
-    // @@TODO@@: It doesnt load the tracks? 
+    // @Kenneth: Carreguem en aquest moment els tracks d'audio o deixem aquesta tasca en el moment que l'usuari obre l'app de podcast? (dilluns 26/10/2020 19:00)    
     var tracks = t.cache.json.get('tracks');
     for (var track in tracks)
     {
       t.load.audio(tracks[track]['id'], `assets/audio/tracks/${tracks[track]['filename']}`);
     }
-
+    */
     t.log("Preload finished in " + (Date.now() - startTimer) / 1000  + " seconds");
     
   }
