@@ -8,25 +8,17 @@ import Bootstrap from './scenes/Bootstrap.js'
 // i empaquetar i escalar a través d'un atlas amb un servei com el TexturePacker:
 // https://www.codeandweb.com/texturepacker
 
-/** iPhone
+/**
 La resolució base del mòbil és 414x736 @3 (pixel ratio)
 basat en la informació disponible a: https://viewportsizer.com/devices/
 el que significa que s'han creat els assets gràfics en una resolució de 1242x2208
-@ 1 -> 414x736
-@ 1.5 -> 621x1104
-@ 2 -> 828x1472
-@ 2.5 -> 1035x1840
-@ 3 -> 1242x2208
-*/
-
-/**
-   @1 -> 360 x 640
-   @2 
-   @3 -> 1080 x 1920
+@1 -> 360 x 640
+...
+@3 -> 1080 x 1920
 */
 
 const roundHalf = num => Math.round(num * 2) / 2;
-const DPR = window.devicePixelRatio;
+export const DPR = window.devicePixelRatio;
 const { width, height } = viewport(DPR);
 // Determinem els valors de les mides d'amplada i alçada del mòbil
 const WIDTH = Math.round(360 * height / 640);
@@ -70,6 +62,9 @@ const config = {
 };  
 
 window.addEventListener('load', () => {
+  //@TODO: Cal incloure una imatge de fons associat a una biblioteca?
+  document.body.style.backgroundImage = "url('assets/img/560x1024/backgrounds/city-blurred-hd.jpg')";
+  
   new Phaser.Game(config);  
 });
 

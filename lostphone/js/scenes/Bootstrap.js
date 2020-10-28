@@ -1,4 +1,5 @@
 // --- Bootstrap
+import { DPR } from '../main.js';
 import { assetsDPR } from '../main.js';
 import Preload from './Preload.js';
 import Image from '../prefabs/image.js';
@@ -12,6 +13,12 @@ export const PhoneEvents = {
 
 export default class Bootstrap extends Phaser.Scene
 {
+  constructor()
+  {
+    super();
+    this.group;
+  };
+  
   init()
   {
     let t = this;
@@ -21,7 +28,6 @@ export default class Bootstrap extends Phaser.Scene
   preload()
   {
     let t = this;
-    let Phone = t.game;
 
     // --- Carrega les fonts amb l'ajut de la llibreria adaptada
     // Typekit... una mica outdated, però sembla ser que funcional
@@ -33,46 +39,72 @@ export default class Bootstrap extends Phaser.Scene
 
     
     // Carreguem els fitxers de configuració
-    // let config = ['config', 'apps', 'tracks', 'wifi', 'mail'];
-    // for (var i = 0; i < config.length; i++) t.load.json(config[i], `config/${config[i]}.json`);
+    let config = ['config', 'apps', 'tracks', 'wifi', 'mail'];
+    for (var i = 0; i < config.length; i++) t.load.json(config[i], `config/${config[i]}.json`);
 
     // --- Emet un esdeveniment anomenat 'preload-finished' que,
     // en el moment que s'executi (només una vegada al preload),
     // executarà el mètode privat 'handlePreloadFinished'
-    Phone.events.once(PhoneEvents.PreloadFinished, t.handlePreloadFinished, t);
+    t.game.events.once(PhoneEvents.PreloadFinished, t.handlePreloadFinished, t);
 
     // Add logo and preloader name
     // let imgFolder = t.registry.get('imgFolder');
     // t.load.image('preloader-logo', `assets/img/${imgFolder}/preloader-logo.png`);
-    t.load.image('ioc-logo', `assets/img/ioc-logo-@${assetsDPR}.png`);
+    // @TODO: t.load.image('ioc-logo', `assets/img/ioc-logo-@${assetsDPR}.png`);
     t.load.image('lorem-appsum', `assets/img/iconApp-@${assetsDPR}.png`);
-    
+
+    // Provisional logo-animation
+    // src: https://labs.phaser.io/edit.html?src=src/animation/muybridge.js&v=3.24.1
+    t.load.spritesheet('muybridge', 'assets/animations/muybridge01.png', { frameWidth: 119, frameHeight: 228 });
+        
+
   }
 
   create()
   {
     let t = this;
     let { width, height } = t.cameras.main;
-    
     width /= assetsDPR;
     height /= assetsDPR;
 
-    // this.scene.scale.canvas.width = width;
-    // this.scene.scale.canvas.height = height;
-    
+    // Determinem nivell de debug
+    t.game.debug = t.cache.json.get('config').debug;
 
-    const iconApp = new Sprite(t, width / 16, width / 16, 'lorem-appsum').setOrigin(0);
+    var iconApp = new Sprite(t, width / 16, width / 16, 'lorem-appsum').setOrigin(0);
+
+
     
-    // iconApp.setX(Math.round(128 / assetsDPR));
-    // iconApp.setY(Math.round(128 / assetsDPR));
+    var config = {
+        key: 'run',
+        frames: 'muybridge',
+        frameRate: 15,
+        repeat: -1
+    };
+
+    this.anims.create(config);
+
+    //  Each frame is 119px wide
+    t.group = this.add.group();
+
+    t.group.createMultiple({
+      key: 'muybridge',
+      frame: 10,
+      repeat: 7,
+      setOrigin: { x: 0, y: 0 },
+      setScale: { x: DPR, y: DPR },
+      setXY: { x: (width * assetsDPR) / 2 , y: (height * assetsDPR) / 2 , stepX: 0 }
+    });
+
+    t.anims.play('run', t.group.getChildren(), -100, false);    
+
+
+
+    
+    
+    
     // let t = this;
     // let Phone = t.game;
     // Phone.state = {};
-    
-    // let config = t.cache.json.get('config');
-    // Phone.debug = config['debug'];
-
-    // t.log("Debug started");
 
     // // --- Initialize Phone apps state
     // const apps = t.cache.json.get('apps');
@@ -115,7 +147,11 @@ export default class Bootstrap extends Phaser.Scene
   handlePreloadFinished()
   {
     let t = this;
-    t.scene.stop('Preload');
+    t.scene.remove('Preload');
+    t.anims.remove('run');
+    t.group.destroy(t);
+
+    // t.sound.play('track02');
   //   // iniciem l'escena del mòbil
   //   t.scene.start('phone');
     //
