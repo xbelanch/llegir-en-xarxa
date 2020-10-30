@@ -1,6 +1,5 @@
 // --- Bootstrap
-import { DPR } from '../main.js';
-import { assetsDPR } from '../main.js';
+import { DPR, Debug, assetsDPR } from '../main.js';
 import Preload from './Preload.js';
 import Image from '../prefabs/image.js';
 import Sprite from '../prefabs/sprite.js';
@@ -56,8 +55,6 @@ export default class Bootstrap extends Phaser.Scene
     // Provisional logo-animation
     // src: https://labs.phaser.io/edit.html?src=src/animation/muybridge.js&v=3.24.1
     t.load.spritesheet('muybridge', 'assets/animations/muybridge01.png', { frameWidth: 119, frameHeight: 228 });
-        
-
   }
 
   create()
@@ -67,13 +64,19 @@ export default class Bootstrap extends Phaser.Scene
     width /= assetsDPR;
     height /= assetsDPR;
 
-    // Determinem nivell de debug
+    // --- Set background color
+    t.cameras.main.setBackgroundColor('#421278');
+    this.cameras.main.fadeIn(1000, 0, 0, 0);
+    
+    
+    // --- Set debug level
     t.game.debug = t.cache.json.get('config').debug;
 
-    var iconApp = new Sprite(t, width / 16, width / 16, 'lorem-appsum').setOrigin(0);
-
-
+    // --- Testing icon app
+    // --- @THIS GOING TO HOMESCREEN!
+    // var iconApp = new Sprite(t, width / 16, width / 16, 'lorem-appsum').setOrigin(0);
     
+    // --- Display logo - text - booting phone
     var config = {
         key: 'run',
         frames: 'muybridge',
@@ -97,52 +100,29 @@ export default class Bootstrap extends Phaser.Scene
 
     t.anims.play('run', t.group.getChildren(), -100, false);    
 
+    // --- Initialize game and app states
+    t.game.state = {};
+    t.game.state['complete'] = {};
+    let apps = t.cache.json.get('apps');
+    for (var i = 0; i < apps.length; i++)
+      t.game.state[apps[i].type] = {};
+        
+    // ---  Check if password via URL
+    let passValue = t.game.getPassword();
+    if (passValue) {
+      t.game.saveCustom('autosave', passValue[1]);
+    }
 
+    // --- Load saved game
+    t.game.loadSave('autosave');
 
-    
-    
-    
-    // let t = this;
-    // let Phone = t.game;
-    // Phone.state = {};
-
-    // // --- Initialize Phone apps state
-    // const apps = t.cache.json.get('apps');
-    // Phone.state['complete'] = {};
-    // for (let i = 0; i < apps.length; i++) {
-    //   Phone.state[apps[i].type] = {};
-    // }
-
-    // // ---  Check if password via URL
-    // const passValue = Phone.getPassword();
-    // if (passValue) {
-    //   Phone.saveCustom('autosave', passValue[1]);
-    // }
-
-    // // --- Load the game if saved before
-    // Phone.loadSave('autosave');
-    
-    // let x = Math.round(Phone.config.width * 0.5);
-    // let y = Math.round(Phone.config.height * 0.5);
-
-    // // --- Display logo - text - booting phone
-    // // Set scale first before display it
-    // t.log('DPR: ' +  DPR);
-    // let scale = t.registry.get('scale');
-    // t.add.sprite(x, y, 'preloader-logo')
-    //   .setOrigin(0.5)
-    //   .setScale(scale);
-    
-    // t.add.text(x, y, config['preloader']['name'], {
-    //   fontFamily: 'Righteous',
-    //   fontSize: (Phone.config.width > 570 ? 32 : 12) * DPR
-    // }).setOrigin(0.5, 0.5);
-    
-    // // --- Un cop carregades les fonts, crida
-    // // l'escena de preload per carregar tots els
-    // // assets del joc
-    t.scene.run('Preload');
-  }
+    // --- Load all the assets stuff
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE, (cam, effect) => {
+      this.time.delayedCall(0, () => {
+        this.scene.run('Preload');
+      });
+    });    
+  };
   
   handlePreloadFinished()
   {
@@ -151,10 +131,11 @@ export default class Bootstrap extends Phaser.Scene
     t.anims.remove('run');
     t.group.destroy(t);
 
-    // t.sound.play('track02');
-  //   // iniciem l'escena del mòbil
-  //   t.scene.start('phone');
-    //
+    if (!['dev'].includes(Debug))
+      t.sound.play('startup');
+    
+    // --- Let's start the game 
+    t.scene.start('phone');    
   }
 }
   

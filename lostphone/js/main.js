@@ -17,6 +17,11 @@ el que significa que s'han creat els assets gràfics en una resolució de 1242x2
 @3 -> 1080 x 1920
 */
 
+// --- Set level of debug: none, log, full
+export const Debug = 'dev';
+
+
+// --- Set assetsDPR value
 const roundHalf = num => Math.round(num * 2) / 2;
 export const DPR = window.devicePixelRatio;
 const { width, height } = viewport(DPR);
@@ -25,16 +30,18 @@ const WIDTH = Math.round(360 * height / 640);
 const HEIGHT = Math.round(height);
 export const assetsDPR = roundHalf(Math.min(Math.max(HEIGHT / 360, 1), 4));
 
-console.log('DPR = ', DPR);
-console.log('assetsDPR = ', assetsDPR);
-console.log('width: ' + width + ' height: ' + height);
-console.log('WIDTH = ', WIDTH);
-console.log('HEIGHT = ', HEIGHT);
+if (['log', 'dev'].includes(Debug)) {  
+  console.log('DPR = ', DPR);
+  console.log('assetsDPR = ', assetsDPR);
+  console.log('width: ' + width + ' height: ' + height);
+  console.log('WIDTH = ', WIDTH);
+  console.log('HEIGHT = ', HEIGHT);
+};
 
-
+// --- Set Config Phaser Game
 const config = {
-  //type : Phaser.AUTO,
-  backgroundColor : '#ffffff',   // Purlple as a debug color
+  type : Phaser.AUTO,
+  backgroundColor : '#000',   // Purlple as a debug color
   dom : { createContainer : true },
   render: { // https://www.html5gamedevs.com/topic/36343-disable-antialias-in-phaser-3/
     antialias: false,
@@ -61,10 +68,10 @@ const config = {
   }
 };  
 
+// --- Booting up the smartphone
 window.addEventListener('load', () => {
   //@TODO: Cal incloure una imatge de fons associat a una biblioteca?
-  document.body.style.backgroundImage = "url('assets/img/560x1024/backgrounds/city-blurred-hd.jpg')";
-  
+  document.body.style.backgroundImage = "url('assets/img/560x1024/backgrounds/city-blurred-hd.jpg')";  
   new Phaser.Game(config);  
 });
 

@@ -63,15 +63,15 @@ export default class Preload extends Phaser.Scene
     });
 
     // testing bar progress
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 10; i++) {
       t.load.image('test' + i, 'assets/img/560x1024/backgrounds/city-blurred-hd.jpg');    
     };
 
     
     // --- Load wallpapers
     /*
-    let imgFolder = t.registry.get('imgFolder');
     t.load.image('home-wallpaper', `assets/img/${imgFolder}/wallpapers/home-wallpaper.png`);
+    let imgFolder = t.registry.get('imgFolder');
     t.load.image('another-wallpaper', `assets/img/${imgFolder}/wallpapers/another-wallpaper.png`);
     t.load.image('wifi-wallpaper', `assets/img/${imgFolder}/wallpapers/wifi-wallpaper.png`);
 
@@ -89,6 +89,9 @@ export default class Preload extends Phaser.Scene
     
     */
 
+    // --- Load sounds effects
+    t.load.audio('startup', 'assets/audio/sounds/320664__pizzaiolo__lovelyboot1.ogg');
+    
     // --- Load lofi - music tracks
     // @Kenneth: Carreguem en aquest moment els tracks d'audio o deixem aquesta tasca en el moment que l'usuari obre l'app de podcast? (dilluns 26/10/2020 19:00)    
     t.load.audio(t.cache.json.get('tracks'));
