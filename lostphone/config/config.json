@@ -22,5 +22,6 @@
     "numberPad_enter" : "0x5deda0",
     "numberPad_delete" : "0xff5624",
     "numberPad_numbers" : "0x361f2e"
-  }
+  },
+  "wallpapers" : ["picsum", "default", "wifi"]
 }

@@ -1,6 +1,7 @@
 // --- Bootstrap
 import { DPR, Debug, assetsDPR } from '../main.js';
 import Preload from './Preload.js';
+import Phone from './Phone.js';
 import Image from '../prefabs/image.js';
 import Sprite from '../prefabs/sprite.js';
 
@@ -22,6 +23,7 @@ export default class Bootstrap extends Phaser.Scene
   {
     let t = this;
     t.scene.add('Preload', Preload);
+    t.scene.add('Phone', Phone);
   }
   
   preload()
@@ -66,8 +68,10 @@ export default class Bootstrap extends Phaser.Scene
 
     // --- Set background color
     t.cameras.main.setBackgroundColor('#421278');
-    this.cameras.main.fadeIn(1000, 0, 0, 0);
-    
+
+    // --- Emulate black fade in at start-up 
+    if (!['dev'].includes(Debug))
+      this.cameras.main.fadeIn(1000, 0, 0, 0);
     
     // --- Set debug level
     t.game.debug = t.cache.json.get('config').debug;
@@ -117,11 +121,15 @@ export default class Bootstrap extends Phaser.Scene
     t.game.loadSave('autosave');
 
     // --- Load all the assets stuff
-    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE, (cam, effect) => {
-      this.time.delayedCall(0, () => {
-        this.scene.run('Preload');
-      });
-    });    
+    if (['dev'].includes(Debug)) {
+      this.scene.run('Preload');
+    } else {
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE, (cam, effect) => {
+        this.time.delayedCall(0, () => {
+          this.scene.run('Preload');
+        });
+      });    
+    };
   };
   
   handlePreloadFinished()
@@ -131,11 +139,13 @@ export default class Bootstrap extends Phaser.Scene
     t.anims.remove('run');
     t.group.destroy(t);
 
+    // --- Let's start the game 
+    t.scene.start('Phone');    
+
+    // --- Play a melodic sound when display homescreen
     if (!['dev'].includes(Debug))
       t.sound.play('startup');
     
-    // --- Let's start the game 
-    t.scene.start('phone');    
   }
 }
   

@@ -1,7 +1,7 @@
 // -- Preload.js
 //
 //
-import { assetsDPR } from '../main.js';
+import { Debug, assetsDPR } from '../main.js';
 import { PhoneEvents } from './Bootstrap.js';
 
 export default class Preload extends Phaser.Scene
@@ -63,18 +63,19 @@ export default class Preload extends Phaser.Scene
     });
 
     // testing bar progress
-    for (var i = 0; i < 10; i++) {
-      t.load.image('test' + i, 'assets/img/560x1024/backgrounds/city-blurred-hd.jpg');    
+    if (!['dev'].includes(Debug)) { 
+      for (var i = 0; i < 100; i++) {
+        t.load.image('test' + i, 'assets/img/560x1024/backgrounds/city-blurred-hd.jpg');    
+      };
     };
 
-    
+   
     // --- Load wallpapers
-    /*
-    t.load.image('home-wallpaper', `assets/img/${imgFolder}/wallpapers/home-wallpaper.png`);
-    let imgFolder = t.registry.get('imgFolder');
-    t.load.image('another-wallpaper', `assets/img/${imgFolder}/wallpapers/another-wallpaper.png`);
-    t.load.image('wifi-wallpaper', `assets/img/${imgFolder}/wallpapers/wifi-wallpaper.png`);
+    let wallpapers = t.cache.json.get('config').wallpapers;
+    for (var i = 0; i < wallpapers.length; i++)
+      t.load.image(wallpapers[i]+ '-wallpaper', `assets/img/wallpapers/${wallpapers[i]}.png`);
 
+    /*
     // --- Load icon apps
     var apps = t.cache.json.get('apps');
     for (var app in apps)

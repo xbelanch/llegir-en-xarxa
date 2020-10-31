@@ -1,22 +1,9 @@
 class HomeScreen extends Phaser.Scene
 {
-  init()
-  {
-
-  }
   
   create()
   {
     let t = this;
-    let Phone = t.game.config;
-    const x = Math.round(Phone.width / 2);
-    const y = Math.round(Phone.height / 2);
-
-    let scale = t.getImageScale('home-wallpaper');
-    let wallpaper = t.add.image(x, y, 'home-wallpaper')
-        .setOrigin(0.5, 0.5)
-        .setScale(scale.w, scale.h);
-    
     t.addIconApps();
 
     t.registry.set('activeApp', 'homescreen');
@@ -49,22 +36,5 @@ class HomeScreen extends Phaser.Scene
       );
       i++;
     }
-  }
-
-  getImageScale(keyImg)
-  {
-    let t = this;
-    let Phone = t.game.config;
-    let scaleWidth, scaleHeight = 1.0;
-    let img = t.textures.get(keyImg).getSourceImage();
-    if (img.width < Phone.width || img.width > Phone.width)
-    {
-      scaleWidth = Phone.width / img.width;
-    }
-    if (img.height < Phone.height || img.height > Phone.height)
-    {
-      scaleHeight = Phone.height / img.height;
-    }    
-    return { w : scaleWidth, h : scaleHeight };
   }
 }

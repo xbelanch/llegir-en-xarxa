@@ -1,38 +1,55 @@
-class SmartPhone extends Phaser.Scene
-{
-  preload()
-  {
+import { DPR, Debug, assetsDPR } from '../main.js';
 
-  }
+export default class Phone extends Phaser.Scene
+{
+  constructor()
+  {
+    super({ key: 'Phone'});
+  };
 
   init()
   {
     let t = this;
-    t.scene.add('homescreen', HomeScreen);
-    t.scene.add('phoneUI', PhoneUI);
-    t.scene.add('wifiApp', WifiApp);
+
+    // t.scene.add('homescreen', HomeScreen);
+    // t.scene.add('phoneUI', PhoneUI);
+    // t.scene.add('wifiApp', WifiApp);
 
     // Definim el cursor
-    let imgFolder = t.registry.get('imgFolder');
+    // let imgFolder = t.registry.get('imgFolder');
     // @NOTE:
     // https://stackoverflow.com/questions/19560878/css-change-custom-cursor-image-origin-hotspot-to-center
-    t.input.setDefaultCursor("url(" + `assets/img/${imgFolder}/cursors/fingerprint.png` + ") 24 24, auto");
-
     // Incorporem les Apps definides al fitxer app.json 
-    let apps = t.cache.json.get('apps');
-    for (var index in apps) {
-      var app = apps[index];
-      t.scene.add(app.key, eval(app.class));
-    }
+    // let apps = t.cache.json.get('apps');
+    // for (var index in apps) {
+    //   var app = apps[index];
+    //   t.scene.add(app.key, eval(app.class));
+    // }
   }
     
 
   create()
   {
     let t = this;
-    let Phone = t.game.config;
-    t.scene.launch('homescreen');
-    t.scene.launch('phoneUI');
-    t.scene.bringToTop('phoneUI');
+
+    // -- Set a random wallpaper
+    let wallpapers = t.cache.json.get('config').wallpapers;
+    let wallpaper = wallpapers[Math.floor(Math.random() * wallpapers.length)] + '-wallpaper';
+    let scale = t.textures.get(wallpaper).getSourceImage();
+    t.add.image(
+      Math.round(t.game.config.width / 2),
+      Math.round(t.game.config.height / 2),
+      wallpaper)
+      .setOrigin(0.5, 0.5)
+      .setScale(
+        t.game.config.width / scale.width,
+        t.game.config.height / scale.height
+      );
+
+    // --- Set default cursor
+    t.input.setDefaultCursor("url(" + `assets/img/cursors/fingerprint.png` + ") 24 24, auto");
+    // t.scene.launch('homescreen');
+    // t.scene.launch('phoneUI');
+    // t.scene.bringToTop('phoneUI');
   }
 }

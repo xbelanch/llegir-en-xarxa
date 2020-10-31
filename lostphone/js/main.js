@@ -71,7 +71,7 @@ const config = {
 // --- Booting up the smartphone
 window.addEventListener('load', () => {
   //@TODO: Cal incloure una imatge de fons associat a una biblioteca?
-  document.body.style.backgroundImage = "url('assets/img/560x1024/backgrounds/city-blurred-hd.jpg')";  
+  document.body.style.backgroundImage = "url('assets/img/backgrounds/library.png')";  
   new Phaser.Game(config);  
 });
 
