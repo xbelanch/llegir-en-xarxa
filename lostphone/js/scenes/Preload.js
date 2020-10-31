@@ -1,7 +1,7 @@
 // -- Preload.js
 //
 //
-import { Debug, assetsDPR } from '../main.js';
+import { assetsDPR } from '../main.js';
 import { PhoneEvents } from './Bootstrap.js';
 
 export default class Preload extends Phaser.Scene
@@ -63,7 +63,7 @@ export default class Preload extends Phaser.Scene
     });
 
     // testing bar progress
-    if (!['dev'].includes(Debug)) { 
+    if (!['dev'].includes(t.game.debug)) { 
       for (var i = 0; i < 100; i++) {
         t.load.image('test' + i, 'assets/img/560x1024/backgrounds/city-blurred-hd.jpg');    
       };

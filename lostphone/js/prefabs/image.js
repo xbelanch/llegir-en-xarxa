@@ -3,6 +3,7 @@ import { assetsDPR } from '../main.js'
 class Image extends Phaser.GameObjects.Image {
   constructor (scene, x, y, texture, frame) {
     super(scene, x * assetsDPR, y * assetsDPR, texture, frame);
+    this.setOrigin(0);
     scene.add.existing(this);
   }
 

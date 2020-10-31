@@ -17,10 +17,6 @@ el que significa que s'han creat els assets gràfics en una resolució de 1242x2
 @3 -> 1080 x 1920
 */
 
-// --- Set level of debug: none, log, full
-export const Debug = 'dev';
-
-
 // --- Set assetsDPR value
 const roundHalf = num => Math.round(num * 2) / 2;
 export const DPR = window.devicePixelRatio;
@@ -30,13 +26,12 @@ const WIDTH = Math.round(360 * height / 640);
 const HEIGHT = Math.round(height);
 export const assetsDPR = roundHalf(Math.min(Math.max(HEIGHT / 360, 1), 4));
 
-if (['log', 'dev'].includes(Debug)) {  
-  console.log('DPR = ', DPR);
-  console.log('assetsDPR = ', assetsDPR);
-  console.log('width: ' + width + ' height: ' + height);
-  console.log('WIDTH = ', WIDTH);
-  console.log('HEIGHT = ', HEIGHT);
-};
+// --- Debug this shit
+console.log('DPR = ', DPR);
+console.log('assetsDPR = ', assetsDPR);
+console.log('width: ' + width + ' height: ' + height);
+console.log('WIDTH = ', WIDTH);
+console.log('HEIGHT = ', HEIGHT);
 
 // --- Set Config Phaser Game
 const config = {
@@ -72,7 +67,7 @@ const config = {
 window.addEventListener('load', () => {
   //@TODO: Cal incloure una imatge de fons associat a una biblioteca?
   document.body.style.backgroundImage = "url('assets/img/backgrounds/library.png')";  
-  new Phaser.Game(config);  
+  new Phaser.Game(config);
 });
 
 // Detecta la mida de pantalla i determina els valors d'ampla i alçada.

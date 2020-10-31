@@ -1,5 +1,5 @@
 // --- Bootstrap
-import { DPR, Debug, assetsDPR } from '../main.js';
+import { DPR, assetsDPR } from '../main.js';
 import Preload from './Preload.js';
 import Phone from './Phone.js';
 import Image from '../prefabs/image.js';
@@ -22,6 +22,8 @@ export default class Bootstrap extends Phaser.Scene
   init()
   {
     let t = this;
+
+    // --- Add scenes
     t.scene.add('Preload', Preload);
     t.scene.add('Phone', Phone);
   }
@@ -39,22 +41,16 @@ export default class Bootstrap extends Phaser.Scene
     t.load.addFile(fonts);
 
     
-    // Carreguem els fitxers de configuració
+    // --- Carreguem els fitxers de configuració
     let config = ['config', 'apps', 'tracks', 'wifi', 'mail'];
     for (var i = 0; i < config.length; i++) t.load.json(config[i], `config/${config[i]}.json`);
-
+    
     // --- Emet un esdeveniment anomenat 'preload-finished' que,
     // en el moment que s'executi (només una vegada al preload),
     // executarà el mètode privat 'handlePreloadFinished'
     t.game.events.once(PhoneEvents.PreloadFinished, t.handlePreloadFinished, t);
 
-    // Add logo and preloader name
-    // let imgFolder = t.registry.get('imgFolder');
-    // t.load.image('preloader-logo', `assets/img/${imgFolder}/preloader-logo.png`);
-    // @TODO: t.load.image('ioc-logo', `assets/img/ioc-logo-@${assetsDPR}.png`);
-    t.load.image('lorem-appsum', `assets/img/iconApp-@${assetsDPR}.png`);
-
-    // Provisional logo-animation
+    // --- Add logo and preloader name (testing)
     // src: https://labs.phaser.io/edit.html?src=src/animation/muybridge.js&v=3.24.1
     t.load.spritesheet('muybridge', 'assets/animations/muybridge01.png', { frameWidth: 119, frameHeight: 228 });
   }
@@ -62,23 +58,23 @@ export default class Bootstrap extends Phaser.Scene
   create()
   {
     let t = this;
+
+    // --- Set Debug level
+    t.game.debug = t.cache.json.get('config').debug;
+
+    // --- Set width and height main camera
     let { width, height } = t.cameras.main;
     width /= assetsDPR;
     height /= assetsDPR;
 
     // --- Set background color
     t.cameras.main.setBackgroundColor('#421278');
+    
 
     // --- Emulate black fade in at start-up 
-    if (!['dev'].includes(Debug))
+    if (!['dev'].includes(t.game.debug))
       this.cameras.main.fadeIn(1000, 0, 0, 0);
-    
-    // --- Set debug level
-    t.game.debug = t.cache.json.get('config').debug;
-
-    // --- Testing icon app
-    // --- @THIS GOING TO HOMESCREEN!
-    // var iconApp = new Sprite(t, width / 16, width / 16, 'lorem-appsum').setOrigin(0);
+   
     
     // --- Display logo - text - booting phone
     var config = {
@@ -121,7 +117,7 @@ export default class Bootstrap extends Phaser.Scene
     t.game.loadSave('autosave');
 
     // --- Load all the assets stuff
-    if (['dev'].includes(Debug)) {
+    if (['dev'].includes(t.game.debug)) {
       this.scene.run('Preload');
     } else {
       this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE, (cam, effect) => {
@@ -143,7 +139,7 @@ export default class Bootstrap extends Phaser.Scene
     t.scene.start('Phone');    
 
     // --- Play a melodic sound when display homescreen
-    if (!['dev'].includes(Debug))
+    if (!['dev'].includes(t.game.debug))
       t.sound.play('startup');
     
   }

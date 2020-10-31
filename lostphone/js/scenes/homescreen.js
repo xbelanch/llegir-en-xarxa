@@ -1,13 +1,27 @@
-class HomeScreen extends Phaser.Scene
+import { DPR, assetsDPR } from '../main.js';
+import IconApp from '../prefabs/iconApp.js';
+
+export default class Homescreen extends Phaser.Scene
 {
+
+  constructor()
+  {
+    super({ key: 'Homescreen'});
+  };
+
+  preload()
+  {
+    let t = this;
+    // --- Testing iconApp
+    if (['dev'].includes(t.game.debug))
+      t.load.image('lorem-appsum', `assets/img/iconApp-@${assetsDPR}.png`);    
+  }
   
   create()
   {
     let t = this;
     t.addIconApps();
-
-    t.registry.set('activeApp', 'homescreen');
-
+    // t.registry.set('activeApp', 'homescreen');
   }
 
 
@@ -15,6 +29,17 @@ class HomeScreen extends Phaser.Scene
   {
     // Files de quatre icones
     let t = this;
+
+    // --- Set width and height main camera
+    let { width, height } = t.cameras.main;
+    width /= assetsDPR;
+    height /= assetsDPR;
+    
+    // --- Testing icon app
+    if (['dev'].includes(t.game.debug))
+      new IconApp(t, 'Lorem Ipsum', width / 16, height / 16, 'lorem-appsum');
+
+    /*
     let Phone = t.game.config;
     let s = t.registry.get('scale');
     var apps = t.cache.json.get('apps');
@@ -36,5 +61,6 @@ class HomeScreen extends Phaser.Scene
       );
       i++;
     }
+    */
   }
 }

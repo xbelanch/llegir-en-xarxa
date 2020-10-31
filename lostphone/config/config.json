@@ -4,7 +4,7 @@
   {
     "name": "IOC Operating System"
   },
-  "debug": 1,
+  "debug": "dev",
   "phone-scenes" :
   {
     "ui" : "UI",

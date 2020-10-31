@@ -1,8 +1,47 @@
 // --- IconApp
 //
 //
+import { DPR, assetsDPR } from '../main.js';
+import Image from './image.js';
+export default class IconApp extends Image
+{
+  constructor(scene, appname,  x, y, texture, frame){
+    super(scene, x, y, texture, frame);
+    this.setInteractive();
+    this.init();
+    this.addLabel(appname);
+  };
 
-class IconApp extends Phaser.GameObjects.Image
+  init()
+  {
+    // --- Interaction with the icon
+    let t = this;
+    t.on('pointerover', function(event){
+      t.setAlpha(0.7);
+    });
+
+    t.on('pointerout', function(event){
+      t.setAlpha(1.0);
+    });    
+  }
+
+  addLabel(appname)
+  {
+    let t = this;
+    let label = t.scene.add.text(
+      t.x + Math.round(t.width / 2),
+      t.y + t.height + (assetsDPR > 2.5 ? 32 : 16),
+      appname);
+    label.setOrigin(0.5);
+    label.setFontSize(assetsDPR > 2.5 ? 32 : 15);
+    // t.scene.game.config.height > 640 ? label.setFontSize(16) : label.setFontSize(10); 
+    label.setFontFamily('Roboto');
+    label.setShadow(2, 2, 0x3f3f3f, 0.4);
+    label.setResolution(1);
+  }
+}
+/*
+export default class IconApp extends Image
 {
   constructor(scene, label, app, frame, x, y)
   {
@@ -68,3 +107,4 @@ class IconApp extends Phaser.GameObjects.Image
   // }
   
 }
+*/
