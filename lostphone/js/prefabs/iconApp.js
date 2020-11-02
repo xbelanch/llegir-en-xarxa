@@ -33,8 +33,8 @@ export default class IconApp extends Image
       t.y + t.height + (assetsDPR > 2.5 ? 32 : 16),
       appname);
     label.setOrigin(0.5);
-    label.setFontSize(assetsDPR > 2.5 ? 32 : 15);
-    // t.scene.game.config.height > 640 ? label.setFontSize(16) : label.setFontSize(10); 
+    // Set text depending on assetsDPR value
+    label.setFontSize(assetsDPR > 1.5 ? (assetsDPR >= 2.5 ? (assetsDPR > 3.5 ? 42 : 32) : 24) : 16);
     label.setFontFamily('Roboto');
     label.setShadow(2, 2, 0x3f3f3f, 0.4);
     label.setResolution(1);

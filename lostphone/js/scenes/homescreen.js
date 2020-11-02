@@ -36,8 +36,17 @@ export default class Homescreen extends Phaser.Scene
     height /= assetsDPR;
     
     // --- Testing icon app
-    if (['dev'].includes(t.game.debug))
-      new IconApp(t, 'Lorem Ipsum', width / 16, height / 16, 'lorem-appsum');
+    if (['dev'].includes(t.game.debug)) {
+      // @TODO:
+      // L'elecció de les mides de separació entre icones no estan
+      // calculades segons una fòrmula sinó visualment. Cal, per tant,
+      // establir una regla que determini la ubicació a tres columnes de
+      // les icones i que, la segona, passi justament pel mig de l'amplada
+      // de la pantalla de l'smartphone
+      new IconApp(t, 'Lorem Ipsum', width / 10, height / 16, 'lorem-appsum');
+      new IconApp(t, 'Lorem Ipsum', width / 2.4, height / 16, 'lorem-appsum');
+      new IconApp(t, 'Lorem Ipsum', width / 1.37, height / 16, 'lorem-appsum');      
+    };
 
     /*
     let Phone = t.game.config;

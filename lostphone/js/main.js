@@ -24,7 +24,7 @@ const { width, height } = viewport(DPR);
 // Determinem els valors de les mides d'amplada i alçada del mòbil
 const WIDTH = Math.round(360 * height / 640);
 const HEIGHT = Math.round(height);
-export const assetsDPR = roundHalf(Math.min(Math.max(HEIGHT / 360, 1), 4));
+export const assetsDPR = roundHalf(Math.min(Math.max(HEIGHT / 640, 1), 4));
 
 // --- Debug this shit
 console.log('DPR = ', DPR);
