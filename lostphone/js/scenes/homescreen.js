@@ -43,9 +43,10 @@ export default class Homescreen extends Phaser.Scene
       // establir una regla que determini la ubicació a tres columnes de
       // les icones i que, la segona, passi justament pel mig de l'amplada
       // de la pantalla de l'smartphone
-      new IconApp(t, 'Lorem Ipsum', width / 10, height / 16, 'lorem-appsum');
-      new IconApp(t, 'Lorem Ipsum', width / 2.4, height / 16, 'lorem-appsum');
-      new IconApp(t, 'Lorem Ipsum', width / 1.37, height / 16, 'lorem-appsum');      
+      
+      new IconApp(t, 'Lorem Ipsum', width / 1.25, height / 16, 'lorem-appsum');
+      new IconApp(t, 'Lorem Ipsum', width / 2, height / 16, 'lorem-appsum');
+      new IconApp(t, 'Lorem Ipsum', width / 5, height / 16, 'lorem-appsum');
     };
 
     /*

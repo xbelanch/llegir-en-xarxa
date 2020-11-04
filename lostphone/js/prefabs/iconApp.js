@@ -32,7 +32,7 @@ export default class IconApp extends Image
       t.x + Math.round(t.width / 2),
       t.y + t.height + (assetsDPR > 2.5 ? 32 : 16),
       appname);
-    label.setOrigin(0.5);
+    label.setOrigin(1, 0.5);
     // Set text depending on assetsDPR value
     label.setFontSize(assetsDPR > 1.5 ? (assetsDPR >= 2.5 ? (assetsDPR > 3.5 ? 42 : 32) : 24) : 16);
     label.setFontFamily('Roboto');
