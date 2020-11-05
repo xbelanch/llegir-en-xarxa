@@ -5,11 +5,11 @@ import { DPR, assetsDPR } from '../main.js';
 import Image from './image.js';
 export default class IconApp extends Image
 {
-  constructor(scene, appname,  x, y, texture, frame){
+  constructor(scene, x, y, texture, frame){
     super(scene, x, y, texture, frame);
     this.setInteractive();
     this.init();
-    this.addLabel(appname);
+    //this.addLabel(appname);
   };
 
   init()
@@ -29,10 +29,10 @@ export default class IconApp extends Image
   {
     let t = this;
     let label = t.scene.add.text(
-      t.x + Math.round(t.width / 2),
-      t.y + t.height + (assetsDPR > 2.5 ? 32 : 16),
+      t.x,
+      t.y + t.height + (assetsDPR > 2.5 ? 18 : 4),
       appname);
-    label.setOrigin(1, 0.5);
+    label.setOrigin(0.5, 0);
     // Set text depending on assetsDPR value
     label.setFontSize(assetsDPR > 1.5 ? (assetsDPR >= 2.5 ? (assetsDPR > 3.5 ? 42 : 32) : 24) : 16);
     label.setFontFamily('Roboto');
@@ -40,6 +40,10 @@ export default class IconApp extends Image
     label.setResolution(1);
   }
 }
+
+
+
+
 /*
 export default class IconApp extends Image
 {

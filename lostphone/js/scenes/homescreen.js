@@ -34,19 +34,35 @@ export default class Homescreen extends Phaser.Scene
     let { width, height } = t.cameras.main;
     width /= assetsDPR;
     height /= assetsDPR;
+
+    // fix values
+    const left_column  = width / 3;
+    const center_column = width / 2;
+    const right_column = 2 * width / 3;
+    // change this values to play with space between icon apps and margin top 
+    const margin = width / 8;
+    const top_margin = height / 12;
     
     // --- Testing icon app
     if (['dev'].includes(t.game.debug)) {
-      // @TODO:
-      // L'elecció de les mides de separació entre icones no estan
-      // calculades segons una fòrmula sinó visualment. Cal, per tant,
-      // establir una regla que determini la ubicació a tres columnes de
-      // les icones i que, la segona, passi justament pel mig de l'amplada
-      // de la pantalla de l'smartphone
+      var app = new IconApp(t, 0, 0, 'lorem-appsum');
+      app.setX(center_column);
+      app.setY(top_margin);
+      app.addLabel('Lorem Ipsum');
+
+
+      var app2 = new IconApp(t, 0, 0, 'lorem-appsum');
+      app2.setX(right_column + margin);
+      app2.setY(top_margin);
+      app2.addLabel('Another App');
+
+      var app3 = new IconApp(t, 0, 0, 'lorem-appsum');
+      app3.setX(left_column - margin);
+      app3.setY(top_margin);
+      app3.addLabel('Same App');      
+    } else {
+
       
-      new IconApp(t, 'Lorem Ipsum', width / 1.25, height / 16, 'lorem-appsum');
-      new IconApp(t, 'Lorem Ipsum', width / 2, height / 16, 'lorem-appsum');
-      new IconApp(t, 'Lorem Ipsum', width / 5, height / 16, 'lorem-appsum');
     };
 
     /*
