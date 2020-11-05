@@ -4,33 +4,33 @@
 //-- @Note: App bàsica per treballar la part gràfica de la llibreria Phaser.
 //-- @Todo: Cal refer-la més endavant per donar-li un aspecte més actual.
 //-- @From: Clock Source: https://phaser.io/examples/v3/view/scenes/drag-scenes-demo#
+import App from '../App.js';
 
-
-class ClockApp extends App
+export default class ClockApp extends App
 {
   constructor()
   {
-    super();
-    this.clockSize = 198;
+    super({ key: 'ClockApp'});
+    this.clockSize;
     this.graphics;
   }
 
   init()
   {
-    let t = this;
     super.init();
+    let t = this;
     t.registry.set('activeApp', 'clockApp');    
-  }
-
-  preload()
-  {
-    super.preload();
   }
 
   create()
   {
-    let t = this;
     super.create();
+    let t = this;
+    let { width, height } = t.cameras.main;
+    t.x = width / 2;
+    t.y = height / 2;
+    t.clockSize = Math.round(width / 2.5);
+    t.graphics = t.add.graphics()
   }
 
   update(delta, time)
@@ -46,7 +46,7 @@ class ClockApp extends App
     t.graphics.fillCircle(t.x, t.y, t.clockSize);
     t.graphics.strokeCircle(t.x, t.y, t.clockSize);
 
-        var angle;
+    var angle;
     var dest;
     var p1;
     var p2;

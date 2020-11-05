@@ -2,7 +2,7 @@
   {
     "type" : "clock",
     "class": "ClockApp",
-    "key"  : "clockApp",
+    "key"  : "ClockApp",
     "name" : "Rellotge",
     "icon" : "clockApp.png"
   },

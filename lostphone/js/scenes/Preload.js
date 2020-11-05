@@ -63,8 +63,8 @@ export default class Preload extends Phaser.Scene
     });
 
     // testing bar progress
-    if (!['dev'].includes(t.game.debug)) { 
-      for (var i = 0; i < 100; i++) {
+    if (['dev'].includes(t.game.debug)) { 
+      for (var i = 0; i < 10; i++) {
         t.load.image('test' + i, 'assets/img/560x1024/backgrounds/city-blurred-hd.jpg');    
       };
     };

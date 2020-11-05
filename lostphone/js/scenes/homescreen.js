@@ -1,5 +1,6 @@
 import { DPR, assetsDPR } from '../main.js';
 import IconApp from '../prefabs/iconApp.js';
+import ClockApp from './apps/clock.js';
 
 export default class Homescreen extends Phaser.Scene
 {
@@ -9,6 +10,12 @@ export default class Homescreen extends Phaser.Scene
     super({ key: 'Homescreen'});
   };
 
+  init()
+  {
+    let t = this;
+    t.scene.add('ClockApp', ClockApp);
+  }
+  
   preload()
   {
     let t = this;
@@ -21,6 +28,7 @@ export default class Homescreen extends Phaser.Scene
   {
     let t = this;
     t.addIconApps();
+    
     // t.registry.set('activeApp', 'homescreen');
   }
 
@@ -43,25 +51,21 @@ export default class Homescreen extends Phaser.Scene
     const margin = width / 8;
     const top_margin = height / 12;
     
+    var apps = t.cache.json.get('apps');
     // --- Testing icon app
     if (['dev'].includes(t.game.debug)) {
-      var app = new IconApp(t, 0, 0, 'lorem-appsum');
-      app.setX(center_column);
-      app.setY(top_margin);
-      app.addLabel('Lorem Ipsum');
-
-
-      var app2 = new IconApp(t, 0, 0, 'lorem-appsum');
-      app2.setX(right_column + margin);
-      app2.setY(top_margin);
-      app2.addLabel('Another App');
-
-      var app3 = new IconApp(t, 0, 0, 'lorem-appsum');
-      app3.setX(left_column - margin);
-      app3.setY(top_margin);
-      app3.addLabel('Same App');      
+      var row = 0;
+      for (var index in apps) {
+        if (index % 3 === 0) row += 1;
+        var app = new IconApp(t, apps[index], 0, 0, 'lorem-appsum');
+        app.setX(index % 3 == 0 ? left_column - margin : (index % 3 == 1 ? center_column : right_column + margin));
+        app.setY(top_margin +  ((top_margin * 2) * (row - 1)));
+        app.addLabel(apps[index].name);
+      };
     } else {
 
+        
+        
       
     };
 
