@@ -1,8 +1,63 @@
-/**
- * Save the game state 
- * Source: https://github.com/xbelanch/llegir-en-xarxa/compare/password#diff-09cb85cb83d4a472620eba8dfb8eb5d9
- * Source: https://github.com/xbelanch/llegir-en-xarxa/commits/3d4cfd1286cea0249b5327c77b6d6f76d11bf757/lostphone/js/save/save.js
- */
+// --- lib lostphone
+
+// --- Debug
+// --------------------------------------------------------
+
+Phaser.Scene.prototype.log = function(message) {
+    message = '[Scene:' + this.scene.key + '] ' + message;
+
+    if (this.game.debug) {
+        console.log(message);
+    }
+}
+
+// --- Common
+// --------------------------------------------------------
+// Define some bunch of methods commons to all scenes
+
+Object.defineProperty(Phaser.Structs.List.prototype, 'current', {
+  get() {
+    return this.getAt(this.position);
+  }
+});
+
+Phaser.Game.prototype.getNewElements = function() {
+
+    if (this.lastmod === undefined) {
+        return [];
+    }
+
+    // Change this
+    let items = [];
+    let apps = this.cache.json.get('apps');
+    for (let app in apps) {
+        let type = apps[app]['type'];
+        let content = this.cache.json.get(type);
+
+        if (content !== undefined) {
+            // Need to rethink this! mails is hardcoded
+            for (let element in content[type+'s']) {
+                let conditions = content[type+'s'][element]['condition'];
+
+                if (!Array.isArray(conditions)) {
+                    conditions = [conditions];
+                }
+                if (conditions.includes(this.lastmod)) {
+                    if (this.checkCondition(conditions)) {
+                        content[type+'s'][element]['type'] = type;
+                        items.push(content[type+'s'][element]);
+                    }
+                }
+            }
+        }
+    }
+
+    return items;
+}
+
+// --- Save
+// --------------------------------------------------------
+// Define some bunch of methods related to save states of the game
 
 /**
  * Update URL with password
@@ -180,6 +235,85 @@ Phaser.Game.prototype.autosaveOff = function() {
     }
 };
 
+// ---- WebFontFile.js
+// Source: https://gist.github.com/supertommy/bc728957ff7dcb8016da68b04d3a2768
+
+const WebFont = window.WebFont;
+
+class WebFontFile extends Phaser.Loader.File
+{
+  /**
+   * @param {Phaser.Loader.LoaderPlugin} loader
+   * @param {string | string[]} fontNames
+   * @param {string} [service]
+   */
+  
+  constructor(loader, fontNames, service = 'google')
+  {
+    super(loader, {
+      type: 'webfont',
+      key: fontNames.toString()
+    });
+
+    this.fontNames = Array.isArray(fontNames) ? fontNames : [fontNames];
+    this.service = service;
+    this.fontsLoadedCount = 0;
+  }
+  load()
+  {
+    const config = {
+      fontactive: (familyName) => {
+	this.checkLoadedFonts(familyName)
+      },
+      fontinactive: (familyName) => {
+	this.checkLoadedFonts(familyName)
+      }
+    }
+
+    switch (this.service)
+    {
+      case 'google':
+      config[this.service] = this.getGoogleConfig()
+      break
+
+      case 'adobe-edge':
+      config['typekit'] = this.getAdobeEdgeConfig()
+
+      default:
+      throw new Error('Unsupported font service')
+    }
+    WebFont.load(config)
+  }
+
+  getGoogleConfig()
+  {
+    return {
+      families: this.fontNames
+    }
+  }
+
+  getAdobeEdgeConfig()
+  {
+    return {
+      id: this.fontNames.join(';'),
+      api: '//use.edgefonts.net'
+    }
+  }
+
+  checkLoadedFonts(familyName)
+  {
+    if (this.fontNames.indexOf(familyName) < 0)
+    {
+      return
+    }
+
+    ++this.fontsLoadedCount
+    if (this.fontsLoadedCount >= this.fontNames.length)
+    {
+      this.loader.nextFile(this, true)
+    }
+  }
+}
 
 
 
