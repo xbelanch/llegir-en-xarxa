@@ -1,4 +1,5 @@
-class Time extends Phaser.GameObjects.Text
+// --- Time
+export default class Time extends Phaser.GameObjects.Text
 {
   constructor(scene, x, y, font)
   {

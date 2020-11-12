@@ -1,5 +1,6 @@
 import { DPR, assetsDPR } from '../main.js';
 import Homescreen from './Homescreen.js';
+import PhoneUI from './PhoneUI.js';
 
 
 export default class Phone extends Phaser.Scene
@@ -14,7 +15,7 @@ export default class Phone extends Phaser.Scene
     let t = this;
 
     t.scene.add('Homescreen', Homescreen);
-    // t.scene.add('phoneUI', PhoneUI);
+    t.scene.add('PhoneUI', PhoneUI);
     // t.scene.add('wifiApp', WifiApp);
 
     // Definim el cursor
@@ -51,7 +52,7 @@ export default class Phone extends Phaser.Scene
     // --- Set default cursor
     t.input.setDefaultCursor("url(" + `assets/img/cursors/fingerprint.png` + ") 24 24, auto");
     t.scene.launch('Homescreen');
-    // t.scene.launch('phoneUI');
-    // t.scene.bringToTop('phoneUI');
+    t.scene.launch('PhoneUI');
+    t.scene.bringToTop('PhoneUI');
   }
 }

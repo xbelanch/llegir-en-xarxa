@@ -30,7 +30,7 @@ export default class ClockApp extends App
     t.x = width / 2;
     t.y = height / 2;
     t.clockSize = Math.round(width / 2.5);
-    t.graphics = t.add.graphics()
+    t.graphics = t.add.graphics();
   }
 
   update(delta, time)

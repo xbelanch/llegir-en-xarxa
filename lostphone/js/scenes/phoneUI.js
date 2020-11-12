@@ -2,6 +2,57 @@
 // --- PhoneUI.js
 // ---
 
+import { DPR, assetsDPR } from '../main.js';
+import Time from '../prefabs/time.js';
+
+export default class PhoneUI extends Phaser.Scene
+{
+  constructor()
+  {
+    super({ key: 'PhoneUI' });
+    this.time;
+  };
+
+  create()
+  {
+    let t = this;
+    let { width, height } = t.cameras.main;
+    let barColor = 0x1c1c1c;
+
+    // --- Display top and bottom bars
+    let topBar = t.add.rectangle(0, 0, width, Math.floor(24 * assetsDPR), barColor, 1.0).setOrigin(0);
+    let bottomBar = t.add.rectangle(0, height - Math.floor(48 * assetsDPR), width, Math.floor(48 * assetsDPR), barColor, 1.0).setOrigin(0);
+
+    // --- Set the home button
+    var circle = new Phaser.Geom.Circle(Math.floor(width / 2), height - Math.floor(48 * assetsDPR / 2 ), Math.floor(18 * assetsDPR));
+    var graphics = t.add.graphics({ fillStyle: { color: 0xffffff } });
+    graphics.fillCircleShape(circle);
+
+    // --- Clock time at the upper bar 
+    t.time = new Time(t, Math.floor(width / 2), height / 56, {
+      fontFamily: 'Roboto',
+      fontSize : Math.floor(13 * assetsDPR),
+      color: '#ffffff',
+      align: 'center'
+    })
+      .setOrigin(0.5, 0.5)
+      .setResolution(Math.floor(assetsDPR));    
+  };
+  
+  update(delta, time)
+  {
+    let t = this;
+    t.time.update(delta);
+    /*
+    t.watchNotification();
+    t.launchNotification();
+    */
+  };
+  
+  
+}
+
+/*
 class PhoneUI extends Phaser.Scene
 {
   constructor()
@@ -194,3 +245,4 @@ class PhoneUI extends Phaser.Scene
     this.notificationOn = false;
   }
 }
+*/
