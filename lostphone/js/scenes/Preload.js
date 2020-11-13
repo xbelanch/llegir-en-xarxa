@@ -62,14 +62,16 @@ export default class Preload extends Phaser.Scene
       percentText.destroy();
     });
 
-    // testing bar progress
+    // Loading test images 
+    if (['dev'].includes(t.game.debug)) {
+      t.load.image('volume-icon-on', 'assets/img/volume-icon-on.png');
+      t.load.image('volume-icon-off', 'assets/img/volume-icon-off.png');
     /*
-    if (['dev'].includes(t.game.debug)) { 
       for (var i = 0; i < 2; i++) {
-        t.load.image('test' + i, 'assets/img/560x1024/backgrounds/city-blurred-hd.jpg');    
+        t.load.image('test' + i, 'assets/img/560x1024/backgrounds/city-blurred-hd.jpg');
       };
-    };
     */
+    };
    
     // --- Load wallpapers
     let wallpapers = t.cache.json.get('config').wallpapers;
@@ -95,8 +97,11 @@ export default class Preload extends Phaser.Scene
     t.load.audio('startup', 'assets/audio/sounds/320664__pizzaiolo__lovelyboot1.ogg');
     
     // --- Load lofi - music tracks
-    // @Kenneth: Carreguem en aquest moment els tracks d'audio o deixem aquesta tasca en el moment que l'usuari obre l'app de podcast? (dilluns 26/10/2020 19:00)    
-    t.load.audio(t.cache.json.get('tracks'));
+    // @Kenneth: Carreguem en aquest moment els tracks d'audio o deixem aquesta tasca en el moment que l'usuari obre l'app de podcast? (dilluns 26/10/2020 19:00)
+    // en fase dev no carreguem els fitxers d'àudio
+    if (!['dev'].includes(t.game.debug)) {
+      t.load.audio(t.cache.json.get('tracks'));
+    };
     
   }
   

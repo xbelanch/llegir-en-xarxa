@@ -27,8 +27,8 @@ export default class IconApp extends Image
     });
     
     t.on('pointerdown', function(event) {
-      t.scene.scene.stop('Homescreen');
-      t.scene.scene.run(t.config.key);
+      t.scene.scene.sleep('Homescreen');
+      t.scene.scene.launch(t.config.key);
     });    
     
   }

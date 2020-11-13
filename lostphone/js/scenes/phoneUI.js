@@ -11,6 +11,9 @@ export default class PhoneUI extends Phaser.Scene
   {
     super({ key: 'PhoneUI' });
     this.time;
+    this.notifications = [];
+    this.notificationOn = false;
+    this.nextDelay = 'random';    
   };
 
   create()
@@ -23,10 +26,44 @@ export default class PhoneUI extends Phaser.Scene
     let topBar = t.add.rectangle(0, 0, width, Math.floor(24 * assetsDPR), barColor, 1.0).setOrigin(0);
     let bottomBar = t.add.rectangle(0, height - Math.floor(48 * assetsDPR), width, Math.floor(48 * assetsDPR), barColor, 1.0).setOrigin(0);
 
+
+    // --- Volume icon
+    // By default, volume icon is on
+    // @TODO: icon atlas
+    let volume_icon = t.add.image(width - Math.floor(18 * assetsDPR), 12 * assetsDPR, 'volume-icon-on')
+        .setScale(1 / (assetsDPR * 4))
+        .setTintFill(0xffffff)
+        .setInteractive()
+        .on('pointerup', function(){
+          t.game.sound.mute === true  ? this.setTexture('volume-icon-on') : this.setTexture('volume-icon-off');
+          t.game.sound.mute = !t.game.sound.mute;
+        });
+    
     // --- Set the home button
+    // @TODO: Replace by an image or sprite
     var circle = new Phaser.Geom.Circle(Math.floor(width / 2), height - Math.floor(48 * assetsDPR / 2 ), Math.floor(18 * assetsDPR));
     var graphics = t.add.graphics({ fillStyle: { color: 0xffffff } });
     graphics.fillCircleShape(circle);
+
+    // That's crap man
+    // but it sleep tha 
+    t.input.on('pointerdown', function(pointer){
+      if (circle.contains(pointer.x, pointer.y) && !t.scene.isActive('Homescreen')){
+        // if there's an alternative to that, shut up
+        // and take my money!
+        var scenes = t.game.scene.getScenes(true);
+        for (var i in scenes) {
+          if (/App/.test(scenes[i].scene.key))
+            var app = scenes[i].scene.key;
+        };
+        switch(app){
+        case 'ClockApp':
+          t.game.scene.stop(app);
+          break;
+        }
+        t.game.scene.wake('Homescreen');
+      };
+    });
 
     // --- Clock time at the upper bar 
     t.time = new Time(t, Math.floor(width / 2), height / 56, {
@@ -69,15 +106,6 @@ class PhoneUI extends Phaser.Scene
     this.nextDelay = 'random';
   }
   
-  init()
-  {
-    let { width, height } = this.getPhoneDimensions();    
-    this.width = width;
-    this.height = height;
-    this.x = width / 2;
-    this.y = height / 2;
-  }
-
   create()
   {
     let t = this;
@@ -108,83 +136,8 @@ class PhoneUI extends Phaser.Scene
             t.scene.launch('wifiApp');
           }
         });
-
-    // Volume icon
-    t.registry.set('unlockVolume', true);
-    let volume_icon = t.add.image(Phone.width - 48, 2, 'phone_ui_icons_states',
-                                  t.registry.get('unlockVolume') ? 'volume-signal-on' : 'volume-signal-off')
-        .setScale(this.registry.get('scaleRatio')*0.75)
-        .setInteractive()
-        .on('pointerover', function(){
-          this.tint = 0xaaaaaa;
-        })
-        .on('pointerout', function(){
-          this.tint = 0xffffff;
-        })
-        .on('pointerup', function(){
-          t.registry.set('unlockVolume',  t.registry.get('unlockVolume') ? false : true);
-          // update icon?
-          if (t.registry.get('unlockVolume'))
-          {
-              this.setTexture('phone_ui_icons_states', 'volume-signal-on');
-              t.game.sound.mute = false;
-          } else {
-              this.setTexture('phone_ui_icons_states', 'volume-signal-off');
-              t.game.sound.mute = true;
-          }
-        });
-    
-    // Home button
-    var circle = new Phaser.Geom.Circle(Math.floor(Phone.width / 2), Phone.height - Math.floor(heightBottomBar / 2), Math.floor(heightBottomBar / 2.5));
-    var graphics = t.add.graphics({ fillStyle: { color: 0xffffff } });
-    graphics.fillCircleShape(circle);
-
-    t.input.on('pointermove', function (pointer) {
-      graphics.clear();
-
-      if(circle.contains(pointer.x, pointer.y))
-      {
-        graphics.fillStyle(0xaaaaaa);
-      }
-      else
-      {
-        graphics.fillStyle(0xffffff);
-      }
-      graphics.fillCircleShape(circle);
-    });
-
-    t.input.on('pointerdown', function(pointer){
-      var activeApp = t.registry.get('activeApp');
-      if(circle.contains(pointer.x, pointer.y))
-      {
-        if (activeApp != 'homescreen');
-        t.scene.sleep(activeApp);
-        //t.scene.transition({ target: 'homescreen', duration: 1000 });
-        t.scene.launch('homescreen');
-      }
-    });
-    
-    
-    // Clock
-    t.time = new Time(t, Math.floor(Phone.width / 2), Math.floor(heightTopBar / 2), {
-      fontFamily: 'Roboto',
-      fontSize : 22,
-      color: '#ffffff',
-      align: 'center'
-    })
-      .setOrigin(0.5, 0.5)
-      .setResolution(2);
   }
 
-  getPhoneDimensions()
-  {
-    let t = this;
-    let Phone = t.game.config;
-    return {
-      width : Phone.width,
-      height : Phone.height
-    };
-  }
 
 
   update(delta, time)
