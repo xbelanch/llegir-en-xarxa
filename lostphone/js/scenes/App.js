@@ -12,7 +12,7 @@ export default class App extends Phaser.Scene
   {
 
   }
-  
+
   create()
   {
     let t = this;
@@ -21,5 +21,4 @@ export default class App extends Phaser.Scene
     // way to handle with this
     t.scene.bringToTop('PhoneUI');
   }
-
 }

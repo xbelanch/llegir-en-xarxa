@@ -1,8 +1,9 @@
+// import { Plugin as NineSlicePlugin } from './plugins/nineslice.min.js'
 import Bootstrap from './scenes/Bootstrap.js'
 
 // --- Phone.js
 //
-// 
+//
 // from: https://github.com/yandeu/phaser3-optimal-resolution
 // cal definir un conjunt de resolucions @1 - @4
 // i empaquetar i escalar a través d'un atlas amb un servei com el TexturePacker:
@@ -52,21 +53,22 @@ const config = {
   scene: [Bootstrap],
   plugins: {
     global: [
-      {
-        key: 'SceneWatcher', plugin: PhaserSceneWatcherPlugin, start: true, mapping: 'sceneWatcher'
-      }]
+      { key: 'SceneWatcher', plugin : PhaserSceneWatcherPlugin, start: true, mapping: 'sceneWatcher' },
+      NineSlice.Plugin.DefaultCfg
+
+    ]
   },
   callbacks: {
     postBoot: function (game) {
       game.plugins.get('SceneWatcher').watchAll();
     }
   }
-};  
+};
 
 // --- Booting up the smartphone
 window.addEventListener('load', () => {
   //@TODO: Cal incloure una imatge de fons associat a una biblioteca?
-  document.body.style.backgroundImage = "url('assets/img/backgrounds/library.png')";  
+  document.body.style.backgroundImage = "url('assets/img/backgrounds/library.png')";
   new Phaser.Game(config);
 });
 

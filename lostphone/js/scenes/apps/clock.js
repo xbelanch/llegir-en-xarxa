@@ -19,7 +19,7 @@ export default class ClockApp extends App
   {
     super.init();
     let t = this;
-    t.registry.set('activeApp', 'clockApp');    
+    t.registry.set('activeApp', 'clockApp');
   }
 
   create()
@@ -39,7 +39,6 @@ export default class ClockApp extends App
 
     // Clear the graphics every frame
     t.graphics.clear();
-    
     // The frame
     t.graphics.fillStyle(0xffffff, 0.5);
     t.graphics.lineStyle(10, 0x000000, 0.5);

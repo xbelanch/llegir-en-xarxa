@@ -5,8 +5,8 @@
 ** Documentació
 
 * Lostphone
-** TODO Fullscreen on Mobile? 
-  https://rexrainbow.github.io/phaser3-rex-notes/docs/site/fullscreen/#toggle 
+** TODO Fullscreen on Mobile?
+  https://rexrainbow.github.io/phaser3-rex-notes/docs/site/fullscreen/#toggle
   Maybe... https://codepen.io/samme/pen/deKZjx però òbviament, cal llavors la
   inclusió d'un botó que gestioni l'acció del fullscreen en entorns de desktop
   More resources: https://codepen.io/gyzkard/pen/PvXBxm
@@ -24,3 +24,42 @@
    https://phaser.io/examples/v3/category/input/cursors
 ** TODO Background shader
    https://phaser.discourse.group/t/applying-shader-to-image-on-the-foreground/1629
+
+
+* TODO (martes 24/11/2020 19:59)
+** Background: inclou una ma de dona. Fons de biblioteca.
+** Selecció de paleta de color principal, pendent de decidir si són o no harmònics.
+** Pantalla inici:
+*** Títol del miniop
+*** Entrar al miniop
+*** Crèdits
+** Pantalla de càrrega d'assets:
+*** Logo / animació
+** Phone UI:
+*** Connectivitat WiFi
+*** Hora
+*** Bateria
+*** Panell de notificacions (deslliçador vertical cantonada superior dreta)
+*** Botó inici / home només apareix quan entrem a les diferents apps
+*** Botó enrera (quan hi hagi una seqüència linial dins de l'app)
+** Apps:
+*** Configuració (settings)
+*** Music (incorporar lofi sad study) amb CC
+*** Podcast
+*** Galeria de fotografies i vídeos
+*** Missatgeria
+*** Correu
+*** Cercador
+*** Notes / Todo / Recordatoris
+*** ?Calendari?
+*** ?Botiga / Store ?
+** Notificació número - icona app
+** Transicions:
+*** Zoom in / zoom out
+** Notificacions:
+*** Popup de bloqueig
+*** Popup d'informació/notificació
+** Teclat / pad únicament per introduir números.
+** Configuració (settings):
+*** Reiniciar / Borrar
+*** Àudio (efectes/notificacions)

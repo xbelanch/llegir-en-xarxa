@@ -17,7 +17,6 @@ class CalculatorApp extends App
   {
     let t = this;
     super.init();
-    t.registry.set('activeApp', 'calculatorApp');    
   }
 
   preload()

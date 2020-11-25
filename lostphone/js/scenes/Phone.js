@@ -22,14 +22,13 @@ export default class Phone extends Phaser.Scene
     // let imgFolder = t.registry.get('imgFolder');
     // @NOTE:
     // https://stackoverflow.com/questions/19560878/css-change-custom-cursor-image-origin-hotspot-to-center
-    // Incorporem les Apps definides al fitxer app.json 
+    // Incorporem les Apps definides al fitxer app.json
     // let apps = t.cache.json.get('apps');
     // for (var index in apps) {
     //   var app = apps[index];
     //   t.scene.add(app.key, eval(app.class));
     // }
   }
-    
 
   create()
   {
