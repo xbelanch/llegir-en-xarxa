@@ -1,6 +1,6 @@
 // import { Plugin as NineSlicePlugin } from './plugins/nineslice.min.js'
 import Bootstrap from './scenes/Bootstrap.js'
-
+import TitleScene from './scenes/TitleScene.js'
 // --- Phone.js
 //
 //
@@ -27,13 +27,6 @@ const WIDTH = Math.round(360 * height / 640);
 const HEIGHT = Math.round(height);
 export const assetsDPR = roundHalf(Math.min(Math.max(HEIGHT / 640, 1), 4));
 
-// --- Debug this shit
-console.log('DPR = ', DPR);
-console.log('assetsDPR = ', assetsDPR);
-console.log('width: ' + width + ' height: ' + height);
-console.log('WIDTH = ', WIDTH);
-console.log('HEIGHT = ', HEIGHT);
-
 // --- Set Config Phaser Game
 const config = {
   type : Phaser.AUTO,
@@ -50,7 +43,7 @@ const config = {
     width: WIDTH,
     height: HEIGHT
   },
-  scene: [Bootstrap],
+  scene: [TitleScene],
   plugins: {
     global: [
       { key: 'SceneWatcher', plugin : PhaserSceneWatcherPlugin, start: true, mapping: 'sceneWatcher' },
@@ -67,7 +60,6 @@ const config = {
 
 // --- Booting up the smartphone
 window.addEventListener('load', () => {
-  //@TODO: Cal incloure una imatge de fons associat a una biblioteca?
   document.body.style.backgroundImage = "url('assets/img/backgrounds/library.png')";
   new Phaser.Game(config);
 });

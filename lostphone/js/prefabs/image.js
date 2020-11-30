@@ -9,7 +9,6 @@ class Image extends Phaser.GameObjects.Image {
 
   setX(x) { super.setX(Math.round(x * assetsDPR)); }
   setY(y) { super.setY(Math.round(y * assetsDPR)); }
-  
 }
 
 export default Image;
