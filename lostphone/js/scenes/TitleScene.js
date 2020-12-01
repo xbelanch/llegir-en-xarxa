@@ -14,7 +14,7 @@ export default class TitleScene extends Phaser.Scene
   preload()
   {
     this.load.image('Title', 'assets/images/title.png');
-    this.load.image('Button', 'assets/images/button.png');
+    this.load.image('Button-Idle', 'assets/images/kennyBlue.png');
   };
 
   init()
@@ -25,22 +25,27 @@ export default class TitleScene extends Phaser.Scene
 
   create()
   {
+    // --- Get width and height from camera and aplly DPR factor
     var { width, height } = this.cameras.main;
     width /= assetsDPR;
     height /= assetsDPR;
 
+    // --- Set title start screen
     var back = new Image(this, Math.round(width/2), Math.round(height/3), 'Title');
     back.setOrigin(0.5, 0.5);
     this.children.add(back);
 
+    // --- Add credits and start buttons
+    var buttonWidth = 120;
+    var buttonHeight = 45;
 
     var goCredits = new TextButton(
       this,
       new Phaser.Geom.Rectangle(
-        Math.round(width/2),
-        Math.round(height/3),
-        100,
-        100),
+        width / 2,
+        height,
+        buttonWidth,
+        buttonHeight),
       "Crèdits",
       'Button',
       this.onClickGo.bind(null, 'Credits')
@@ -48,13 +53,14 @@ export default class TitleScene extends Phaser.Scene
 
     this.children.add(goCredits);
 
+    var offset = 16 * assetsDPR;
     var goStart = new TextButton(
       this,
       new Phaser.Geom.Rectangle(
-        Math.round(width/3),
-        Math.round(height/2),
-        80,
-        10),
+        width / 2,
+        (goCredits.y + goCredits.height * assetsDPR) + offset,
+        buttonWidth,
+        buttonHeight),
       "Entrar",
       'Button',
       this.onClickGo.bind(null, 'Bootstrap')

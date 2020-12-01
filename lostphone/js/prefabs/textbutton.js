@@ -1,4 +1,5 @@
 // --- TextButton
+import { assetsDPR } from '../main.js'
 
 export default class TextButton extends Phaser.GameObjects.Container
 {
@@ -6,64 +7,50 @@ export default class TextButton extends Phaser.GameObjects.Container
   {
     super(scene, rect.x, rect.y, []);
 
-    var back = new Phaser.GameObjects.Image(
-      scene,
-      this.x,
-      this.y,
-      buttonType
-    );
-    back.setInteractive();
-    back.setOrigin(0.5, 0);
-    back.on('pointerdown', ()=> callback());
-    back.on('pointerover', ()=> this.enterButtonHoverState());
-    back.on('pointerout', ()=> this.enterButtonRestState());
-    this.add(back);
+    this.width = rect.width;
+    this.height = rect.height;
 
-    var goButton = new Phaser.GameObjects.Text(
+    var slice = this.scene.add.nineslice(
+      this.x, this.y,
+      Math.round(rect.width * assetsDPR),
+      Math.round(rect.height * assetsDPR),
+      'Button-Idle',
+      [35, 15, 15]
+    );
+
+    var label = new Phaser.GameObjects.Text(
       scene,
-      this.x - 80,
-      this.y + 30,
+      0, // position relative to container
+      0,
       text,
-      { fontSize: '48px' }
+      { fontSize: '32px' }
     );
-    this.add(goButton);
+    this.add(label);
 
+    this.scene.input.on('pointermove', (pointer) => {
+      if (pointer.y >= slice.y && pointer.y < slice.y + slice.height && pointer.x >= slice.x && pointer.x < slice.x + slice.width)
+      {
+        slice.setTint(0x808080);
+        label.setTint(0x808080);
+      } else {
+        slice.clearTint();
+      };
+    });
+
+    this.scene.input.on('pointerdown', (pointer) => {
+      if (pointer.y >= slice.y && pointer.y < slice.y + slice.height && pointer.x >= slice.x && pointer.x < slice.x + slice.width)
+      {
+        slice.setTint(0x00ff00);
+      }
+    });
+
+    this.scene.input.on('pointerup', (pointer) => {
+      if (pointer.y >= slice.y && pointer.y < slice.y + slice.height && pointer.x >= slice.x && pointer.x < slice.x + slice.width)
+      {
+        slice.clearTint();
+        callback();
+      }
+    });
     scene.add.existing(this);
   };
-
-  enterButtonHoverState() {
-    this.list[0].setTint(0xff0000);
-    this.list[1].setTint(0x00ff00);
-  };
-
-  enterButtonRestState() {
-    this.list[0].clearTint();
-    this.list[1].clearTint();
-  };
 };
-/*
-
-class TextButton extends Phaser.GameObjects.Text {
-
-  constructor(scene, x, y, text, style, callback)
-  {
-    super(scene, x, y, text, style);
-    this.setOrigin(0.5);
-    this.setInteractive()
-      .on('pointerover', () => this.enterButtonHoverState() )
-      .on('pointerout', () => this.enterButtonRestState() )
-      .on('pointerdown', () => this.enterButtonActiveState() )
-      .on('pointerup', () => {
-        this.enterButtonHoverState();
-        callback();
-      });
-  }
-
-
-
-  enterButtonActiveState() {
-    this.setStyle({ fill: '#0ff' });
-  }
-
-}
-*/
