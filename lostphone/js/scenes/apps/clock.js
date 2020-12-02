@@ -15,16 +15,11 @@ export default class ClockApp extends App
     this.graphics;
   }
 
-  init()
-  {
-    super.init();
-    let t = this;
-    t.registry.set('activeApp', 'clockApp');
-  }
-
   create()
   {
+    // call this si volem incloure el fons de pantalla random
     super.create();
+
     let t = this;
     let { width, height } = t.cameras.main;
     t.x = width / 2;
@@ -40,8 +35,8 @@ export default class ClockApp extends App
     // Clear the graphics every frame
     t.graphics.clear();
     // The frame
-    t.graphics.fillStyle(0xffffff, 0.5);
-    t.graphics.lineStyle(10, 0x000000, 0.5);
+    t.graphics.fillStyle(this.colors.blue, 0.5);
+    t.graphics.lineStyle(10, this.colors.white, 0.5);
     t.graphics.fillCircle(t.x, t.y, t.clockSize);
     t.graphics.strokeCircle(t.x, t.y, t.clockSize);
 
@@ -58,7 +53,7 @@ export default class ClockApp extends App
     // @DONE: Recorda que el rellotge no és de 24 hores, sinó de 12!
     // Aquest bug es compartit amb la font oroginal
     var hours = date.getHours() / 12;
-    
+
     //---  The hours hand
     size = t.clockSize * 0.8;
     angle = (360 * hours) - 90;
@@ -75,7 +70,7 @@ export default class ClockApp extends App
    t.graphics.lineTo(dest.x, dest.y);
    t.graphics.fillPath();
    t.graphics.closePath();
-    
+
     //--- The minutes hand
     size = t.clockSize * 0.9;
     angle = (360 * mins) - 90;

@@ -18,7 +18,7 @@ export default class Bootstrap extends Phaser.Scene
     super();
     this.group;
   };
-  
+
   init()
   {
     let t = this;
@@ -27,7 +27,7 @@ export default class Bootstrap extends Phaser.Scene
     t.scene.add('Preload', Preload);
     t.scene.add('Phone', Phone);
   }
-  
+
   preload()
   {
     let t = this;
@@ -40,11 +40,11 @@ export default class Bootstrap extends Phaser.Scene
     ]);
     t.load.addFile(fonts);
 
-    
+
     // --- Carreguem els fitxers de configuració
-    let config = ['config', 'apps', 'tracks', 'wifi', 'mail'];
+    let config = ['config', 'apps', 'tracks', 'wifi', 'mail', 'colors'];
     for (var i = 0; i < config.length; i++) t.load.json(config[i], `config/${config[i]}.json`);
-    
+
     // --- Emet un esdeveniment anomenat 'preload-finished' que,
     // en el moment que s'executi (només una vegada al preload),
     // executarà el mètode privat 'handlePreloadFinished'
@@ -69,13 +69,13 @@ export default class Bootstrap extends Phaser.Scene
 
     // --- Set background color
     t.cameras.main.setBackgroundColor('#421278');
-    
 
-    // --- Emulate black fade in at start-up 
+
+    // --- Emulate black fade in at start-up
     if (!['dev'].includes(t.game.debug))
       this.cameras.main.fadeIn(1000, 0, 0, 0);
-   
-    
+
+
     // --- Display logo - text - booting phone
     var config = {
         key: 'run',
@@ -98,7 +98,7 @@ export default class Bootstrap extends Phaser.Scene
       setXY: { x: (width * assetsDPR) / 2 , y: (height * assetsDPR) / 2 , stepX: 0 }
     });
 
-    t.anims.play('run', t.group.getChildren(), -100, false);    
+    t.anims.play('run', t.group.getChildren(), -100, false);
 
     // --- Initialize game and app states
     t.game.state = {};
@@ -106,7 +106,7 @@ export default class Bootstrap extends Phaser.Scene
     let apps = t.cache.json.get('apps');
     for (var i = 0; i < apps.length; i++)
       t.game.state[apps[i].type] = {};
-        
+
     // ---  Check if password via URL
     let passValue = t.game.getPassword();
     if (passValue) {
@@ -124,10 +124,10 @@ export default class Bootstrap extends Phaser.Scene
         this.time.delayedCall(0, () => {
           this.scene.run('Preload');
         });
-      });    
+      });
     };
   };
-  
+
   handlePreloadFinished()
   {
     let t = this;
@@ -135,13 +135,12 @@ export default class Bootstrap extends Phaser.Scene
     t.anims.remove('run');
     t.group.destroy(t);
 
-    // --- Let's start the game 
-    t.scene.start('Phone');    
+    // --- Let's start the game
+    t.scene.start('Phone');
 
     // --- Play a melodic sound when display homescreen
     if (!['dev'].includes(t.game.debug))
       t.sound.play('startup');
-    
+
   }
 }
-  

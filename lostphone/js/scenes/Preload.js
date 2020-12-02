@@ -11,7 +11,7 @@ export default class Preload extends Phaser.Scene
     super({ key: 'Preload'});
     this.starterTimer;
   };
-  
+
   preload()
   {
     let t = this;
@@ -47,7 +47,7 @@ export default class Preload extends Phaser.Scene
       }
     });
     percentText.setOrigin(0.5, 0.5);
-    
+
     this.load.on('progress', function (value) {
       percentText.setText(parseInt(value * 100) + '%');
       progressBar.clear();
@@ -62,7 +62,7 @@ export default class Preload extends Phaser.Scene
       percentText.destroy();
     });
 
-    // Loading test images 
+    // Loading test images
     if (['dev'].includes(t.game.debug)) {
       t.load.image('volume-icon-on', 'assets/img/volume-icon-on.png');
       t.load.image('volume-icon-off', 'assets/img/volume-icon-off.png');
@@ -72,7 +72,7 @@ export default class Preload extends Phaser.Scene
       };
     */
     };
-   
+
     // --- Load wallpapers
     let wallpapers = t.cache.json.get('config').wallpapers;
     for (var i = 0; i < wallpapers.length; i++)
@@ -90,21 +90,21 @@ export default class Preload extends Phaser.Scene
     this.load.atlas('phone_ui_icons_states',
                     `assets/img/${imgFolder}/atlas/phone_ui_icons_states.png`,
                    `assets/img/${imgFolder}/atlas/phone_ui_icons_states.json`);
-    
+
     */
 
     // --- Load sounds effects
     t.load.audio('startup', 'assets/audio/sounds/320664__pizzaiolo__lovelyboot1.ogg');
-    
+
     // --- Load lofi - music tracks
     // @Kenneth: Carreguem en aquest moment els tracks d'audio o deixem aquesta tasca en el moment que l'usuari obre l'app de podcast? (dilluns 26/10/2020 19:00)
     // en fase dev no carreguem els fitxers d'àudio
     if (!['dev'].includes(t.game.debug)) {
       t.load.audio(t.cache.json.get('tracks'));
     };
-    
+
   }
-  
+
   create()
   {
     let t = this;
