@@ -48,7 +48,7 @@ export default class TitleScene extends Phaser.Scene
         buttonHeight),
       "Crèdits",
       'Button',
-      this.onClickGo.bind(null, 'Credits')
+      () => this.onClickGo('Credits')
     );
 
     this.children.add(goCredits);
@@ -63,7 +63,7 @@ export default class TitleScene extends Phaser.Scene
         buttonHeight),
       "Entrar",
       'Button',
-      this.onClickGo.bind(null, 'Bootstrap')
+      () => this.onClickGo('Bootstrap')
     );
 
     this.children.add(goStart);
@@ -71,8 +71,8 @@ export default class TitleScene extends Phaser.Scene
 
   // https://stackoverflow.com/questions/20279484/how-to-access-the-correct-this-inside-a-callback
   //
-  onClickGo = (function(scene) {
-    this.scene.start(scene);
-  }).bind(this);
+  onClickGo(scene) {
+      this.scene.start(scene);
+  }
 
 };
