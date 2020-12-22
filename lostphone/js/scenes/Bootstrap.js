@@ -1,5 +1,5 @@
 // --- Bootstrap
-import { DPR, assetsDPR } from '../main.js';
+import { DPR, assetsDPR } from '../config.js';
 import Preload from './Preload.js';
 import Phone from './Phone.js';
 import Image from '../prefabs/image.js';
@@ -21,11 +21,6 @@ export default class Bootstrap extends Phaser.Scene
 
   init()
   {
-    let t = this;
-
-    // --- Add scenes
-    t.scene.add('Preload', Preload);
-    t.scene.add('Phone', Phone);
   }
 
   preload()
@@ -130,17 +125,18 @@ export default class Bootstrap extends Phaser.Scene
 
   handlePreloadFinished()
   {
-    let t = this;
-    t.scene.remove('Preload');
-    t.anims.remove('run');
-    t.group.destroy(t);
+    this.scene.remove('Preload');
+    this.anims.remove('run');
+    this.group.remove(this);
+
 
     // --- Let's start the game
-    t.scene.start('Phone');
+    this.scene.launch('Phone');
+    this.scene.remove();
 
     // --- Play a melodic sound when display homescreen
-    if (!['dev'].includes(t.game.debug))
-      t.sound.play('startup');
+    if (!['dev'].includes(this.game.debug))
+      this.sound.play('startup');
 
   }
 }

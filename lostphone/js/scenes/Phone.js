@@ -1,6 +1,5 @@
-import { DPR, assetsDPR } from '../main.js';
+import { DPR, assetsDPR } from '../config.js';
 import Homescreen from './Homescreen.js';
-import PhoneUI from './PhoneUI.js';
 
 
 export default class Phone extends Phaser.Scene
@@ -12,10 +11,10 @@ export default class Phone extends Phaser.Scene
 
   init()
   {
-    let t = this;
+    // let t = this;
 
-    t.scene.add('Homescreen', Homescreen);
-    t.scene.add('PhoneUI', PhoneUI);
+    // t.scene.add('Homescreen', Homescreen);
+    // t.scene.add('PhoneUI', PhoneUI);
     // t.scene.add('wifiApp', WifiApp);
 
     // Definim el cursor
@@ -32,25 +31,23 @@ export default class Phone extends Phaser.Scene
 
   create()
   {
-    let t = this;
-
     // -- Set a random wallpaper
-    let wallpapers = t.cache.json.get('config').wallpapers;
+    let wallpapers = this.cache.json.get('config').wallpapers;
     let wallpaper = wallpapers[Math.floor(Math.random() * wallpapers.length)] + '-wallpaper';
-    let scale = t.textures.get(wallpaper).getSourceImage();
-    t.add.image(
-      Math.round(t.game.config.width / 2),
-      Math.round(t.game.config.height / 2),
+    let scale = this.textures.get(wallpaper).getSourceImage();
+    this.add.image(
+      Math.round(this.game.config.width / 2),
+      Math.round(this.game.config.height / 2),
       wallpaper)
       .setOrigin(0.5, 0.5)
       .setScale(
-        t.game.config.width / scale.width,
-        t.game.config.height / scale.height
+        this.game.config.width / scale.width,
+        this.game.config.height / scale.height
       );
 
     // --- Set default cursor
-    t.input.setDefaultCursor("url(" + `assets/img/cursors/fingerprint.png` + ") 24 24, auto");
-    t.scene.launch('Homescreen');
-    t.scene.launch('PhoneUI');
+    this.input.setDefaultCursor("url(" + `assets/img/cursors/fingerprint.png` + ") 24 24, auto");
+    this.scene.launch('Homescreen');
+    this.scene.launch('PhoneUI');
   }
 }

@@ -1,6 +1,8 @@
-import { DPR, assetsDPR } from '../main.js';
+import { DPR, assetsDPR } from '../config.js';
 import IconApp from '../prefabs/iconApp.js';
-import ClockApp from './apps/clock.js';
+// import ClockApp from './apps/clock.js';
+import PhoneUI from './PhoneUI.js';
+
 
 export default class Homescreen extends Phaser.Scene
 {
@@ -13,9 +15,7 @@ export default class Homescreen extends Phaser.Scene
 
   init()
   {
-    let t = this;
-    // --- Initialize all the working apps
-    t.scene.add('ClockApp', ClockApp);
+    this.apps = this.cache.json.get('apps');
   }
 
   preload()
@@ -27,7 +27,6 @@ export default class Homescreen extends Phaser.Scene
 
   create()
   {
-    this.apps = this.cache.json.get('apps');
     this.addIconApps();
   }
 

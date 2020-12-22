@@ -2,7 +2,7 @@
 // --- PhoneUI.js
 // ---
 
-import { DPR, assetsDPR } from '../main.js';
+import { DPR, assetsDPR } from '../config.js';
 import Time from '../prefabs/time.js';
 
 export default class PhoneUI extends Phaser.Scene
@@ -13,7 +13,7 @@ export default class PhoneUI extends Phaser.Scene
     this.time;
     this.notifications = [];
     this.notificationOn = false;
-    this.nextDelay = 'random';    
+    this.nextDelay = 'random';
   };
 
   create()
@@ -30,7 +30,7 @@ export default class PhoneUI extends Phaser.Scene
     // --- Volume icon
     // By default, volume icon is on
     // @TODO: icon atlas
-    let volume_icon = t.add.image(width - Math.floor(18 * assetsDPR), 12 * assetsDPR, 'volume-icon-on')
+    this.add.image(width - Math.floor(18 * assetsDPR), 12 * assetsDPR, 'volume-icon-on')
         .setScale(1 / (assetsDPR * 4))
         .setTintFill(0xffffff)
         .setInteractive()
@@ -38,34 +38,24 @@ export default class PhoneUI extends Phaser.Scene
           t.game.sound.mute === true  ? this.setTexture('volume-icon-on') : this.setTexture('volume-icon-off');
           t.game.sound.mute = !t.game.sound.mute;
         });
-    
-    // --- Set the home button
-    // @TODO: Replace by an image or sprite
-    var circle = new Phaser.Geom.Circle(Math.floor(width / 2), height - Math.floor(48 * assetsDPR / 2 ), Math.floor(18 * assetsDPR));
-    var graphics = t.add.graphics({ fillStyle: { color: 0xffffff } });
-    graphics.fillCircleShape(circle);
 
-    // That's crap man
-    // but it sleep tha 
-    t.input.on('pointerdown', function(pointer){
-      if (circle.contains(pointer.x, pointer.y) && !t.scene.isActive('Homescreen')){
-        // if there's an alternative to that, shut up
-        // and take my money!
+    // --- Home button
+    this.add.image(Math.floor(width / 2), height - Math.floor(48 * assetsDPR / 2), 'button-homescreen')
+      .setInteractive()
+      .on('pointerup', function(){
         var scenes = t.game.scene.getScenes(true);
         for (var i in scenes) {
           if (/App/.test(scenes[i].scene.key))
             var app = scenes[i].scene.key;
         };
-        switch(app){
-        case 'ClockApp':
-          t.game.scene.stop(app);
-          break;
-        }
-        t.game.scene.wake('Homescreen');
-      };
-    });
 
-    // --- Clock time at the upper bar 
+        if (typeof app !== 'undefined') {
+          t.game.scene.sleep(app);
+          t.game.scene.wake('Homescreen');
+        }
+      });
+
+    // --- Clock time at the upper bar
     t.time = new Time(t, Math.floor(width / 2), height / 56, {
       fontFamily: 'Roboto',
       fontSize : Math.floor(13 * assetsDPR),
@@ -73,9 +63,9 @@ export default class PhoneUI extends Phaser.Scene
       align: 'center'
     })
       .setOrigin(0.5, 0.5)
-      .setResolution(Math.floor(assetsDPR));    
+      .setResolution(Math.floor(assetsDPR));
   };
-  
+
   update(delta, time)
   {
     let t = this;
@@ -85,8 +75,8 @@ export default class PhoneUI extends Phaser.Scene
     t.launchNotification();
     */
   };
-  
-  
+
+
 }
 
 /*
@@ -105,7 +95,7 @@ class PhoneUI extends Phaser.Scene
     this.notificationOn = false;
     this.nextDelay = 'random';
   }
-  
+
   create()
   {
     let t = this;
@@ -151,7 +141,7 @@ class PhoneUI extends Phaser.Scene
   watchNotification()
   {
     let t = this;
-    
+
     // Don't do anything if game state has not been modified
     if (t.game.lastmod !== undefined) {
       let elements = t.game.getNewElements();
@@ -166,7 +156,7 @@ class PhoneUI extends Phaser.Scene
         ));
         this.log("Added notifications to queue.");
       }
-    } 
+    }
   }
 
   launchNotification()

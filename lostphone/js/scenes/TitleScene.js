@@ -1,4 +1,4 @@
-import { assetsDPR } from '../main.js'
+import { assetsDPR } from '../config.js'
 import Image from '../prefabs/Image.js'
 import TextButton from '../prefabs/TextButton.js'
 import Bootstrap from './Bootstrap.js'

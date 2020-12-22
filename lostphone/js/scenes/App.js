@@ -5,7 +5,7 @@ export default class App extends Phaser.Scene
 {
   constructor()
   {
-    super();
+    super({key : 'App'});
     this.config;
     this.colors;
   }
@@ -22,6 +22,6 @@ export default class App extends Phaser.Scene
     let t = this;
     t.cameras.main.setBackgroundColor(0xc3c3c3);
     //@TODO Segurament que hi haurà una manera diferent (i millor) per no haver-ne de fer aquesta crida cada vegada que llancem una app
-    t.scene.bringToTop('PhoneUI');
+    // t.scene.bringToTop('PhoneUI');
   }
 }

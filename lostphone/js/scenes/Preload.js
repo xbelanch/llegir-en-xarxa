@@ -1,7 +1,7 @@
 // -- Preload.js
 //
 //
-import { assetsDPR } from '../main.js';
+import { assetsDPR } from '../config.js';
 import { PhoneEvents } from './Bootstrap.js';
 
 export default class Preload extends Phaser.Scene
@@ -66,6 +66,7 @@ export default class Preload extends Phaser.Scene
     if (['dev'].includes(t.game.debug)) {
       t.load.image('volume-icon-on', 'assets/img/volume-icon-on.png');
       t.load.image('volume-icon-off', 'assets/img/volume-icon-off.png');
+      t.load.image('button-homescreen', 'assets/images/button-homescreen.png');
     /*
       for (var i = 0; i < 2; i++) {
         t.load.image('test' + i, 'assets/img/560x1024/backgrounds/city-blurred-hd.jpg');

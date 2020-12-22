@@ -40,5 +40,12 @@
     "key"  : "mailApp",
     "name" : "Correu",
     "icon" : "mailApp.png"
+  },
+  {
+    "type" : "test",
+    "class": "TestApp",
+    "key"  : "TestApp",
+    "name" : "Test",
+    "icon" : "clockApp.png"
   }
 ]
