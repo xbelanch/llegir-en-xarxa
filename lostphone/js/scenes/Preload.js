@@ -104,6 +104,10 @@ export default class Preload extends Phaser.Scene
       t.load.audio(t.cache.json.get('tracks'));
     };
 
+    // --- Load shaders
+    t.load.glsl('bundle', 'assets/shaders/bundle.glsl.js');
+
+
   }
 
   create()

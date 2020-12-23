@@ -42,10 +42,10 @@
     "icon" : "mailApp.png"
   },
   {
-    "type" : "test",
-    "class": "TestApp",
-    "key"  : "TestApp",
-    "name" : "Test",
+    "type" : "sandbox",
+    "class": "SandboxApp",
+    "key"  : "SandboxApp",
+    "name" : "Sandbox",
     "icon" : "clockApp.png"
   }
 ]

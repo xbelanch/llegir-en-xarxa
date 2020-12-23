@@ -6,8 +6,9 @@ import TitleScene from './scenes/TitleScene.js'
 import Phone from './scenes/Phone.js'
 import Homescreen from './scenes/Homescreen.js'
 import PhoneUI from './scenes/PhoneUI.js'
-//import ClockApp from './scenes/apps/Clock.js';
-import TestApp from './scenes/apps/Test.js';
+
+import ClockApp from './scenes/apps/Clock.js';
+import SandboxApp from './scenes/apps/Sandbox.js';
 
 // import { Plugin as NineSlicePlugin } from './plugins/nineslice.min.js'
 // import Bootstrap from './scenes/Bootstrap.js'
@@ -54,7 +55,7 @@ export default {
     width: WIDTH,
     height: HEIGHT
   },
-  scene: [TitleScene, Bootstrap, Preload, Phone, TestApp, Homescreen, PhoneUI],
+  scene: [TitleScene, Bootstrap, Preload, Phone, ClockApp, SandboxApp, Homescreen, PhoneUI],
   plugins: {
     global: [
       { key: 'SceneWatcher', plugin : PhaserSceneWatcherPlugin, start: true, mapping: 'sceneWatcher' },
