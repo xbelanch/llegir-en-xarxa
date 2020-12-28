@@ -4,6 +4,7 @@ import Preload from './Preload.js';
 import Phone from './Phone.js';
 import Image from '../prefabs/image.js';
 import Sprite from '../prefabs/sprite.js';
+import {WebFontFile} from "../libs/lostphone";
 
 
 export const PhoneEvents = {

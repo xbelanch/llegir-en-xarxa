@@ -1,5 +1,7 @@
 // --- Set Config Phaser Game
-// import { Plugin as NineSlicePlugin } from './plugins/nineslice.min.js'
+import Phaser from 'phaser'
+import PhaserSceneWatcherPlugin from 'phaser-plugin-scene-watcher'
+import { Plugin as NineSlice } from 'phaser3-nineslice'
 import Bootstrap from './scenes/Bootstrap.js'
 import Preload from './scenes/Preload.js';
 import TitleScene from './scenes/TitleScene.js'
@@ -59,7 +61,7 @@ export default {
   plugins: {
     global: [
       { key: 'SceneWatcher', plugin : PhaserSceneWatcherPlugin, start: true, mapping: 'sceneWatcher' },
-      NineSlice.Plugin.DefaultCfg
+      NineSlice.DefaultCfg
 
     ]
   },

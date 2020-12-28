@@ -1,3 +1,4 @@
+import WebFont from 'webFontLoader'
 // --- lib lostphone
 
 // --- Debug
@@ -152,7 +153,7 @@ Phaser.Game.prototype.unserialize = function(saveObject) {
 Phaser.Game.prototype.save = function(key) {
     this.saveCustom(key, btoa(this.serialize()));
 };
-  
+
 
 /**
  * Save the game state.
@@ -182,7 +183,7 @@ Phaser.Game.prototype.getPassword = function() {
 
   return passValue;
 }
-  
+
 /**
  * Update URL with password
  */
@@ -194,11 +195,11 @@ Phaser.Game.prototype.updateURL = function(value) {
   if (passValue) {
        path = url.replace(passValue[0], "");
    }
-  
+
   window.history.pushState("", "", path + '?pass=' + value);
 };
 
-  
+
 /**
  * Load a game state.
  *
@@ -238,16 +239,16 @@ Phaser.Game.prototype.autosaveOff = function() {
 // ---- WebFontFile.js
 // Source: https://gist.github.com/supertommy/bc728957ff7dcb8016da68b04d3a2768
 
-const WebFont = window.WebFont;
+//const WebFont = window.WebFont;
 
-class WebFontFile extends Phaser.Loader.File
+export class WebFontFile extends Phaser.Loader.File
 {
   /**
    * @param {Phaser.Loader.LoaderPlugin} loader
    * @param {string | string[]} fontNames
    * @param {string} [service]
    */
-  
+
   constructor(loader, fontNames, service = 'google')
   {
     super(loader, {

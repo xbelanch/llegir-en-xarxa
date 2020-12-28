@@ -8,3 +8,6 @@ defs/
 GPATH
 GRTAGS
 GTAGS
+.cache
+dist
+node_modules

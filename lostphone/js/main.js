@@ -1,4 +1,4 @@
-import config from './config.js'
+import config from './config'
 
 // Sure there's another aesthetic way
 // to launch the game
