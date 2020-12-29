@@ -1,0 +1,32 @@
+{
+  "name": "lostphone",
+  "version": "1.0.0",
+  "description": "Lost Phone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "parcel": "parcel watch js/main.js",
+    "parcel:build": "parcel build js/main.js",
+    "browser-sync": "browser-sync start --server --files \".\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xbelanch/llegir-en-xarxa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "libs": "^0.1.2",
+    "phaser": "^3.50.1",
+    "phaser-plugin-scene-watcher": "^4.2.0",
+    "phaser3-nineslice": "^0.5.0",
+    "webfontloader": "^1.6.28"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.13",
+    "parcel": "^1.12.4",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^4.3.0"
+  }
+}
