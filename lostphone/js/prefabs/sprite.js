@@ -1,4 +1,4 @@
-import { assetsDPR } from '../main.js'
+import { assetsDPR } from '../config.js'
 
 class Sprite extends Phaser.GameObjects.Sprite {
   constructor (scene, x, y, texture, frame) {
@@ -8,8 +8,8 @@ class Sprite extends Phaser.GameObjects.Sprite {
 
   setX(x) { super.setX(Math.round(x * assetsDPR)); }
   setY(y) { super.setY(Math.round(y * assetsDPR)); }
-  
-  
+
+
 }
 
 export default Sprite

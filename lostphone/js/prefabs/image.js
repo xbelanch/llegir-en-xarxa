@@ -1,4 +1,4 @@
-import { assetsDPR } from '../main.js'
+import { assetsDPR } from '../config.js'
 
 class Image extends Phaser.GameObjects.Image {
   constructor (scene, x, y, texture, frame) {

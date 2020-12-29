@@ -40,5 +40,12 @@
     "key"  : "mailApp",
     "name" : "Correu",
     "icon" : "mailApp.png"
+  },
+  {
+    "type" : "sandbox",
+    "class": "SandboxApp",
+    "key"  : "SandboxApp",
+    "name" : "Sandbox",
+    "icon" : "clockApp.png"
   }
 ]

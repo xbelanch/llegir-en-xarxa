@@ -1,25 +1,27 @@
 //--
 //-- Clock.js
 //--
-//-- @Note: App bàsica per treballar la part gràfica de la llibreria Phaser.
-//-- @Todo: Cal refer-la més endavant per donar-li un aspecte més actual.
 //-- @From: Clock Source: https://phaser.io/examples/v3/view/scenes/drag-scenes-demo#
-import App from '../App.js';
 
-export default class ClockApp extends App
+export default class ClockApp extends Phaser.Scene
 {
   constructor()
   {
     super({ key: 'ClockApp'});
     this.clockSize;
     this.graphics;
+    this.config;
+    this.colors;
+  }
+
+  init()
+  {
+    this.config = this.cache.json.get('config');
+    this.colors = this.config.colors;
   }
 
   create()
   {
-    // call this si volem incloure el fons de pantalla random
-    super.create();
-
     let t = this;
     let { width, height } = t.cameras.main;
     t.x = width / 2;

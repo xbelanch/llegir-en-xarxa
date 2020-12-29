@@ -2,7 +2,7 @@
 //
 //
 
-import { assetsDPR } from '../main.js';
+import { assetsDPR } from '../config.js';
 import Image from './image.js';
 
 export default class IconApp extends Image
@@ -25,12 +25,12 @@ export default class IconApp extends Image
     t.on('pointerout', function(event){
       t.setAlpha(1.0);
     });
-    
+
     t.on('pointerdown', function(event) {
-      t.scene.scene.sleep('Homescreen');
       t.scene.scene.launch(t.config.key);
-    });    
-    
+      t.scene.scene.sleep('Homescreen');
+    });
+
   }
 
   addLabel(appname)
