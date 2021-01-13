@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "browser-sync": "^2.26.13",
+    "http-server": "^0.12.3",
     "parcel": "^1.12.4",
     "webpack": "^4.44.2",
     "webpack-cli": "^4.3.0"

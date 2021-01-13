@@ -1,7 +1,7 @@
 # llegir-en-xarxa
 
 Repositori documental i tècnic del miniop "Llegir en xarxa"
-                                     
+
 ## Development (dir: llegir-en-xarxa/lostphone)
 ### Install packages
 ````shell
@@ -21,4 +21,11 @@ npm run browser-sync
 ````shell
 npm run parcel:build
 ````
-                       
+
+###  Makefile
+
+Add simple Makefile at the moment only for launch a simple http-server. Borrowed from [@tsoding/schedule](https://github.com/tsoding/schedule).
+
+```
+$ make
+```
