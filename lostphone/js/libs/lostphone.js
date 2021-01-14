@@ -154,7 +154,7 @@ Phaser.Game.prototype.unserialize = function(saveObject) {
 /**
  * Save the game state.
  */
-Phaser.Game.prototype.save = function(key) {
+Phaser.Game.prototype.save = function(key='autosave') {
     this.saveCustom(key, btoa(this.serialize()));
 };
 

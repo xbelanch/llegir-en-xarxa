@@ -16,23 +16,28 @@ export default class PhoneUI extends Phaser.Scene
     this.notificationOn = false;
     this.nextDelay = 'random';
     this.emitter = EventDispatcher.getInstance();
+    this.drawer;
+    this.drawerOut = false;
+    this.topNotificationBar;
+    this.barColor = 0x1c1c1c;
   };
 
   create()
   {
     let t = this;
     let { width, height } = t.cameras.main;
-    let barColor = 0x1c1c1c;
 
     // --- Display top and bottom bars
-    let topBar = t.add.rectangle(0, 0, width, Math.floor(24 * assetsDPR), barColor, 1.0).setOrigin(0);
-    let bottomBar = t.add.rectangle(0, height - Math.floor(48 * assetsDPR), width, Math.floor(48 * assetsDPR), barColor, 1.0).setOrigin(0);
+    let topBar = t.add.rectangle(0, 0, width, Math.floor(24 * assetsDPR), t.barColor, 1.0).setOrigin(0);
+    let bottomBar = t.add.rectangle(0, height - Math.floor(48 * assetsDPR), width, Math.floor(48 * assetsDPR), t.barColor, 1.0).setOrigin(0);
+    t.createDrawer();
+    t.createNotificationBar();
 
 
     // --- Volume icon
     // By default, volume icon is on
     // @TODO: icon atlas
-    this.add.image(width - Math.floor(18 * assetsDPR), 12 * assetsDPR, 'volume-icon-on')
+    this.add.image(width - Math.floor(24 * assetsDPR), 12 * assetsDPR, 'volume-icon-on')
         .setScale(1 / (assetsDPR * 4))
         .setTintFill(0xffffff)
         .setInteractive()
@@ -66,6 +71,7 @@ export default class PhoneUI extends Phaser.Scene
     })
       .setOrigin(0.5, 0.5)
       .setResolution(Math.floor(assetsDPR));
+
 
     this.emitter.on('notification', () => this.launchNotification());
     this.launchNotification();
@@ -114,8 +120,99 @@ export default class PhoneUI extends Phaser.Scene
     let notifications = this.game.state['pendingNotifications'];
     if (notifications.length > 0) {
       notifications.splice(0, 1);
+      this.game.save();
       this.emitter.emit('notification');
     }
+  }
+
+  createNotificationBar() {
+    let t = this;
+    let { width, height } = t.cameras.main;
+    let notificationBarColor = 0x9c9c9c;
+
+    this.topNotificationBar = this.add.container(
+      width - Math.floor(16 * assetsDPR), -height,
+      [
+        t.add.rectangle(
+          0, 0, 
+          16 * assetsDPR, 
+          height + Math.floor(24 * assetsDPR), 
+          notificationBarColor
+        ).setOrigin(0,0),
+        t.add.triangle(
+          0, 0,
+          0,height+Math.floor(24 * assetsDPR),
+          Math.floor(16 * assetsDPR), height+Math.floor(24 * assetsDPR),
+          Math.floor(16 * assetsDPR) / 2, height + Math.floor(24 * assetsDPR) + Math.floor(8 * assetsDPR),
+          notificationBarColor
+        ).setOrigin(0,0),
+        t.add.text(
+          Math.floor(8*assetsDPR), height + Math.floor(10*assetsDPR), "↡", {
+          fontFamily: 'Roboto',
+          fontSize : Math.floor(13 * assetsDPR),
+          color: '#ffffff',
+          align: 'center'
+        })
+          .setOrigin(0.5, 0.5)
+          .setResolution(Math.floor(assetsDPR))
+          .setInteractive()
+          .on('pointerup', function(){
+              t.drawerOut ? this.setText('↡') : this.setText('↟');
+              t.drawerOut ? t.hideDrawer() : t.showDrawer();
+              t.drawerOut = !t.drawerOut;
+            })
+      ]
+    );
+  }
+
+  createDrawer() {
+    let t = this;
+    let { width, height } = t.cameras.main;
+
+    t.drawer = this.add.container(
+      0, -height,
+      [
+        t.add.rectangle(0, 0, width, height, t.barColor, 1.0).setOrigin(0,0),
+        t.add.text(
+          Math.floor(width / 2), Math.floor(100*assetsDPR),
+          "Notificacions",
+          {
+            fontFamily: 'Roboto',
+            fontSize : Math.floor(13 * assetsDPR),
+            color: '#ffffff',
+            align: 'center'
+          }
+        )
+        .setOrigin(0.5, 0.5)
+        .setResolution(Math.floor(assetsDPR)),
+        t.add.line(
+          0, 0,
+          Math.floor(30*assetsDPR), Math.floor(120*assetsDPR),
+          width - Math.floor(30*assetsDPR), Math.floor(120*assetsDPR), 
+         0xffffff)
+        .setOrigin(0)
+      ]
+    );
+  }
+
+  showDrawer() {
+    let { width, height } = this.cameras.main;
+    this.log('Drawer out!');
+    this.tweens.add({
+      targets: [this.drawer, this.topNotificationBar],
+      y: - Math.floor(48 * assetsDPR),
+      duration : 500
+    });
+  }
+
+  hideDrawer() {
+    let { width, height } = this.cameras.main;
+    this.log('Drawer in!');
+    this.tweens.add({
+      targets: [this.drawer, this.topNotificationBar],
+      y: -height,
+      duration : 500,
+    });
   }
 }
 
