@@ -1,4 +1,5 @@
-import WebFont from 'webFontLoader'
+import WebFont from './webFontLoader'
+import EventDispatcher from './EventDispatcher';
 // --- lib lostphone
 
 // --- Debug
@@ -22,11 +23,7 @@ Object.defineProperty(Phaser.Structs.List.prototype, 'current', {
   }
 });
 
-Phaser.Game.prototype.getNewElements = function() {
-
-    if (this.lastmod === undefined) {
-        return [];
-    }
+Phaser.Game.prototype.getNewElements = function(triggerItem) {
 
     // Change this
     let items = [];
@@ -43,7 +40,7 @@ Phaser.Game.prototype.getNewElements = function() {
                 if (!Array.isArray(conditions)) {
                     conditions = [conditions];
                 }
-                if (conditions.includes(this.lastmod)) {
+                if (conditions.includes(triggerItem)) {
                     if (this.checkCondition(conditions)) {
                         content[type+'s'][element]['type'] = type;
                         items.push(content[type+'s'][element]);
@@ -90,9 +87,16 @@ Phaser.Game.prototype.updateURL = function(value) {
  */
 Phaser.Game.prototype.saveState = function(app, key, value) {
     if (app === 'complete' && this.state[app][key] === undefined) {
-      this.lastmod = key;
+      this.state[app][key] = value;
+      let items = this.getNewElements(key);
+      this.state['notifications'] = [...this.state['notifications'], ...items];
+      this.state['pendingNotifications'] = [...this.state['pendingNotifications'], ...items];
+
+      this.emitter = EventDispatcher.getInstance();
+      this.emitter.emit('notification');
+    } else {
+      this.state[app][key] = value;
     }
-    this.state[app][key] = value;
     this.save('autosave');
 };
 

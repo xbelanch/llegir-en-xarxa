@@ -1,4 +1,6 @@
-class MailListObject extends Phaser.GameObjects.GameObject
+import MailHeadingObject from './mailHeading.js';
+
+export default class MailListObject extends Phaser.GameObjects.GameObject
 {
   constructor(scene, config) {
         super(scene, 'mailList');

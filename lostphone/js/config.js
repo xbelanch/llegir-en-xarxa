@@ -11,6 +11,7 @@ import PhoneUI from './scenes/PhoneUI.js'
 
 import ClockApp from './scenes/apps/Clock.js';
 import SandboxApp from './scenes/apps/Sandbox.js';
+import MailApp from './scenes/apps/Mail.js';
 
 // import { Plugin as NineSlicePlugin } from './plugins/nineslice.min.js'
 // import Bootstrap from './scenes/Bootstrap.js'
@@ -57,7 +58,7 @@ export default {
     width: WIDTH,
     height: HEIGHT
   },
-  scene: [TitleScene, Bootstrap, Preload, Phone, ClockApp, SandboxApp, Homescreen, PhoneUI],
+  scene: [TitleScene, Bootstrap, Preload, Phone, ClockApp, SandboxApp, MailApp, Homescreen, PhoneUI],
   plugins: {
     global: [
       { key: 'SceneWatcher', plugin : PhaserSceneWatcherPlugin, start: true, mapping: 'sceneWatcher' },

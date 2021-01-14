@@ -99,6 +99,8 @@ export default class Bootstrap extends Phaser.Scene
     // --- Initialize game and app states
     t.game.state = {};
     t.game.state['complete'] = {};
+    t.game.state['notifications'] = [];
+    t.game.state['pendingNotifications'] = [];
     let apps = t.cache.json.get('apps');
     for (var i = 0; i < apps.length; i++)
       t.game.state[apps[i].type] = {};

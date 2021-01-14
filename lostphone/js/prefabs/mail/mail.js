@@ -1,4 +1,4 @@
-class MailObject extends Phaser.GameObjects.GameObject
+export default class MailObject extends Phaser.GameObjects.GameObject
 {
     constructor(scene, config, mail) {
         super(scene, 'mail');

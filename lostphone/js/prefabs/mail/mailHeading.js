@@ -1,4 +1,6 @@
-class MailHeadingObject extends Phaser.GameObjects.Text
+import MailObject from './mail.js';
+
+export default class MailHeadingObject extends Phaser.GameObjects.Text
 {
     constructor(scene, config, mail, x, y, text_style) {
       const text_content = config['locale']['from']

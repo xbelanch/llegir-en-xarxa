@@ -37,7 +37,7 @@
   {
     "type" : "mail",
     "class": "MailApp",
-    "key"  : "mailApp",
+    "key"  : "MailApp",
     "name" : "Correu",
     "icon" : "mailApp.png"
   },

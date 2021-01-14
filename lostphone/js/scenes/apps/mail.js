@@ -4,27 +4,24 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
+import MailListObject from '../../prefabs/mail/mailList.js';
 
-
-class MailApp extends App
+export default class MailApp extends Phaser.Scene
 {
   constructor()
   {
-    super();
+    super({ key: 'MailApp'});
     this.config = null;
   }
 
   init()
   {
-    let t = this;
-    super.init();
-    t.registry.set('activeApp', 'mailApp');    
+
   }
 
   preload()
   {
     let t = this;
-    super.preload();
     t.colors = t.cache.json.get('config').colors;
     t.config = t.cache.json.get('mail');
 
@@ -34,7 +31,6 @@ class MailApp extends App
   {
     // --- This need to refactor?
     let t = this;
-    super.create();
 
     // --- Display a list mails
     t.listMails();

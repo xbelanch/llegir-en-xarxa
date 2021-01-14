@@ -4,6 +4,8 @@
 
 import { DPR, assetsDPR } from '../config.js';
 import Time from '../prefabs/time.js';
+import Popup from '../prefabs/popup.js';
+import EventDispatcher from '../libs/EventDispatcher.js';
 
 export default class PhoneUI extends Phaser.Scene
 {
@@ -11,9 +13,9 @@ export default class PhoneUI extends Phaser.Scene
   {
     super({ key: 'PhoneUI' });
     this.time;
-    this.notifications = [];
     this.notificationOn = false;
     this.nextDelay = 'random';
+    this.emitter = EventDispatcher.getInstance();
   };
 
   create()
@@ -64,19 +66,56 @@ export default class PhoneUI extends Phaser.Scene
     })
       .setOrigin(0.5, 0.5)
       .setResolution(Math.floor(assetsDPR));
+
+    this.emitter.on('notification', () => this.launchNotification());
   };
 
   update(delta, time)
   {
     let t = this;
     t.time.update(delta);
-    /*
-    t.watchNotification();
-    t.launchNotification();
-    */
   };
 
+  launchNotification()
+  {
+    let t = this;
+    let notifications = this.game.state['pendingNotifications'];
 
+    if (!this.notificationOn && notifications !== undefined && notifications.length > 0) {
+
+      this.notificationOn = true;
+      let notification = notifications[0];
+      notifications.splice(0, 1);
+
+      new Popup(
+        t,
+        'Nou '+notification['type']+': '+notification['subject'],
+        { icon: notification['type'] }
+      ).display({
+        delay: this.nextDelay,
+        onComplete: this.onCompleteHandler,
+        onCompleteScope: this
+      });
+      this.nextDelay = 'random';
+
+      this.log("Notification launched");
+    } else if (this.notificationOn) {
+      this.nextDelay = 0;
+    }
+  }
+
+  onCompleteHandler(tween, targets, popup)
+  {
+    popup.isActive = false;
+    popup.setVisible(false);
+    popup.destroy();
+    this.notificationOn = false;
+
+    let notifications = this.game.state['pendingNotifications'];
+    if (notifications.length > 0) {
+      this.emitter.emit('notification');
+    }
+  }
 }
 
 /*
@@ -136,56 +175,6 @@ class PhoneUI extends Phaser.Scene
     t.time.update();
     t.watchNotification();
     t.launchNotification();
-  }
-
-  watchNotification()
-  {
-    let t = this;
-
-    // Don't do anything if game state has not been modified
-    if (t.game.lastmod !== undefined) {
-      let elements = t.game.getNewElements();
-      t.game.lastmod = undefined;
-
-      // TODO: Will overlap if multiple elements
-      for (let x in elements) {
-        this.notifications.push(new Popup(
-          t,
-          'New '+elements[x]['type']+': '+elements[x]['subject'],
-          { icon: elements[x]['type'] }
-        ));
-        this.log("Added notifications to queue.");
-      }
-    }
-  }
-
-  launchNotification()
-  {
-    if (!this.notificationOn && this.notifications !== undefined && this.notifications.length > 0) {
-
-      this.notificationOn = true;
-      let notification = this.notifications[0];
-      this.notifications.splice(0, 1);
-
-      notification.display({
-        delay: this.nextDelay,
-        onComplete: this.onCompleteHandler,
-        onCompleteScope: this
-      });
-      this.log("Notification launched");
-    } else if (this.notificationOn) {
-      this.nextDelay = 0;
-    } else if (this.notifications === undefined || this.notifications.length === 0) {
-      this.nextDelay = 'random';
-    }
-  }
-
-  onCompleteHandler(tween, targets, popup)
-  {
-    popup.isActive = false;
-    popup.setVisible(false);
-    popup.destroy();
-    this.notificationOn = false;
   }
 }
 */
