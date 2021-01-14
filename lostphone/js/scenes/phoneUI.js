@@ -68,6 +68,7 @@ export default class PhoneUI extends Phaser.Scene
       .setResolution(Math.floor(assetsDPR));
 
     this.emitter.on('notification', () => this.launchNotification());
+    this.launchNotification();
   };
 
   update(delta, time)
@@ -85,7 +86,6 @@ export default class PhoneUI extends Phaser.Scene
 
       this.notificationOn = true;
       let notification = notifications[0];
-      notifications.splice(0, 1);
 
       new Popup(
         t,
@@ -113,6 +113,7 @@ export default class PhoneUI extends Phaser.Scene
 
     let notifications = this.game.state['pendingNotifications'];
     if (notifications.length > 0) {
+      notifications.splice(0, 1);
       this.emitter.emit('notification');
     }
   }

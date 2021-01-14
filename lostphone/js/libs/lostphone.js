@@ -169,8 +169,7 @@ Phaser.Game.prototype.saveCustom = function(key, value) {
 
     // Check if value is correct before saving
     try {
-        test = atob(value);
-        test = JSON.parse(test);
+        JSON.parse(atob(value));
 
         localStorage.setItem('save-' + key, value);
         this.updateURL(value);
