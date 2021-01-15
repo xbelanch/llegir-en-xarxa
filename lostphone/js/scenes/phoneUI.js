@@ -221,7 +221,7 @@ export default class PhoneUI extends Phaser.Scene
       notificationsArea.add(new Notification(
           this,
           'Nou '+notifications[i]['type']+': '+notifications[i]['subject'],
-          notifications[i]['key'],
+          notifications[i],
           {
             y: Math.floor(110*assetsDPR) * i,
             width: width*0.8,

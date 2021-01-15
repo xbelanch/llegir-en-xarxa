@@ -72,4 +72,7 @@ export default class Popup extends TextBox
     popup.setVisible(false);
   }
 
+  destroyBox() {
+    super.destroy();
+  }
 }

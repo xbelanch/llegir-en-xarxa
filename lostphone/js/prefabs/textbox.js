@@ -77,12 +77,12 @@ export default class TextBox extends Phaser.GameObjects.Container
         }
         ).setOrigin(0,0)
         .setInteractive()
-        .on('pointerup', () => textbox.destroy())
+        .on('pointerup', () => textbox.destroyBox())
       );
     }
   }
 
-  destroy() {
+  destroyBox() {
     super.destroy();
   }
 }
