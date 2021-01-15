@@ -26,6 +26,7 @@ export default class PhoneUI extends Phaser.Scene
   {
     let t = this;
     let { width, height } = t.cameras.main;
+    t.input.setTopOnly(true);
 
     // --- Display top and bottom bars
     let topBar = t.add.rectangle(0, 0, width, Math.floor(24 * assetsDPR), t.barColor, 1.0).setOrigin(0);
@@ -96,7 +97,7 @@ export default class PhoneUI extends Phaser.Scene
       new Popup(
         t,
         'Nou '+notification['type']+': '+notification['subject'],
-        { icon: notification['type'] }
+        { icon: notification['type'], ellipsis: true }
       ).display({
         delay: this.nextDelay,
         onComplete: this.onCompleteHandler,
@@ -134,9 +135,9 @@ export default class PhoneUI extends Phaser.Scene
       width - Math.floor(16 * assetsDPR), -height,
       [
         t.add.rectangle(
-          0, 0, 
-          16 * assetsDPR, 
-          height + Math.floor(24 * assetsDPR), 
+          0, 0,
+          16 * assetsDPR,
+          height + Math.floor(24 * assetsDPR),
           notificationBarColor
         ).setOrigin(0,0),
         t.add.triangle(
@@ -188,7 +189,7 @@ export default class PhoneUI extends Phaser.Scene
         t.add.line(
           0, 0,
           Math.floor(30*assetsDPR), Math.floor(120*assetsDPR),
-          width - Math.floor(30*assetsDPR), Math.floor(120*assetsDPR), 
+          width - Math.floor(30*assetsDPR), Math.floor(120*assetsDPR),
          0xffffff)
         .setOrigin(0)
       ]
