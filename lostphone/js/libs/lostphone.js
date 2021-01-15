@@ -92,6 +92,12 @@ Phaser.Game.prototype.saveState = function(app, key, value) {
       this.state['notifications'] = [...this.state['notifications'], ...items];
       this.state['pendingNotifications'] = [...this.state['pendingNotifications'], ...items];
 
+      let found = this.state['notifications'].filter(element => element['id'] === key);
+      if (found.length > 0) {
+        let index = this.state['notifications'].indexOf(found[0]);
+        if (index !== -1) this.state['notifications'].splice(index, 1);
+      }
+
       this.emitter = EventDispatcher.getInstance();
       this.emitter.emit('notification');
     } else {
