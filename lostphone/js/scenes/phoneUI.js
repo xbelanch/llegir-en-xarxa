@@ -5,6 +5,8 @@
 import { DPR, assetsDPR } from '../config.js';
 import Time from '../prefabs/time.js';
 import Popup from '../prefabs/popup.js';
+import ExclusivePopup from '../prefabs/exclusivePopup.js';
+import Notification from '../prefabs/notification.js';
 import EventDispatcher from '../libs/EventDispatcher.js';
 
 export default class PhoneUI extends Phaser.Scene
@@ -22,11 +24,14 @@ export default class PhoneUI extends Phaser.Scene
     this.barColor = 0x1c1c1c;
   };
 
+  preload() {
+    this.load.image('lorem-appsum-test', `assets/img/iconApp-@${assetsDPR}.png`);
+  }
+
   create()
   {
     let t = this;
     let { width, height } = t.cameras.main;
-    t.input.setTopOnly(true);
 
     // --- Display top and bottom bars
     let topBar = t.add.rectangle(0, 0, width, Math.floor(24 * assetsDPR), t.barColor, 1.0).setOrigin(0);
@@ -60,6 +65,7 @@ export default class PhoneUI extends Phaser.Scene
         if (typeof app !== 'undefined') {
           t.game.scene.stop(app);
           t.game.scene.wake('Homescreen');
+          t.hideDrawer();
         }
       });
 
@@ -74,7 +80,9 @@ export default class PhoneUI extends Phaser.Scene
       .setResolution(Math.floor(assetsDPR));
 
 
-    this.emitter.on('notification', () => this.launchNotification());
+    this.emitter.on('notification', function() {
+      t.launchNotification();
+    });
     this.launchNotification();
   };
 
@@ -97,9 +105,15 @@ export default class PhoneUI extends Phaser.Scene
       new Popup(
         t,
         'Nou '+notification['type']+': '+notification['subject'],
-        { icon: notification['type'], ellipsis: true }
+        {
+          //icon: notification['type'],
+          icon: 'lorem-appsum-test',
+          ellipsis: 30
+        }
       ).display({
         delay: this.nextDelay,
+        onActive: this.hideDrawer(),
+        onActiveScope: this,
         onComplete: this.onCompleteHandler,
         onCompleteScope: this
       });
@@ -122,7 +136,9 @@ export default class PhoneUI extends Phaser.Scene
     if (notifications.length > 0) {
       notifications.splice(0, 1);
       this.game.save();
-      this.emitter.emit('notification');
+      if (notifications.length > 0) {
+        this.emitter.emit('notification');
+      }
     }
   }
 
@@ -130,6 +146,7 @@ export default class PhoneUI extends Phaser.Scene
     let t = this;
     let { width, height } = t.cameras.main;
     let notificationBarColor = 0x9c9c9c;
+    t.drawerOut = false;
 
     this.topNotificationBar = this.add.container(
       width - Math.floor(16 * assetsDPR), -height,
@@ -194,6 +211,33 @@ export default class PhoneUI extends Phaser.Scene
         .setOrigin(0)
       ]
     );
+
+    let notificationsArea = new Phaser.GameObjects.Container(this,width * 0.1, Math.floor(140*assetsDPR));
+    t.drawer.add(notificationsArea);
+
+    let notifications = this.game.state['notifications'];
+
+    for (let i=0; i<notifications.length; i++) {
+      notificationsArea.add(new Notification(
+          this,
+          'Nou '+notifications[i]['type']+': '+notifications[i]['subject'],
+          notifications[i]['key'],
+          {
+            y: Math.floor(110*assetsDPR) * i,
+            width: width*0.8,
+            height: Math.floor(100*assetsDPR),
+            bgcolor: 0x999999,
+            alpha: 1.0,
+            strokeWidth: 2,
+            strokeColor: 0xdddddd,
+            //icon: notifications[i]['type']
+            icon: 'lorem-appsum-test',
+            closeButton: true,
+            ellipsis: 30
+          }
+        )
+      );
+    }
   }
 
   showDrawer() {
@@ -213,67 +257,13 @@ export default class PhoneUI extends Phaser.Scene
       targets: [this.drawer, this.topNotificationBar],
       y: -height,
       duration : 500,
+      onComplete: function () {
+        this.drawer.destroy()
+        this.createDrawer();
+        this.topNotificationBar.destroy();
+        this.createNotificationBar();
+      },
+      onCompleteScope: this
     });
   }
 }
-
-/*
-class PhoneUI extends Phaser.Scene
-{
-  constructor()
-  {
-    super();
-    this.time;
-    this.wifi_signal_icon;
-    this.width;
-    this.height;
-    this.x;
-    this.y;
-    this.notifications = [];
-    this.notificationOn = false;
-    this.nextDelay = 'random';
-  }
-
-  create()
-  {
-    let t = this;
-    let Phone = t.game.config;
-    let heightTopBar = 42;
-    let heightBottomBar = 64;
-
-    // Display top and bottom bars
-    let phoneTopBar = t.add.rectangle(0, 0, Phone.width, heightTopBar, 0x1c1c1c, 1.0).setOrigin(0);
-    let phoneBottomBar = t.add.rectangle(0, Phone.height - heightBottomBar, Phone.width, heightBottomBar, 0x0, 1.0).setOrigin(0);
-
-    // WiFi icon
-    t.wifi_signal_icon = t.add.image(8, 2, 'phone_ui_icons_states',
-                                       t.registry.get('unlockWifi') ? 'wifi-signal-on' : 'wifi-signal-off')
-        .setScale(this.registry.get('scaleRatio')*0.75)
-        .setInteractive()
-        .on('pointerover', function(){
-          this.tint = 0xaaaaaa;
-        })
-        .on('pointerout', function(){
-          this.tint = 0xffffff;
-        })
-        .on('pointerup', function(){
-          var activeApp = t.registry.get('activeApp');
-          if (activeApp != 'wifiApp')
-          {
-            t.scene.stop(activeApp);
-            t.scene.launch('wifiApp');
-          }
-        });
-  }
-
-
-
-  update(delta, time)
-  {
-    let t = this;
-    t.time.update();
-    t.watchNotification();
-    t.launchNotification();
-  }
-}
-*/
