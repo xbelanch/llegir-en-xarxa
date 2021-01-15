@@ -2,6 +2,7 @@ import { DPR, assetsDPR } from '../config.js';
 import IconApp from '../prefabs/iconApp.js';
 // import ClockApp from './apps/clock.js';
 import PhoneUI from './PhoneUI.js';
+import EventDispatcher from '../libs/EventDispatcher.js';
 
 
 export default class Homescreen extends Phaser.Scene
@@ -11,6 +12,8 @@ export default class Homescreen extends Phaser.Scene
   {
     super({ key: 'Homescreen'});
     this.apps;
+    this.icons = {};
+    this.emitter = EventDispatcher.getInstance();
   }
 
   init()
@@ -28,8 +31,9 @@ export default class Homescreen extends Phaser.Scene
   create()
   {
     this.addIconApps();
+    this.emitter.on('notification', () => this.addBalloons());
+    this.addBalloons();
   }
-
 
   addIconApps()
   {
@@ -61,6 +65,21 @@ export default class Homescreen extends Phaser.Scene
       app.setX(index % 3 == 0 ? left_column - margin : (index % 3 == 1 ? center_column : right_column + margin));
       app.setY(top_margin +  ((top_margin * 2) * (row - 1)));
       app.addLabel(this.apps[index].name);
+
+      this.icons[this.apps[index]['type']] = app;
     };
   };
+
+  addBalloons()
+  {
+
+    let notifications = this.game.state['notifications'];
+
+    for (var index in this.apps) {
+      let found = notifications.filter(element => element['type'] === this.apps[index]['type']).length
+      if (found !== 0) {
+        this.icons[this.apps[index]['type']].addBalloon(found);
+      }
+    }
+  }
 };
