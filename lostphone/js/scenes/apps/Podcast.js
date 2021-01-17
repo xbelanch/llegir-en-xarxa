@@ -4,11 +4,9 @@
 //-- @Note:
 //-- @Todo:
 //-- @From: this code belongs to https://codepen.io/samme/pen/NWPbQJY?editors=0010
+import LostPhoneScene from '../LostPhoneScene';
 
-
-
-
-class PodcastApp extends App
+class PodcastApp extends LostPhoneScene
 {
   constructor()
   {
@@ -29,7 +27,7 @@ class PodcastApp extends App
   {
     let t = this;
     super.init();
-    t.registry.set('activeApp', 'podcastApp');    
+    t.registry.set('activeApp', 'podcastApp');
   }
 
   preload()
@@ -40,29 +38,29 @@ class PodcastApp extends App
     t.loadingText = t.add.text(this.x, this.y, 'Loading...')
       .setOrigin(0.5, 0.5)
       .setDepth(0);
-    
+
     t.tracks = t.cache.json.get('tracks');
 
     t.progressMap = Object.fromEntries(t.tracks.map(t => [t.key, 0]));
     t.playlist = new Phaser.Structs.List();
-    t.load.audio(t.tracks);    
+    t.load.audio(t.tracks);
   }
-  
+
   create()
   {
     let t = this;
     super.create();
-    
+
     t.loadingText.destroy();
 
     // Mmmmmm...
     t.text = t.add.text(t.x, t.y, 'Tracks loaded!')
       .setOrigin(0.5, 0.5)
       .setDepth(0);
-        
+
     // I dunno what am I doing!
     t.audio = t.sound;
-    
+
     // Afegim a la playlist els podcasts
     t.playlist.add(t.tracks.map(track => t.audio.add(track.key, track)));
 
@@ -86,9 +84,9 @@ class PodcastApp extends App
           current.pause();
         } else {
           current.play();
-        } 
-  
-      }),      
+        }
+
+      }),
       t.createButton.call(t, '⏹', function(){
         t.audio.stopAll();
         if (t.progressBox !== undefined) {
@@ -100,7 +98,7 @@ class PodcastApp extends App
       t.createButton.call(t, '⏮', function(){
         var prev = t.playlist.previous || t.playlist.last;
         t.audio.stopAll();
-        if (prev) prev.play();        
+        if (prev) prev.play();
       }),
       t.createButton.call(t, '⏭', function(){
         var next = t.playlist.next || t.playlist.first;
@@ -154,12 +152,12 @@ class PodcastApp extends App
        t.progressCursor.clear();
        t.progressCursor.fillStyle(0xffffff, 1);
     }
-      
+
 
       t.playlist.list.map(function(s, i){
         if (s.isPlaying || s.isPaused) {
 
-          
+
           if (t.progressBar === undefined || !t.progressBar.active) {
             t.createBar();
           }
@@ -170,7 +168,7 @@ class PodcastApp extends App
             Math.round((width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
             20
           );
- 
+
           t.progressCursor.fillRect(
             x - (width*0.4) + Math.round((width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
             height - 225,
@@ -179,16 +177,16 @@ class PodcastApp extends App
           );
         }
       });
- 
+
   }
-  
+
   createButton(text, callback)
   {
     return this.add
       .text(0, 0, text, { fontSize: 48 })
       .setInteractive()
       .on('pointerdown', callback);
-  }  
+  }
 
   createBar()
   {
@@ -215,5 +213,5 @@ class PodcastApp extends App
       current.play('',{seek: seconds})
     });
   }
-    
+
 }
