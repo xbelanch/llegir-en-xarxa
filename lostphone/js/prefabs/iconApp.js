@@ -30,6 +30,7 @@ export default class IconApp extends Image
     t.on('pointerdown', function(event) {
       t.scene.scene.launch(t.config.key);
       t.scene.scene.sleep('Homescreen');
+      t.scene.scene.get('PhoneUI').homeButton.setVisible(true);
     });
 
   }

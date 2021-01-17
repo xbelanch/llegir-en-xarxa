@@ -4,9 +4,9 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
+import LostPhoneScene from '../LostPhoneScene';
 
-
-class NotesApp extends App
+class NotesApp extends LostPhoneScene
 {
   constructor()
   {
@@ -17,7 +17,7 @@ class NotesApp extends App
   {
     let t = this;
     super.init();
-    t.registry.set('activeApp', 'notesApp');    
+    t.registry.set('activeApp', 'notesApp');
   }
 
   preload()

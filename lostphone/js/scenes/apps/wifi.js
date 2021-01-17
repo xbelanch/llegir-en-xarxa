@@ -1,8 +1,9 @@
 // ---
 // --- Wifi App
 // ---
+import LostPhoneScene from '../LostPhoneScene';
 
-class WifiApp extends App
+class WifiApp extends LostPhoneScene
 {
   constructor()
   {
@@ -21,7 +22,7 @@ class WifiApp extends App
   {
     let t = this;
     super.init();
-    t.registry.set('activeApp', 'wifiApp');    
+    t.registry.set('activeApp', 'wifiApp');
   }
 
   preload()
@@ -69,7 +70,7 @@ class WifiApp extends App
 
       t.xarxes[xarxa] = t.add.text(title.x, title.y + 128 +  (xarxa * 72), name, {
         fontFamily : 'Roboto',
-        fontSize : (Phone.width >=  525 ? 20 : 12)        
+        fontSize : (Phone.width >=  525 ? 20 : 12)
       })
         .setDataEnabled()
         .setData('name', name)
@@ -89,7 +90,7 @@ class WifiApp extends App
             if (t.outOfRangeMessage === undefined)
             {
               // Creem el popup
-              t.outOfRangeMessage = new Popup(t, this.getData('message'));  
+              t.outOfRangeMessage = new Popup(t, this.getData('message'));
             }
             if (!t.outOfRangeMessage.isActive)
             {
@@ -97,9 +98,9 @@ class WifiApp extends App
                 hold: 2000
               });
             }
-            
+
           } else {
-            // Afegim el formulari de contrasenya de la xarxa    
+            // Afegim el formulari de contrasenya de la xarxa
             if (t.wifiPasswordInputForm === undefined)
             {
               t.wifiPasswordInputForm = t.newPasswordInputForm(x, y, this.getData('message'));
@@ -115,7 +116,7 @@ class WifiApp extends App
         fontFamily : 'Roboto',
         fontSize : (Phone.width >= 525 ? 20 : 12)
       });
-    }    
+    }
   }
 
   disableInteractive()
@@ -167,7 +168,7 @@ class WifiApp extends App
         align: 'center',
         color : t.colors.numberPad_numbers
       }).setOrigin(0.5);
-    
+
     // create a second container for Pad buttons
     var padding = 4;
     var margin = 18;
@@ -191,9 +192,9 @@ class WifiApp extends App
         buttons[i].setFillStyle(t.colors.numberPad_delete, 1);
       else if (i === 11)
         buttons[i].setFillStyle(t.colors.numberPad_enter, 1);
-      else 
+      else
         buttons[i].setFillStyle(t.colors.numberPad_buttons, 1);
-      
+
       buttons[i].setOrigin(0);
 
       // Set the correct value
@@ -207,7 +208,7 @@ class WifiApp extends App
         buttons[i].setData({ 'value' : 'Enter' });
       else
         buttons[i].setData({ 'value' : i + 1});
-      
+
       buttons[i].setInteractive()
         .on('pointerover', function(){
           var value = this.getData('value');
@@ -215,7 +216,7 @@ class WifiApp extends App
             this.setFillStyle(t.colors.numberPad_delete, 1);
           else if (value === 'Enter')
             this.setFillStyle(t.colors.numberPad_enter, 1);
-          else 
+          else
             this.setFillStyle(t.colors.numberPad_buttons_over, 1);
         })
         .on('pointerout', function(){
@@ -224,8 +225,8 @@ class WifiApp extends App
             this.setFillStyle(t.colors.numberPad_delete, 1);
           else if (value === 'Enter')
             this.setFillStyle(t.colors.numberPad_enter, 1);
-          else 
-            this.setFillStyle(t.colors.numberPad_buttons, 1);          
+          else
+            this.setFillStyle(t.colors.numberPad_buttons, 1);
         })
         .on('pointerup', function(){
           var value = this.getData('value').toString();
@@ -245,11 +246,11 @@ class WifiApp extends App
           }
           else if (passwordValue.length < t.config.limitPasswordCharacters)
           {
-            passwordValue += value;            
+            passwordValue += value;
           }
 
           // update display value
-          displayNumberPad.text = passwordValue;          
+          displayNumberPad.text = passwordValue;
         });
 
       // Afefim els nombres
@@ -260,7 +261,7 @@ class WifiApp extends App
       }).setOrigin(0.5);
 
     }
-    
+
     numberPad.add(boxPad);
     numberPad.add(enterNumberPad);
     numberPad.add(buttons);
@@ -273,7 +274,7 @@ class WifiApp extends App
   {
     let t = this;
     let Phone = t.game.config;
-    
+
     t.tweens.add({
       targets : t.numberPad,
       y : -(Math.floor(Phone.height / 1.77)),
@@ -281,7 +282,7 @@ class WifiApp extends App
       ease : 'Power2'
     });
   }
-  
+
   newPasswordInputForm()
   {
     let t = this;
@@ -294,7 +295,7 @@ class WifiApp extends App
     const password  = t.config.password;
     const inputPassword = undefined;
     const displayPassword = undefined;
-    
+
     var container = t.add.container(x - Math.floor(width / 2), y - Math.floor(height / 2));
 
     var bubble = t.add.graphics({ x: 0, y: 0 });
@@ -302,7 +303,7 @@ class WifiApp extends App
     bubble.lineStyle(4, 0x565656, 1);
     bubble.strokeRoundedRect(0, 0, width, height, 16);
     bubble.fillRoundedRect(0, 0, width, height, 16);
-    
+
     var text = t.add.text(Math.floor(width / 2), Math.floor(padding * 1.3), "La xarxa està protegida per contrasenya", {
       fontFamily: 'Roboto',
       fontSize: 24,
@@ -333,7 +334,7 @@ class WifiApp extends App
       fontFamily: 'Roboto',
       fontSize: 18,
       color: '#ff0000',
-      align: 'center',                  
+      align: 'center',
     }).setVisible(false);
 
     // Mostra aquest text o popup si la contrasenya és vàlida
@@ -341,7 +342,7 @@ class WifiApp extends App
       fontFamily: 'Roboto',
       fontSize: 32,
       color: '#00ff00',
-      align: 'center',                  
+      align: 'center',
     }).setVisible(false);
 
 
@@ -352,7 +353,7 @@ class WifiApp extends App
       color: t.colors.white,
       align: 'center'
     }, () => t.checkPassword());
-    
+
     var cancel = new TextButton(t, accept.x, accept.y + padding, "Cancel·lar",{
       fontFamily: 'Roboto',
       fontSize: 24,
@@ -367,8 +368,8 @@ class WifiApp extends App
       color: t.colors.black,
       align: 'center'
     }).setOrigin(0.5);
-    
-    
+
+
     container.add(bubble);
     container.add(text);
     container.add(accept);
@@ -389,7 +390,7 @@ class WifiApp extends App
       {
         t.unlockWiFi();
         return;
-      }      
+      }
     }
     console.log("Password is incorrect"); // Popup
   }
@@ -398,7 +399,7 @@ class WifiApp extends App
   {
     let t = this;
     t.enableInteractive();
-    t.wifiPasswordInputForm.setVisible(false);      
+    t.wifiPasswordInputForm.setVisible(false);
   }
 
 
@@ -412,10 +413,10 @@ class WifiApp extends App
     // Actualitzem la icona de la wifi!
     var wifi_signal_icon = t.scene.get('phoneUI').wifi_signal_icon;
     wifi_signal_icon.setTexture('phone_ui_icons_states', 'wifi-signal-on');
-    t.registry.set('unlockWifi', true);    
+    t.registry.set('unlockWifi', true);
   }
 
-  
+
 }
 
-  
+

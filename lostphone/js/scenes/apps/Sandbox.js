@@ -1,4 +1,6 @@
-export default class SandboxApp extends Phaser.Scene
+import LostPhoneScene from '../LostPhoneScene';
+
+export default class SandboxApp extends LostPhoneScene
 {
   constructor()
   {
