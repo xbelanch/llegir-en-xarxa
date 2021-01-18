@@ -22,12 +22,16 @@ export default class PodcastApp extends Phaser.Scene
     this.playlist;
     this.x;
     this.y;
+    this.width;
+    this.height;
   }
 
   init()
   {
-    var { width, height } = this.cameras.main;
-    this.x = width / 2;
+    this.width  = this.cameras.main.width;
+    this.height  = this.cameras.main.width;
+    this.x = this.width / 2;
+    this.y = this.height / 2;
   }
 
   preload()
@@ -35,11 +39,7 @@ export default class PodcastApp extends Phaser.Scene
     this.config = this.cache.json.get('config');
     this.colors = this.config.colors;
 
-    var { width, height } = this.cameras.main;
-    var x = width / 2;
-    var y = height / 2;
-
-    this.loadingText = this.add.text(x, y, 'Loading...')
+    this.loadingText = this.add.text(this.x, this.y, 'Loading...')
       .setOrigin(0.5, 0.5)
       .setDepth(0);
 
@@ -56,12 +56,7 @@ export default class PodcastApp extends Phaser.Scene
 
     this.loadingText.destroy();
 
-    var { width, height } = this.cameras.main;
-    var x = width / 2;
-    var y = height / 2;
-
-
-    this.text = this.add.text(x, y, 'Tracks loaded!')
+    this.text = this.add.text(this.x, this.y, 'Tracks loaded!')
       .setOrigin(0.5, 0.5)
       .setDepth(0);
 
@@ -81,9 +76,10 @@ export default class PodcastApp extends Phaser.Scene
     });
 
     // Display tracks and buttons
-    let buttons = [
+    let t = this;
+    var buttons = [
       this.createButton.call(this, '⏯', function(){
-        var current = this.playlist.current || this.playlist.first;
+        var current = t.playlist.current || this.playlist.first;
         if (current.isPaused) {
           current.resume();
         } else if (current.isPlaying) {
@@ -94,21 +90,21 @@ export default class PodcastApp extends Phaser.Scene
 
       }),
       this.createButton.call(this, '⏹', function(){
-        this.audio.stopAll();
-        if (this.progressBox !== undefined) {
-          this.progressBox.destroy();
-          this.progressBar.destroy();
-          this.progressCursor.destroy();
+        t.audio.stopAll();
+        if (t.progressBox !== undefined) {
+          t.progressBox.destroy();
+          t.progressBar.destroy();
+          t.progressCursor.destroy();
         }
       }),
       this.createButton.call(this, '⏮', function(){
-        var prev = this.playlist.previous || this.playlist.last;
-        this.audio.stopAll();
+        var prev = t.playlist.previous || t.playlist.last;
+        t.audio.stopAll();
         if (prev) prev.play();
       }),
       this.createButton.call(this, '⏭', function(){
-        var next = this.playlist.next || this.playlist.first;
-        this.audio.stopAll();
+        var next = t.playlist.next || t.playlist.first;
+        t.audio.stopAll();
         if (next) next.play();
       })
     ];
@@ -117,7 +113,7 @@ export default class PodcastApp extends Phaser.Scene
     // el grup de butons
     // display the buttons on screen
     Phaser.Actions.GridAlign(buttons, {
-      x: this.x - 150, // @TODO: Recorda que aquest 552 és l'amplada de la pantalla i que cal modificar-la perquè aquesta s'adapti a les dimensions variables de les pantalles.
+      x: this.x - 150,
       y: this.height - 120,
       width: 20,
       height: 20,
@@ -135,12 +131,8 @@ export default class PodcastApp extends Phaser.Scene
 
   refresh()
   {
-    var { width, height } = this.cameras.main;
-    var x = width / 2;
-    var y = height / 2;
+    let t = this; // wtf? really?
 
-    // pintem en pantalla els tracks disponibles
-    let t = this;
     this.text.setText(this.playlist.list.map(function(s, i){
       return [
         i === t.playlist.position ? `[${i + 1}]` : ` ${i + 1} `,
@@ -161,20 +153,20 @@ export default class PodcastApp extends Phaser.Scene
       if (s.isPlaying || s.isPaused) {
 
 
-        if (this.progressBar === undefined || !this.progressBar.active) {
-          this.createBar();
+        if (t.progressBar === undefined || !t.progressBar.active) {
+          t.createBar();
         }
 
-        this.progressBar.fillRect(
-          x - (width*0.4),
-          height - 220,
-          Math.round((width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
+        t.progressBar.fillRect(
+          t.x - (t.width*0.4),
+          t.height - 220,
+          Math.round((t.width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
           20
         );
 
-        this.progressCursor.fillRect(
-          x - (width*0.4) + Math.round((width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
-          height - 225,
+        t.progressCursor.fillRect(
+          t.x - (t.width*0.4) + Math.round((t.width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
+          t.height - 225,
           3,
           30
         );
@@ -193,24 +185,23 @@ export default class PodcastApp extends Phaser.Scene
 
   createBar()
   {
-    var { width, height } = t.cameras.main;
-    var x = width / 2;
-    var y = height / 2;
+    let t = this;
+
     this.progressBar = this.add.graphics();
     this.progressBox = this.add.graphics();
     this.progressCursor = this.add.graphics();
     this.progressBox.fillStyle(0x222222, 0.8);
-    this.progressBox.fillRect(x - (width*0.4), height - 220, width *0.8, 20);
+    this.progressBox.fillRect(this.x - (this.width*0.4), this.height - 220, this.width *0.8, 20);
     this.progressCursor.fillStyle(0xffffff, 1);
-    this.progressCursor.fillRect(x - (width*0.4), height - 225, 3, 30);
+    this.progressCursor.fillRect(this.x - (this.width*0.4), this.height - 225, 3, 30);
 
-    let zone = this.add.zone(x - (width*0.4), height - 220, width *0.8, 20)
+    var zone = this.add.zone(this.x - (this.width*0.4), this.height - 220, this.width *0.8, 20)
       .setOrigin(0)
       .setInteractive();
 
     zone.on('pointerdown', function(event) {
-      let current = this.playlist.current || this.playlist.first;
-      let seconds = Math.round(((event.downX - width*0.1) / (width*0.8))*current.duration.toFixed(1));
+      var current = t.playlist.current || t.playlist.first;
+      var seconds = Math.round(((event.downX - t.width*0.1) / (t.width*0.8))*current.duration.toFixed(1));
       current.stop();
       current.play('',{seek: seconds})
     });
