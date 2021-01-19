@@ -4,9 +4,10 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
+import LostPhoneScene from '../LostPhoneScene';
 import MailListObject from '../../prefabs/mail/mailList.js';
 
-export default class MailApp extends Phaser.Scene
+export default class MailApp extends LostPhoneScene
 {
   constructor()
   {
@@ -26,7 +27,7 @@ export default class MailApp extends Phaser.Scene
     t.config = t.cache.json.get('mail');
 
   }
-  
+
   create()
   {
     // --- This need to refactor?
@@ -34,6 +35,7 @@ export default class MailApp extends Phaser.Scene
 
     // --- Display a list mails
     t.listMails();
+    t.addGoBackFunction();
   }
 
   listMails()

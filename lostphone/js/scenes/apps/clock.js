@@ -2,8 +2,9 @@
 //-- Clock.js
 //--
 //-- @From: Clock Source: https://phaser.io/examples/v3/view/scenes/drag-scenes-demo#
+import LostPhoneScene from '../LostPhoneScene';
 
-export default class ClockApp extends Phaser.Scene
+export default class ClockApp extends LostPhoneScene
 {
   constructor()
   {
@@ -28,6 +29,7 @@ export default class ClockApp extends Phaser.Scene
     t.y = height / 2;
     t.clockSize = Math.round(width / 2.5);
     t.graphics = t.add.graphics();
+    t.addGoBackFunction();
   }
 
   update(delta, time)

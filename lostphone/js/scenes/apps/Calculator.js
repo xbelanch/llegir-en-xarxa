@@ -4,9 +4,9 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
+import LostPhoneScene from '../LostPhoneScene';
 
-
-class CalculatorApp extends App
+export default class CalculatorApp extends LostPhoneScene
 {
   constructor()
   {
@@ -31,7 +31,7 @@ class CalculatorApp extends App
 
     // @@TESTING@@
     var numberPad = new NumberPad(t, {});
-    
+
   }
 
 }

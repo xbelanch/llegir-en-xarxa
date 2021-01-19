@@ -22,6 +22,8 @@ export default class PhoneUI extends Phaser.Scene
     this.drawerOut = false;
     this.topNotificationBar;
     this.barColor = 0x1c1c1c;
+    this.homeButton;
+    this.backButton;
   };
 
   preload() {
@@ -39,7 +41,6 @@ export default class PhoneUI extends Phaser.Scene
     t.createDrawer();
     t.createNotificationBar();
 
-
     // --- Volume icon
     // By default, volume icon is on
     // @TODO: icon atlas
@@ -53,21 +54,25 @@ export default class PhoneUI extends Phaser.Scene
         });
 
     // --- Home button
-    this.add.image(Math.floor(width / 2), height - Math.floor(48 * assetsDPR / 2), 'button-homescreen')
+    this.homeButton = this.add.image(Math.floor(width / 2), height - Math.floor(48 * assetsDPR / 2), 'button-homescreen')
       .setInteractive()
-      .on('pointerup', function(){
-        var scenes = t.game.scene.getScenes(true);
-        for (var i in scenes) {
-          if (/App/.test(scenes[i].scene.key))
-            var app = scenes[i].scene.key;
-        };
+      .on('pointerup', () => t.backHome())
+      .setVisible(false);
 
-        if (typeof app !== 'undefined') {
-          t.game.scene.stop(app);
-          t.game.scene.wake('Homescreen');
-          t.hideDrawer();
-        }
-      });
+    // --- Go back Button
+    this.backButton = this.add.text(
+      Math.floor(width / 5), height - Math.floor(48 * assetsDPR / 2),
+       "↩",
+      {
+        fontFamily: 'Roboto',
+        fontSize : Math.floor(30 * assetsDPR),
+        color: '#ffffff',
+        align: 'center'
+      }
+    )
+    .setOrigin(0.5, 0.5)
+    .setInteractive()
+    .setVisible(false);
 
     // --- Clock time at the upper bar
     t.time = new Time(t, Math.floor(width / 2), height / 56, {
@@ -85,6 +90,25 @@ export default class PhoneUI extends Phaser.Scene
     });
     this.launchNotification();
   };
+
+  backHome()
+  {
+    let t = this;
+
+    var scenes = t.game.scene.getScenes(true);
+    for (var i in scenes) {
+      if (/App/.test(scenes[i].scene.key))
+        var app = scenes[i].scene.key;
+    };
+
+    if (typeof app !== 'undefined') {
+      t.game.scene.stop(app);
+      t.game.scene.wake('Homescreen')
+      t.backButton.setVisible(false);
+      t.homeButton.setVisible(false);
+      t.hideDrawer();
+    }
+  }
 
   update(delta, time)
   {
