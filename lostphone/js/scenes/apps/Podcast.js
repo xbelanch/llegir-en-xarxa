@@ -1,18 +1,15 @@
 //--
 //-- Podcast.js
 //--
-//-- @Note:
-//-- @Todo:
 //-- @From: this code belongs to https://codepen.io/samme/pen/NWPbQJY?editors=0010
 
-
-
-
-class PodcastApp extends App
+export default class PodcastApp extends Phaser.Scene
 {
   constructor()
   {
-    super();
+    super({ key: 'PodcastApp'});
+    this.config;
+    this.colors;
     this.audio;
     this.progressBar;
     this.progressBox;
@@ -23,73 +20,76 @@ class PodcastApp extends App
     this.tracks;
     this.progressMap;
     this.playlist;
+    this.x;
+    this.y;
+    this.width;
+    this.height;
   }
 
   init()
   {
-    let t = this;
-    super.init();
-    t.registry.set('activeApp', 'podcastApp');    
+    this.width  = this.cameras.main.width;
+    this.height  = this.cameras.main.width;
+    this.x = this.width / 2;
+    this.y = this.height / 2;
   }
 
   preload()
   {
-    let t = this;
-    super.preload();
+    this.config = this.cache.json.get('config');
+    this.colors = this.config.colors;
 
-    t.loadingText = t.add.text(this.x, this.y, 'Loading...')
+    this.loadingText = this.add.text(this.x, this.y, 'Loading...')
       .setOrigin(0.5, 0.5)
       .setDepth(0);
-    
-    t.tracks = t.cache.json.get('tracks');
 
-    t.progressMap = Object.fromEntries(t.tracks.map(t => [t.key, 0]));
-    t.playlist = new Phaser.Structs.List();
-    t.load.audio(t.tracks);    
+    // @ALERT: si les pistes d'àudio s'han carregat al preload,
+    // cal un altre cop?
+    this.tracks = this.cache.json.get('tracks');
+    this.progressMap = Object.fromEntries(this.tracks.map(t => [t.key, 0]));
+    this.playlist = new Phaser.Structs.List();
+    this.load.audio(this.tracks);
   }
-  
+
   create()
   {
-    let t = this;
-    super.create();
-    
-    t.loadingText.destroy();
 
-    // Mmmmmm...
-    t.text = t.add.text(t.x, t.y, 'Tracks loaded!')
+    this.loadingText.destroy();
+
+    this.text = this.add.text(this.x, this.y, 'Tracks loaded!')
       .setOrigin(0.5, 0.5)
       .setDepth(0);
-        
-    // I dunno what am I doing!
-    t.audio = t.sound;
-    
+
+    this.audio = this.sound;
+
     // Afegim a la playlist els podcasts
-    t.playlist.add(t.tracks.map(track => t.audio.add(track.key, track)));
+    this.playlist.add(this.tracks.map(track => this.audio.add(track.key, track)));
 
     // Afegim la propietat a cada audio el fet que, si finalitza, continui
-    t.playlist.each(function(sound){
+    this.playlist.each(function(sound){
       sound.on('complete', function()
                {
-                 var next = t.playlist.next || t.playlist.first;
-                 t.audio.stopAll();
+                 var next = this.playlist.next || this.playlist.first;
+                 this.audio.stopAll();
                  if (next) next.play();
                });
     });
 
     // Display tracks and buttons
-    let buttons = [
-      t.createButton.call(t, '⏯', function(){
-        var current = t.playlist.current || t.playlist.first;
+    let t = this;
+    var buttons = [
+      this.createButton.call(this, '⏯', function(){
+        var current = t.playlist.current || this.playlist.first;
         if (current.isPaused) {
           current.resume();
         } else if (current.isPlaying) {
           current.pause();
         } else {
           current.play();
-        } 
-  
-      }),      
-      t.createButton.call(t, '⏹', function(){
+        }
+
+      }),
+      this.createButton.call(this, '⏹', function(){
         t.audio.stopAll();
         if (t.progressBox !== undefined) {
           t.progressBox.destroy();
@@ -97,12 +97,12 @@ class PodcastApp extends App
           t.progressCursor.destroy();
         }
       }),
-      t.createButton.call(t, '⏮', function(){
+      this.createButton.call(this, '⏮', function(){
         var prev = t.playlist.previous || t.playlist.last;
         t.audio.stopAll();
-        if (prev) prev.play();        
+        if (prev) prev.play();
       }),
-      t.createButton.call(t, '⏭', function(){
+      this.createButton.call(this, '⏭', function(){
         var next = t.playlist.next || t.playlist.first;
         t.audio.stopAll();
         if (next) next.play();
@@ -113,8 +113,8 @@ class PodcastApp extends App
     // el grup de butons
     // display the buttons on screen
     Phaser.Actions.GridAlign(buttons, {
-      x: t.x - 150, // @TODO: Recorda que aquest 552 és l'amplada de la pantalla i que cal modificar-la perquè aquesta s'adapti a les dimensions variables de les pantalles.
-      y: t.height - 120,
+      x: this.x - 150,
+      y: this.height - 120,
       width: 20,
       height: 20,
       cellWidth: 500 / buttons.length,
@@ -124,22 +124,16 @@ class PodcastApp extends App
   }
 
 
-  update()
+  update(delta , time)
   {
-    let t = this;
-    t.refresh();
+    this.refresh();
   }
 
-  // --- Private methods
   refresh()
   {
-    let t = this;
-    let { width, height } = t.getPhoneDimensions();
-    let x = width / 2;
-    let y = height / 2;
+    let t = this; // wtf? really?
 
-    // pintem en pantalla els tracks disponibles
-    t.text.setText(t.playlist.list.map(function(s, i){
+    this.text.setText(this.playlist.list.map(function(s, i){
       return [
         i === t.playlist.position ? `[${i + 1}]` : ` ${i + 1} `,
         (s.isPlaying && '>') || (s.isPaused && ':') || ' ',
@@ -148,72 +142,68 @@ class PodcastApp extends App
       ].join('  ');
     }));
 
-    if (t.progressBar !== undefined) {
-       t.progressBar.clear();
-       t.progressBar.fillStyle(0xffff00, 1);
-       t.progressCursor.clear();
-       t.progressCursor.fillStyle(0xffffff, 1);
+    if (this.progressBar !== undefined) {
+       this.progressBar.clear();
+       this.progressBar.fillStyle(0xffff00, 1);
+       this.progressCursor.clear();
+       this.progressCursor.fillStyle(0xffffff, 1);
     }
-      
 
-      t.playlist.list.map(function(s, i){
-        if (s.isPlaying || s.isPaused) {
+    this.playlist.list.map(function(s, i){
+      if (s.isPlaying || s.isPaused) {
 
-          
-          if (t.progressBar === undefined || !t.progressBar.active) {
-            t.createBar();
-          }
 
-          t.progressBar.fillRect(
-            x - (width*0.4),
-            height - 220,
-            Math.round((width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
-            20
-          );
- 
-          t.progressCursor.fillRect(
-            x - (width*0.4) + Math.round((width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
-            height - 225,
-            3,
-            30
-          );
+        if (t.progressBar === undefined || !t.progressBar.active) {
+          t.createBar();
         }
-      });
- 
+
+        t.progressBar.fillRect(
+          t.x - (t.width*0.4),
+          t.height - 220,
+          Math.round((t.width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
+          20
+        );
+
+        t.progressCursor.fillRect(
+          t.x - (t.width*0.4) + Math.round((t.width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
+          t.height - 225,
+          3,
+          30
+        );
+      }
+    });
+
   }
-  
+
   createButton(text, callback)
   {
     return this.add
       .text(0, 0, text, { fontSize: 48 })
       .setInteractive()
       .on('pointerdown', callback);
-  }  
+  }
 
   createBar()
   {
     let t = this;
-    let { width, height } = t.getPhoneDimensions();
-    let x = width / 2;
-    let y = height / 2;
-    t.progressBar = this.add.graphics();
-    t.progressBox = this.add.graphics();
-    t.progressCursor = this.add.graphics();
-    t.progressBox.fillStyle(0x222222, 0.8);
-    t.progressBox.fillRect(x - (width*0.4), height - 220, width *0.8, 20);
-    t.progressCursor.fillStyle(0xffffff, 1);
-    t.progressCursor.fillRect(x - (width*0.4), height - 225, 3, 30);
 
-    let zone = this.add.zone(x - (width*0.4), height - 220, width *0.8, 20)
+    this.progressBar = this.add.graphics();
+    this.progressBox = this.add.graphics();
+    this.progressCursor = this.add.graphics();
+    this.progressBox.fillStyle(0x222222, 0.8);
+    this.progressBox.fillRect(this.x - (this.width*0.4), this.height - 220, this.width *0.8, 20);
+    this.progressCursor.fillStyle(0xffffff, 1);
+    this.progressCursor.fillRect(this.x - (this.width*0.4), this.height - 225, 3, 30);
+
+    var zone = this.add.zone(this.x - (this.width*0.4), this.height - 220, this.width *0.8, 20)
       .setOrigin(0)
       .setInteractive();
 
     zone.on('pointerdown', function(event) {
-      let current = t.playlist.current || t.playlist.first;
-      let seconds = Math.round(((event.downX - width*0.1) / (width*0.8))*current.duration.toFixed(1));
+      var current = t.playlist.current || t.playlist.first;
+      var seconds = Math.round(((event.downX - t.width*0.1) / (t.width*0.8))*current.duration.toFixed(1));
       current.stop();
       current.play('',{seek: seconds})
     });
   }
-    
 }

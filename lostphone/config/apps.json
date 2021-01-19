@@ -9,7 +9,7 @@
   {
     "type" : "podcast",
     "class": "PodcastApp",
-    "key"  : "podcastApp",
+    "key"  : "PodcastApp",
     "name" : "Podcast",
     "icon" : "podcastApp.png"
   },

@@ -106,8 +106,6 @@ export default class Preload extends Phaser.Scene
 
     // --- Load shaders
     t.load.glsl('bundle', 'assets/shaders/bundle.glsl.js');
-
-
   }
 
   create()

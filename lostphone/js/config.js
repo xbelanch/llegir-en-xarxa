@@ -12,6 +12,7 @@ import PhoneUI from './scenes/PhoneUI.js'
 import ClockApp from './scenes/apps/Clock.js';
 import SandboxApp from './scenes/apps/Sandbox.js';
 import MailApp from './scenes/apps/Mail.js';
+import PodcastApp from './scenes/apps/Podcast.js';
 
 // import { Plugin as NineSlicePlugin } from './plugins/nineslice.min.js'
 // import Bootstrap from './scenes/Bootstrap.js'
@@ -43,6 +44,20 @@ const WIDTH = Math.round(360 * height / 640);
 const HEIGHT = Math.round(height);
 export const assetsDPR = roundHalf(Math.min(Math.max(HEIGHT / 640, 1), 4));
 
+// Loading scenes order
+const scenes = [
+  TitleScene
+  , Bootstrap
+  , Preload
+  , Phone
+  , MailApp
+  , PodcastApp
+  , ClockApp
+  , SandboxApp
+  , Homescreen
+  , PhoneUI
+];
+
 export default {
   type : Phaser.AUTO,
   backgroundColor : '#000',   // Purlple as a debug color
@@ -58,7 +73,7 @@ export default {
     width: WIDTH,
     height: HEIGHT
   },
-  scene: [TitleScene, Bootstrap, Preload, Phone, ClockApp, SandboxApp, MailApp, Homescreen, PhoneUI],
+  scene: scenes,
   plugins: {
     global: [
       { key: 'SceneWatcher', plugin : PhaserSceneWatcherPlugin, start: true, mapping: 'sceneWatcher' },

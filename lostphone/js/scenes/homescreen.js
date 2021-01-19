@@ -1,6 +1,5 @@
 import { DPR, assetsDPR } from '../config.js';
 import IconApp from '../prefabs/iconApp.js';
-// import ClockApp from './apps/clock.js';
 import PhoneUI from './PhoneUI.js';
 import EventDispatcher from '../libs/EventDispatcher.js';
 
