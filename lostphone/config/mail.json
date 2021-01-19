@@ -40,6 +40,15 @@
       "body" : "Vestibulum elementum est",
       "attach" :null,
       "condition" : ["m001", "m002", "m003"]
+    },
+    {
+      "id" : "m005",
+      "from" : "Persona 5",
+      "subject" : "Més mails",
+      "date" : "10/12/2020",
+      "body" : "Vestibulum elementum est",
+      "attach" :null,
+      "condition" : "m003"
     }
   ]
 }

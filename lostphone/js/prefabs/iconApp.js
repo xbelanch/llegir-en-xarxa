@@ -12,6 +12,7 @@ export default class IconApp extends Image
     this.setInteractive();
     this.init();
     this.config = appConfig;
+    this.balloon;
   };
 
   init()
@@ -53,35 +54,43 @@ export default class IconApp extends Image
     let t = this;
     let offset = Math.floor(5*assetsDPR);
 
-    let container = new Phaser.GameObjects.Container(
-      t.scene,
-      t.x + t.width/2 - offset,
-      t.y + offset
-    );
+    if (t.balloon !== undefined) {
+      t.balloon.destroy();
+    }
 
-    container.add(new Phaser.GameObjects.Ellipse(
-      t.scene,
-      0,
-      0,
-      Math.floor(25*assetsDPR),
-      Math.floor(25*assetsDPR),
-      0xff0000,
-      1.0
-    ).setOrigin(0.5, 0.5));
+    if (counter > 0) {
+      let container = new Phaser.GameObjects.Container(
+        t.scene,
+        t.x + t.width/2 - offset,
+        t.y + offset
+      );
 
-    container.add(new Phaser.GameObjects.Text(
+      container.add(new Phaser.GameObjects.Ellipse(
         t.scene,
         0,
         0,
-        counter
-      )
-      .setOrigin(0.5, 0.5)
-      .setFontSize(assetsDPR > 1.5 ? (assetsDPR >= 2.5 ? (assetsDPR > 3.5 ? 42 : 32) : 24) : 16)
-      .setShadow(2, 2, 0x3f3f3f, 0.4)
-      .setFontFamily('Roboto')
-      .setResolution(1)
-    );
+        Math.floor(25*assetsDPR),
+        Math.floor(25*assetsDPR),
+        0xff0000,
+        1.0
+      ).setOrigin(0.5, 0.5));
 
-    t.scene.add.existing(container);
+      container.add(new Phaser.GameObjects.Text(
+          t.scene,
+          0,
+          0,
+          counter
+        )
+        .setOrigin(0.5, 0.5)
+        .setFontSize(assetsDPR > 1.5 ? (assetsDPR >= 2.5 ? (assetsDPR > 3.5 ? 42 : 32) : 24) : 16)
+        .setShadow(2, 2, 0x3f3f3f, 0.4)
+        .setFontFamily('Roboto')
+        .setResolution(1)
+      );
+
+      t.balloon = container;
+
+      t.scene.add.existing(container);
+    }
   }
 }

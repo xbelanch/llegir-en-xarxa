@@ -77,9 +77,7 @@ export default class Homescreen extends Phaser.Scene
 
     for (var index in this.apps) {
       let found = notifications.filter(element => element['type'] === this.apps[index]['type']).length
-      if (found !== 0) {
-        this.icons[this.apps[index]['type']].addBalloon(found);
-      }
+      this.icons[this.apps[index]['type']].addBalloon(found);
     }
   }
 };
