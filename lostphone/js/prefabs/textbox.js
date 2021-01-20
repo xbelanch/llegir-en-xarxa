@@ -38,6 +38,7 @@ export default class TextBox extends Phaser.GameObjects.Container
           params['height'] / 2,
           params['icon']
         ).setOrigin(0, 0.5)
+        .setAlpha(params['alpha'])
       );
     }
 
@@ -61,6 +62,7 @@ export default class TextBox extends Phaser.GameObjects.Container
         align: 'right'
       }
       ).setOrigin(0.5, 0.5)
+      .setAlpha(params['alpha'])
     );
 
     if (params['closeButton'] !== undefined) {
@@ -77,6 +79,7 @@ export default class TextBox extends Phaser.GameObjects.Container
         }
         ).setOrigin(0,0)
         .setInteractive()
+        .setAlpha(params['alpha'])
         .on('pointerup', () => textbox.destroyBox())
       );
     }

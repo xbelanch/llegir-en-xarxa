@@ -19,11 +19,13 @@ export default class PhoneUI extends Phaser.Scene
     this.nextDelay = 'random';
     this.emitter = EventDispatcher.getInstance();
     this.drawer;
+    this.notificationsArea;
     this.drawerOut = false;
     this.topNotificationBar;
     this.barColor = 0x1c1c1c;
     this.homeButton;
     this.backButton;
+    this.dragZone;
   };
 
   preload() {
@@ -38,8 +40,6 @@ export default class PhoneUI extends Phaser.Scene
     // --- Display top and bottom bars
     let topBar = t.add.rectangle(0, 0, width, Math.floor(24 * assetsDPR), t.barColor, 1.0).setOrigin(0);
     let bottomBar = t.add.rectangle(0, height - Math.floor(48 * assetsDPR), width, Math.floor(48 * assetsDPR), t.barColor, 1.0).setOrigin(0);
-    t.createDrawer();
-    t.createNotificationBar();
 
     // --- Volume icon
     // By default, volume icon is on
@@ -56,8 +56,7 @@ export default class PhoneUI extends Phaser.Scene
     // --- Home button
     this.homeButton = this.add.image(Math.floor(width / 2), height - Math.floor(48 * assetsDPR / 2), 'button-homescreen')
       .setInteractive()
-      .on('pointerup', () => t.backHome())
-      .setVisible(false);
+      .on('pointerup', () => t.backHome());
 
     // --- Go back Button
     this.backButton = this.add.text(
@@ -84,6 +83,8 @@ export default class PhoneUI extends Phaser.Scene
       .setOrigin(0.5, 0.5)
       .setResolution(Math.floor(assetsDPR));
 
+    t.createDrawer();
+    t.createNotificationBar();
 
     this.emitter.on('notification', function() {
       t.launchNotification();
@@ -105,7 +106,6 @@ export default class PhoneUI extends Phaser.Scene
       t.game.scene.stop(app);
       t.game.scene.wake('Homescreen')
       t.backButton.setVisible(false);
-      t.homeButton.setVisible(false);
       t.hideDrawer();
     }
   }
@@ -144,8 +144,6 @@ export default class PhoneUI extends Phaser.Scene
       this.nextDelay = 'random';
 
       this.log("Notification launched");
-    } else if (this.notificationOn) {
-      this.nextDelay = 0;
     }
   }
 
@@ -161,6 +159,7 @@ export default class PhoneUI extends Phaser.Scene
       notifications.splice(0, 1);
       this.game.save();
       if (notifications.length > 0) {
+        this.nextDelay = 0;
         this.emitter.emit('notification');
       }
     }
@@ -173,7 +172,8 @@ export default class PhoneUI extends Phaser.Scene
     t.drawerOut = false;
 
     this.topNotificationBar = this.add.container(
-      width - Math.floor(16 * assetsDPR), -height,
+      width - Math.floor(16 * assetsDPR),
+      -height,
       [
         t.add.rectangle(
           0, 0,
@@ -211,12 +211,25 @@ export default class PhoneUI extends Phaser.Scene
     let t = this;
     let { width, height } = t.cameras.main;
 
+    const top_part = t.add.rectangle(
+      0, 0,
+      width, Math.floor(70*assetsDPR),
+      t.barColor, 1.0
+    ).setOrigin(0,0);
+
+    const bottom_part = t.add.rectangle(
+      0, Math.floor(70*assetsDPR),
+      width, height - Math.floor(70*assetsDPR) - Math.floor(48*assetsDPR),
+      t.barColor, 1.0
+    ).setOrigin(0,0);
+
     t.drawer = this.add.container(
       0, -height,
       [
-        t.add.rectangle(0, 0, width, height, t.barColor, 1.0).setOrigin(0,0),
+        top_part,
+        bottom_part,
         t.add.text(
-          Math.floor(width / 2), Math.floor(100*assetsDPR),
+          Math.floor(width / 2), Math.floor(50*assetsDPR),
           "Notificacions",
           {
             fontFamily: 'Roboto',
@@ -225,24 +238,35 @@ export default class PhoneUI extends Phaser.Scene
             align: 'center'
           }
         )
-        .setOrigin(0.5, 0.5)
+        .setOrigin(0.5, 0)
         .setResolution(Math.floor(assetsDPR)),
         t.add.line(
           0, 0,
-          Math.floor(30*assetsDPR), Math.floor(120*assetsDPR),
-          width - Math.floor(30*assetsDPR), Math.floor(120*assetsDPR),
+          Math.floor(30*assetsDPR), Math.floor(70*assetsDPR),
+          width - Math.floor(30*assetsDPR), Math.floor(70*assetsDPR),
          0xffffff)
-        .setOrigin(0)
+        .setOrigin(0,0),
+        t.add.line(
+          0, 0,
+          Math.floor(30*assetsDPR), height - Math.floor(48*assetsDPR) - 1,
+          width - Math.floor(30*assetsDPR), height - Math.floor(48*assetsDPR) - 1,
+         0xffffff)
+        .setOrigin(0,0)
       ]
     );
 
-    let notificationsArea = new Phaser.GameObjects.Container(this,width * 0.1, Math.floor(140*assetsDPR));
-    t.drawer.add(notificationsArea);
+    this.notificationsArea = new Phaser.GameObjects.Container(
+      this,
+      width * 0.1, 
+      Math.floor(100*assetsDPR)
+    );
+    t.drawer.add(this.notificationsArea);
 
-    let notifications = this.game.state['notifications'];
+    let notifications = [...this.game.state['notifications']];
+    notifications.reverse();
 
     for (let i=0; i<notifications.length; i++) {
-      notificationsArea.add(new Notification(
+      this.notificationsArea.add(new Notification(
           this,
           'Nou '+notifications[i]['type']+': '+notifications[i]['subject'],
           notifications[i],
@@ -251,26 +275,54 @@ export default class PhoneUI extends Phaser.Scene
             width: width*0.8,
             height: Math.floor(100*assetsDPR),
             bgcolor: 0x999999,
-            alpha: 1.0,
+            alpha: 1.0 - (Math.min(i*0.2, 0.6)),
             strokeWidth: 2,
             strokeColor: 0xdddddd,
             //icon: notifications[i]['type']
             icon: 'lorem-appsum-test',
-            closeButton: true,
             ellipsis: 30
           }
         )
       );
     }
+
+    let mask = new Phaser.Display.Masks.GeometryMask(t, bottom_part);
+    this.notificationsArea.setMask(mask);
   }
 
   showDrawer() {
+    let t = this;
     let { width, height } = this.cameras.main;
     this.log('Drawer out!');
     this.tweens.add({
-      targets: [this.drawer, this.topNotificationBar],
-      y: - Math.floor(48 * assetsDPR),
+      targets: [this.drawer],
+      y: 0,
       duration : 500
+    });
+    this.tweens.add({
+      targets: [this.topNotificationBar],
+      y: 0 - Math.floor(32*assetsDPR),
+      duration : 500
+    });
+
+    this.dragZone = this.add.zone(
+      0,
+      Math.floor(120*assetsDPR),
+      width - (16 * assetsDPR),
+      height - Math.floor(120*assetsDPR) - Math.floor(48*assetsDPR)
+    ).setOrigin(0).setInteractive();
+
+    const max_height = Math.floor(110*assetsDPR) * this.game.state['notifications'].length - height + Math.floor(120*assetsDPR);
+    
+    this.dragZone.on('pointermove', function (pointer) {
+      if (pointer.isDown) {
+        t.notificationsArea.y += (pointer.velocity.y / 3);
+        t.notificationsArea.y = Phaser.Math.Clamp(
+          t.notificationsArea.y,
+          -max_height,
+          Math.floor(100*assetsDPR)
+        );
+      }
     });
   }
 
@@ -289,5 +341,9 @@ export default class PhoneUI extends Phaser.Scene
       },
       onCompleteScope: this
     });
+
+    if (this.dragZone !== undefined) {
+      this.dragZone.destroy();
+    }
   }
 }
