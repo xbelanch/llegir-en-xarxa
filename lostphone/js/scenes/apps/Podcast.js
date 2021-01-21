@@ -200,13 +200,17 @@ export default class PodcastApp extends LostPhoneScene
       .setOrigin(0)
       .setInteractive();
 
-    zone.on('pointermove', function(pointer) {
+    let moveToSelection = function(pointer) {
       if (pointer.isDown) {
         var current = t.playlist.current || t.playlist.first;
         var seconds = Math.round(((pointer.worldX - t.width*0.1) / (t.width*0.8))*current.duration.toFixed(1));
         current.stop();
         current.play('',{seek: seconds});
       }
-    });
+    };
+
+    zone
+      .on('pointermove', moveToSelection)
+      .on('pointerdown', moveToSelection);
   }
 }
