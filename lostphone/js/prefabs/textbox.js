@@ -21,7 +21,7 @@ export default class TextBox extends Phaser.GameObjects.Container
         params['width'],
         params['height'],
         params['bgcolor'],
-        params['alpha']
+        params['alpha'] !== undefined ? params['alpha'] : 1
       )
       .setOrigin(0,0)
       .setStrokeStyle(
@@ -38,7 +38,8 @@ export default class TextBox extends Phaser.GameObjects.Container
           params['height'] / 2,
           params['icon']
         ).setOrigin(0, 0.5)
-        .setAlpha(params['alpha'])
+        .setAlpha(params['alpha'] !== undefined ? params['alpha'] : 1)
+        .setScale(params['iconScale'] !== undefined ? params['iconScale'] : 1)
       );
     }
 
@@ -62,7 +63,7 @@ export default class TextBox extends Phaser.GameObjects.Container
         align: 'right'
       }
       ).setOrigin(0.5, 0.5)
-      .setAlpha(params['alpha'])
+      .setAlpha(params['alpha'] !== undefined ? params['alpha'] : 1)
     );
 
     if (params['closeButton'] !== undefined) {
@@ -79,7 +80,7 @@ export default class TextBox extends Phaser.GameObjects.Container
         }
         ).setOrigin(0,0)
         .setInteractive()
-        .setAlpha(params['alpha'])
+        .setAlpha(params['alpha'] !== undefined ? params['alpha'] : 1)
         .on('pointerup', () => textbox.destroyBox())
       );
     }
