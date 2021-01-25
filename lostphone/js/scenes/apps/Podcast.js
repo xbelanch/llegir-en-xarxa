@@ -2,15 +2,13 @@
 //-- Podcast.js
 //--
 //-- @From: this code belongs to https://codepen.io/samme/pen/NWPbQJY?editors=0010
-import LostPhoneScene from '../LostPhoneScene';
+import PhoneApp from '../PhoneApp';
 
-export default class PodcastApp extends LostPhoneScene
+export default class PodcastApp extends PhoneApp
 {
   constructor()
   {
     super({ key: 'PodcastApp'});
-    this.config;
-    this.colors;
     this.audio;
     this.progressBar;
     this.progressBox;
@@ -21,66 +19,51 @@ export default class PodcastApp extends LostPhoneScene
     this.tracks;
     this.progressMap;
     this.playlist;
-    this.x;
-    this.y;
-    this.width;
-    this.height;
-  }
-
-  init()
-  {
-    this.width  = this.cameras.main.width;
-    this.height  = this.cameras.main.width;
-    this.x = this.width / 2;
-    this.y = this.height / 2;
   }
 
   preload()
   {
-    this.config = this.cache.json.get('config');
-    this.colors = this.config.colors;
-
-    this.loadingText = this.add.text(this.x, this.y, 'Loading...')
+    let t = this;
+    t.loadingText = t.add.text(t.x, t.y, 'Loading...')
       .setOrigin(0.5, 0.5)
       .setDepth(0);
 
     // @ALERT: si les pistes d'àudio s'han carregat al preload,
     // cal un altre cop?
-    this.tracks = this.cache.json.get('tracks');
-    this.progressMap = Object.fromEntries(this.tracks.map(t => [t.key, 0]));
-    this.playlist = new Phaser.Structs.List();
-    this.load.audio(this.tracks);
+    t.tracks = t.cache.json.get('tracks');
+    t.progressMap = Object.fromEntries(t.tracks.map(t => [t.key, 0]));
+    t.playlist = new Phaser.Structs.List();
+    t.load.audio(t.tracks);
   }
 
   create()
   {
+    let t = this;
+    t.loadingText.destroy();
 
-    this.loadingText.destroy();
-
-    this.text = this.add.text(this.x, this.y, 'Tracks loaded!')
+    t.text = t.add.text(t.x, t.y, 'Tracks loaded!')
       .setOrigin(0.5, 0.5)
       .setDepth(0);
 
-    this.audio = this.sound;
+    t.audio = t.sound;
 
     // Afegim a la playlist els podcasts
-    this.playlist.add(this.tracks.map(track => this.audio.add(track.key, track)));
+    t.playlist.add(t.tracks.map(track => t.audio.add(track.key, track)));
 
     // Afegim la propietat a cada audio el fet que, si finalitza, continui
-    this.playlist.each(function(sound){
+    t.playlist.each(function(sound){
       sound.on('complete', function()
-               {
-                 var next = this.playlist.next || this.playlist.first;
-                 this.audio.stopAll();
-                 if (next) next.play();
-               });
+        {
+          var next = t.playlist.next || t.playlist.first;
+          t.audio.stopAll();
+          if (next) next.play();
+        });
     });
 
     // Display tracks and buttons
-    let t = this;
     var buttons = [
-      this.createButton.call(this, '⏯', function(){
-        var current = t.playlist.current || this.playlist.first;
+      t.createButton.call(t, '⏯', function(){
+        var current = t.playlist.current || t.playlist.first;
         if (current.isPaused) {
           current.resume();
         } else if (current.isPlaying) {
@@ -90,7 +73,7 @@ export default class PodcastApp extends LostPhoneScene
         }
 
       }),
-      this.createButton.call(this, '⏹', function(){
+      t.createButton.call(t, '⏹', function(){
         t.audio.stopAll();
         if (t.progressBox !== undefined) {
           t.progressBox.destroy();
@@ -98,12 +81,12 @@ export default class PodcastApp extends LostPhoneScene
           t.progressCursor.destroy();
         }
       }),
-      this.createButton.call(this, '⏮', function(){
+      t.createButton.call(t, '⏮', function(){
         var prev = t.playlist.previous || t.playlist.last;
         t.audio.stopAll();
         if (prev) prev.play();
       }),
-      this.createButton.call(this, '⏭', function(){
+      t.createButton.call(t, '⏭', function(){
         var next = t.playlist.next || t.playlist.first;
         t.audio.stopAll();
         if (next) next.play();
@@ -114,8 +97,8 @@ export default class PodcastApp extends LostPhoneScene
     // el grup de butons
     // display the buttons on screen
     Phaser.Actions.GridAlign(buttons, {
-      x: this.x - 150,
-      y: this.height - 120,
+      x: t.x - 150,
+      y: t.height - 120,
       width: 20,
       height: 20,
       cellWidth: 500 / buttons.length,
@@ -134,7 +117,7 @@ export default class PodcastApp extends LostPhoneScene
   {
     let t = this; // wtf? really?
 
-    this.text.setText(this.playlist.list.map(function(s, i){
+    t.text.setText(t.playlist.list.map(function(s, i){
       return [
         i === t.playlist.position ? `[${i + 1}]` : ` ${i + 1} `,
         (s.isPlaying && '>') || (s.isPaused && ':') || ' ',
@@ -143,14 +126,14 @@ export default class PodcastApp extends LostPhoneScene
       ].join('  ');
     }));
 
-    if (this.progressBar !== undefined) {
-       this.progressBar.clear();
-       this.progressBar.fillStyle(0xffff00, 1);
-       this.progressCursor.clear();
-       this.progressCursor.fillStyle(0xffffff, 1);
+    if (t.progressBar !== undefined) {
+       t.progressBar.clear();
+       t.progressBar.fillStyle(0xffff00, 1);
+       t.progressCursor.clear();
+       t.progressCursor.fillStyle(0xffffff, 1);
     }
 
-    this.playlist.list.map(function(s, i){
+    t.playlist.list.map(function(s, i){
       if (s.isPlaying || s.isPaused) {
 
 
@@ -188,15 +171,15 @@ export default class PodcastApp extends LostPhoneScene
   {
     let t = this;
 
-    this.progressBar = this.add.graphics();
-    this.progressBox = this.add.graphics();
-    this.progressCursor = this.add.graphics();
-    this.progressBox.fillStyle(0x222222, 0.8);
-    this.progressBox.fillRect(this.x - (this.width*0.4), this.height - 220, this.width *0.8, 20);
-    this.progressCursor.fillStyle(0xffffff, 1);
-    this.progressCursor.fillRect(this.x - (this.width*0.4), this.height - 225, 3, 30);
+    t.progressBar = t.add.graphics();
+    t.progressBox = t.add.graphics();
+    t.progressCursor = t.add.graphics();
+    t.progressBox.fillStyle(0x222222, 0.8);
+    t.progressBox.fillRect(t.x - (t.width*0.4), t.height - 220, t.width *0.8, 20);
+    t.progressCursor.fillStyle(0xffffff, 1);
+    t.progressCursor.fillRect(t.x - (t.width*0.4), t.height - 225, 3, 30);
 
-    var zone = this.add.zone(this.x - (this.width*0.4), this.height - 220, this.width *0.8, 20)
+    var zone = t.add.zone(t.x - (t.width*0.4), t.height - 220, t.width *0.8, 20)
       .setOrigin(0)
       .setInteractive();
 

@@ -4,24 +4,13 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
-import LostPhoneScene from '../LostPhoneScene';
+import PhoneApp from '../PhoneApp';
 
-export default class CalculatorApp extends LostPhoneScene
+export default class CalculatorApp extends PhoneApp
 {
   constructor()
   {
-    super();
-  }
-
-  init()
-  {
-    let t = this;
-    super.init();
-  }
-
-  preload()
-  {
-    super.preload();
+    super({ key: 'CalculatorApp'});
   }
 
   create()

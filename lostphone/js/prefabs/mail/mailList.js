@@ -16,7 +16,7 @@ export default class MailListObject extends Phaser.GameObjects.Container
 
   print(config) {
     let t = this;
-    let { width, height } = this.scene.cameras.main;
+    let { width, height } = t.scene.cameras.main;
 
     const margin_line = Math.floor(25 * assetsDPR);
     const margin_text_left = Math.floor(45 * assetsDPR);
@@ -29,14 +29,14 @@ export default class MailListObject extends Phaser.GameObjects.Container
     for (let i=0; i<config.mails.length; i++) {
 
       // Check if we have to show it
-      if (!this.scene.game.checkCondition(config.mails[i].condition)) {
+      if (!t.scene.game.checkCondition(config.mails[i].condition)) {
         continue;
       }
       visible_mails += 1;
 
       // Add a background
-      this.add(new Phaser.GameObjects.Rectangle(
-        this.scene,
+      t.add(new Phaser.GameObjects.Rectangle(
+        t.scene,
         margin_line,
         initial_pos + (i*box_height),
         width-(margin_line*2),
@@ -46,8 +46,8 @@ export default class MailListObject extends Phaser.GameObjects.Container
       ).setOrigin(0,0));
 
       // Add the text
-      this.add(new MailHeadingObject(
-        this.scene,
+      t.add(new MailHeadingObject(
+        t.scene,
         config,
         config.mails[i],
         margin_text_left,
@@ -56,7 +56,7 @@ export default class MailListObject extends Phaser.GameObjects.Container
       ).setOrigin(0,0));
 
       // Add a line
-      this.add(this.addLine(
+      t.add(t.addLine(
         margin_line,
         initial_pos + (i*box_height),
         width-margin_line,
@@ -64,7 +64,7 @@ export default class MailListObject extends Phaser.GameObjects.Container
       ));
     }
 
-    this.add(this.addLine(
+    t.add(t.addLine(
       margin_line,
       initial_pos + (visible_mails*box_height),
       width-margin_line,
@@ -72,23 +72,23 @@ export default class MailListObject extends Phaser.GameObjects.Container
     ));
 
     // Create a mask
-    this.mailMask = this.scene.add.rectangle(
+    t.mailMask = t.scene.add.rectangle(
       margin_line, initial_pos,
       width-(margin_line*2),
       box_height*visible_mails,
       0x000000, 0.0
     ).setOrigin(0,0).setVisible(false);
-    let mask = new Phaser.Display.Masks.GeometryMask(this, this.mailMask);
-    this.setMask(mask);
+    let mask = new Phaser.Display.Masks.GeometryMask(t, t.mailMask);
+    t.setMask(mask);
 
-    this.dragZone = this.scene.add.zone(
+    t.dragZone = t.scene.add.zone(
       margin_line,
       initial_pos,
       width-(margin_line*2),
       box_height*visible_mails
     ).setOrigin(0).setInteractive();
 
-    this.dragZone.on('pointermove', function (pointer) {
+    t.dragZone.on('pointermove', function (pointer) {
       if (pointer.isDown) {
         t.y += (pointer.velocity.y / 3);
         t.y = Phaser.Math.Clamp(
@@ -102,14 +102,10 @@ export default class MailListObject extends Phaser.GameObjects.Container
   }
 
   addLine(x1, y1, x2, y2) {
-    const graphics = this.scene.add.graphics();
+    let t = this;
+    const graphics = t.scene.add.graphics();
     graphics.lineStyle(2, 0xffffff, 1);
     graphics.lineBetween(x1, y1, x2, y2);
     return graphics;
-  }
-
-  // TO DO: fer l'scroll
-  addDragableZone(container) {
-
   }
 }

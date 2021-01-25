@@ -4,40 +4,31 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
-import LostPhoneScene from '../LostPhoneScene';
+import PhoneApp from '../PhoneApp';
 import MailListObject from '../../prefabs/mail/mailList.js';
 import { assetsDPR } from '../../config';
 
-export default class MailApp extends LostPhoneScene
+export default class MailApp extends PhoneApp
 {
   constructor()
   {
     super({ key: 'MailApp'});
-    this.config = null;
   }
 
   init()
   {
-
-  }
-
-  preload()
-  {
-    let t = this;
-    t.colors = t.cache.json.get('config').colors;
-    t.config = t.cache.json.get('mail');
-
+    super.init();
+    super.getConfig('mail');
   }
 
   create()
   {
     // --- This need to refactor?
     let t = this;
-    let { width, height } = t.cameras.main;
 
     // --- Title
     t.add.text(
-      width / 2,
+      t.width / 2,
       Math.floor(80*assetsDPR),
       "Correu",
       {
@@ -50,7 +41,6 @@ export default class MailApp extends LostPhoneScene
 
     // --- Display a list mails
     t.listMails();
-    t.addGoBackFunction();
   }
 
   listMails()
@@ -58,5 +48,4 @@ export default class MailApp extends LostPhoneScene
     let t = this;
     new MailListObject(t, t.config);
   }
-
 }

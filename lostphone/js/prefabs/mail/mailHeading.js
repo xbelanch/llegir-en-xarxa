@@ -23,22 +23,23 @@ export default class MailHeadingObject extends Phaser.GameObjects.Text
 
   // Fer la capçalera del mail clickable
   setClickable(config, mail) {
-    this.setInteractive();
+    let t = this;
 
-    this.on('pointerover', function(event){
-      this.setAlpha(0.7);
+    t.setInteractive();
+
+    t.on('pointerover', function(event){
+      t.setAlpha(0.7);
     });
 
-    this.on('pointerout', function(event){
-      this.setAlpha(1.0);
+    t.on('pointerout', function(event){
+      t.setAlpha(1.0);
     });
 
-    this.on('pointerdown', function(event) {
-      // this.scene.sound.play('click');
-      this.scene.game.saveState('complete', mail['id'], true);
-      this.setColor('#ffffff');
+    t.on('pointerdown', function(event) {
+      t.scene.game.saveState('complete', mail['id'], true);
+      t.setColor('#ffffff');
 
-      new MailObject(this.scene, config, mail);
+      new MailObject(t.scene, config, mail);
     });
   }
 }

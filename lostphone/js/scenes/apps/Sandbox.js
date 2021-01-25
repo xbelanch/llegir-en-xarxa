@@ -1,20 +1,12 @@
-import LostPhoneScene from '../LostPhoneScene';
+import PhoneApp from '../PhoneApp';
 
-export default class SandboxApp extends LostPhoneScene
+export default class SandboxApp extends PhoneApp
 {
   constructor()
   {
     super({ key: 'SandboxApp'});
-    this.config;
-    this.colors;
   }
-
-  init()
-  {
-    this.config = this.cache.json.get('config');
-    this.colors = this.config.colors;
-  }
-
+  
   preload()
   {
     this.load.image('raster', 'assets/images/raster-bw-64.png');

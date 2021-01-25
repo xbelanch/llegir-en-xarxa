@@ -4,27 +4,14 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
-import LostPhoneScene from '../LostPhoneScene';
+import PhoneApp from '../PhoneApp';
 
-export default class CalendarApp extends LostPhoneScene
+export default class CalendarApp extends PhoneApp
 {
   constructor()
   {
-    super();
+    super({ key: 'CalendarApp'});
   }
-
-  init()
-  {
-    let t = this;
-    super.init();
-    t.registry.set('activeApp', 'calendarApp');
-  }
-
-  preload()
-  {
-    super.preload();
-  }
-
   create()
   {
     let t = this;

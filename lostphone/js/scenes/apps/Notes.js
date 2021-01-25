@@ -4,25 +4,13 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
-import LostPhoneScene from '../LostPhoneScene';
+import PhoneApp from '../PhoneApp';
 
-class NotesApp extends LostPhoneScene
+export default class NotesApp extends PhoneApp
 {
   constructor()
   {
-    super();
-  }
-
-  init()
-  {
-    let t = this;
-    super.init();
-    t.registry.set('activeApp', 'notesApp');
-  }
-
-  preload()
-  {
-    super.preload();
+    super({ key: 'NotesApp'});
   }
 
   create()

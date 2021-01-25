@@ -1,13 +1,13 @@
 // ---
 // --- Wifi App
 // ---
-import LostPhoneScene from '../LostPhoneScene';
+import PhoneApp from '../PhoneApp';
 
-class WifiApp extends LostPhoneScene
+class WifiApp extends PhoneApp
 {
   constructor()
   {
-    super();
+    super({ key: 'WifiApp'});
     this.config = null;
     this.xarxes;
     this.xarxesEstat;
@@ -16,21 +16,6 @@ class WifiApp extends LostPhoneScene
     this.numberPad;
     this.colors;
     this.password;
-  }
-
-  init()
-  {
-    let t = this;
-    super.init();
-    t.registry.set('activeApp', 'wifiApp');
-  }
-
-  preload()
-  {
-    let t = this;
-    super.preload();
-    t.colors = t.cache.json.get('config').colors;
-    t.config = t.cache.json.get('wifi');
   }
 
   create()
