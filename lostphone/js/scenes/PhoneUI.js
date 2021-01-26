@@ -256,7 +256,7 @@ export default class PhoneUI extends Phaser.Scene
 
     this.notificationsArea = new Phaser.GameObjects.Container(
       this,
-      width * 0.1, 
+      width * 0.1,
       Math.floor(100*assetsDPR)
     );
     t.drawer.add(this.notificationsArea);
@@ -312,7 +312,7 @@ export default class PhoneUI extends Phaser.Scene
     ).setOrigin(0).setInteractive();
 
     let max_height = Math.floor(60*assetsDPR) * (this.game.state['notifications'].length) - Math.floor(100*assetsDPR);
-    
+
     this.dragZone.on('pointermove', function (pointer) {
       if (pointer.isDown) {
         t.notificationsArea.y += (pointer.velocity.y / 3);

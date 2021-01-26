@@ -36,7 +36,7 @@ export default class MailObject extends Phaser.GameObjects.Container
       height,
       0xffffff,
       0.2
-    ).setOrigin(0,0); 
+    ).setOrigin(0,0);
 
     // Rectangle reading area
     let background = this.add(new Phaser.GameObjects.Rectangle(
@@ -47,7 +47,7 @@ export default class MailObject extends Phaser.GameObjects.Container
       height - (2 * margin_top),
       0x202020,
       1.0
-    ).setOrigin(0,0).setStrokeStyle(1, 0xffffff)); 
+    ).setOrigin(0,0).setStrokeStyle(1, 0xffffff));
 
     let mask = new Phaser.Display.Masks.GeometryMask(this.scene, background);
 

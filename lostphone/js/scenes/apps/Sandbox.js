@@ -6,7 +6,7 @@ export default class SandboxApp extends PhoneApp
   {
     super({ key: 'SandboxApp'});
   }
-  
+
   preload()
   {
     this.load.image('raster', 'assets/images/raster-bw-64.png');

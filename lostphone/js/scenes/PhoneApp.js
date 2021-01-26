@@ -16,7 +16,7 @@ export default class PhoneApp extends Phaser.Scene
 
     let { width, height } = t.cameras.main;
     t.width = width;
-    t.height = height; 
+    t.height = height;
     t.x = t.width / 2;
     t.y = t.height / 2;
 

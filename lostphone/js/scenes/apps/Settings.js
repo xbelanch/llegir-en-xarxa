@@ -11,7 +11,7 @@ export default class SettingsApp extends PhoneApp
   create()
   {
     let t = this;
-    
+
     t.add.text(
         t.width / 2,
         Math.floor(60 * assetsDPR),
