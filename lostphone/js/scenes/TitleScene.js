@@ -13,33 +13,36 @@ export default class TitleScene extends Phaser.Scene
 
   preload()
   {
-    this.load.image('Title', 'assets/images/title.png');
-    this.load.image('Button-Idle', 'assets/images/kennyBlue.png');
+    let t = this;
+    t.load.image('Title', 'assets/images/title.png');
+    t.load.image('Button-Idle', 'assets/images/kennyBlue.png');
   };
 
   init()
   {
-    this.scene.add('Bootstrap', Bootstrap);
-    this.scene.add('Credits', Credits);
+    let t = this;
+    t.scene.add('Bootstrap', Bootstrap);
+    t.scene.add('Credits', Credits);
   };
 
   create()
   {
+    let t = this;
     // --- Get width and height from camera and aplly DPR factor
-    var { width, height } = this.cameras.main;
+    let { width, height } = t.cameras.main;
     width /= assetsDPR;
     height /= assetsDPR;
 
     // --- Set title start screen
-    var back = new Image(this, Math.round(width/2), Math.round(height/3), 'Title');
+    let back = new Image(t, Math.round(width/2), Math.round(height/3), 'Title');
     back.setOrigin(0.5, 0.5);
-    this.children.add(back);
+    t.children.add(back);
 
     // --- Add credits and start buttons
-    var buttonWidth = 120;
-    var buttonHeight = 45;
+    let buttonWidth = 120;
+    let buttonHeight = 45;
 
-    var goCredits = new TextButton(
+    let goCredits = new TextButton(
       this,
       new Phaser.Geom.Rectangle(
         width / 2,
@@ -48,14 +51,14 @@ export default class TitleScene extends Phaser.Scene
         buttonHeight),
       "Crèdits",
       'Button',
-      () => this.onClickGo('Credits')
+      () => t.onClickGo('Credits')
     );
 
     this.children.add(goCredits);
 
-    var offset = 16 * assetsDPR;
-    var goStart = new TextButton(
-      this,
+    let offset = 16 * assetsDPR;
+    let goStart = new TextButton(
+      t,
       new Phaser.Geom.Rectangle(
         width / 2,
         (goCredits.y + goCredits.height * assetsDPR) + offset,
@@ -66,13 +69,14 @@ export default class TitleScene extends Phaser.Scene
       () => this.onClickGo('Bootstrap')
     );
 
-    this.children.add(goStart);
+    t.children.add(goStart);
   };
 
   // https://stackoverflow.com/questions/20279484/how-to-access-the-correct-this-inside-a-callback
   //
   onClickGo(scene) {
-      this.scene.start(scene);
+    let t = this;
+    t.scene.start(scene);
   }
 
 };

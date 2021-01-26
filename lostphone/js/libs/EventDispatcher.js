@@ -2,7 +2,7 @@ let instance = null;
 
 export default class EventDispatcher extends Phaser.Events.EventEmitter {
     constructor() {
-        super();       
+        super();
     }
 
     static getInstance() {

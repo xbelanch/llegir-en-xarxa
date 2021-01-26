@@ -15,11 +15,6 @@ export default class Time extends Phaser.GameObjects.Text
     t.text = `${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}:${('0' + date.getSeconds()).slice(-2)}`;
   }
 
-  create()
-  {
-
-  }
-
   update(delta, time)
   {
     let t = this

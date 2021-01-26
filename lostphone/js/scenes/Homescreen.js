@@ -17,21 +17,24 @@ export default class Homescreen extends Phaser.Scene
 
   init()
   {
-    this.apps = this.cache.json.get('apps');
+    let t = this;
+    t.apps = this.cache.json.get('apps');
   }
 
   preload()
   {
+    let t = this;
     // --- Testing iconApp
     if (['dev'].includes(this.game.debug))
-      this.load.image('lorem-appsum', `assets/img/iconApp-@${assetsDPR}.png`);
+      t.load.image('lorem-appsum', `assets/img/iconApp-@${assetsDPR}.png`);
   }
 
   create()
   {
-    this.addIconApps();
-    this.emitter.on('notification', () => this.addBalloons());
-    this.addBalloons();
+    let t = this;
+    t.addIconApps();
+    t.emitter.on('notification', () => this.addBalloons());
+    t.addBalloons();
   }
 
   addIconApps()
@@ -55,28 +58,29 @@ export default class Homescreen extends Phaser.Scene
     // ubica les icones de les apps a tres columenes.
     var row = 0;
     for (var index in this.apps) {
+      let app = undefined;
       if (index % 3 === 0) row += 1;
       if (['dev'].includes(t.game.debug)) {
-        var app = new IconApp(t, this.apps[index], 0, 0, 'lorem-appsum');
+        app = new IconApp(t, t.apps[index], 0, 0, 'lorem-appsum');
       } else {
-        var app = new IconApp(t, this.apps[index], 0, 0, this.apps.key);
+        app = new IconApp(t, t.apps[index], 0, 0, t.apps.key);
       };
       app.setX(index % 3 == 0 ? left_column - margin : (index % 3 == 1 ? center_column : right_column + margin));
       app.setY(top_margin +  ((top_margin * 2) * (row - 1)));
-      app.addLabel(this.apps[index].name);
+      app.addLabel(t.apps[index].name);
 
-      this.icons[this.apps[index]['type']] = app;
+      t.icons[t.apps[index]['type']] = app;
     };
   };
 
   addBalloons()
   {
+    let t = this;
+    let notifications = t.game.state['notifications'];
 
-    let notifications = this.game.state['notifications'];
-
-    for (var index in this.apps) {
-      let found = notifications.filter(element => element['type'] === this.apps[index]['type']).length
-      this.icons[this.apps[index]['type']].addBalloon(found);
+    for (var index in t.apps) {
+      let found = notifications.filter(element => element['type'] === this.apps[index]['type']).length;
+      t.icons[this.apps[index]['type']].addBalloon(found);
     }
   }
 };

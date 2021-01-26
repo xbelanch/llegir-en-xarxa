@@ -30,7 +30,8 @@ export default class PhoneUI extends Phaser.Scene
   };
 
   preload() {
-    this.load.image('lorem-appsum-test', `assets/img/iconApp-@${assetsDPR}.png`);
+    let t = this;
+    t.load.image('lorem-appsum-test', `assets/img/iconApp-@${assetsDPR}.png`);
   }
 
   create()
@@ -45,22 +46,22 @@ export default class PhoneUI extends Phaser.Scene
     // --- Volume icon
     // By default, volume icon is on
     // @TODO: icon atlas
-    this.add.image(width - Math.floor(24 * assetsDPR), 12 * assetsDPR, 'volume-icon-on')
+    t.add.image(width - Math.floor(24 * assetsDPR), 12 * assetsDPR, 'volume-icon-on')
         .setScale(1 / (assetsDPR * 4))
         .setTintFill(0xffffff)
         .setInteractive()
         .on('pointerup', function(){
-          t.game.sound.mute === true  ? this.setTexture('volume-icon-on') : this.setTexture('volume-icon-off');
+          t.game.sound.mute === true  ? t.setTexture('volume-icon-on') : t.setTexture('volume-icon-off');
           t.game.sound.mute = !t.game.sound.mute;
         });
 
     // --- Home button
-    this.homeButton = this.add.image(Math.floor(width / 2), height - Math.floor(48 * assetsDPR / 2), 'button-homescreen')
+    t.homeButton = this.add.image(Math.floor(width / 2), height - Math.floor(48 * assetsDPR / 2), 'button-homescreen')
       .setInteractive()
       .on('pointerup', () => t.backHome());
 
     // --- Go back Button
-    this.backButton = this.add.text(
+    t.backButton = t.add.text(
       Math.floor(width / 5), height - Math.floor(48 * assetsDPR / 2),
        "↩",
       {
@@ -87,17 +88,17 @@ export default class PhoneUI extends Phaser.Scene
     t.createDrawer();
     t.createNotificationBar();
 
-    this.emitter.on('notification', function() {
+    t.emitter.on('notification', function() {
       t.launchNotification();
     });
-    this.launchNotification();
+    t.launchNotification();
   };
 
   backHome()
   {
     let t = this;
 
-    var scenes = t.game.scene.getScenes(true);
+    let scenes = t.game.scene.getScenes(true);
     for (var i in scenes) {
       if (/App/.test(scenes[i].scene.key))
         var app = scenes[i].scene.key;
@@ -150,18 +151,19 @@ export default class PhoneUI extends Phaser.Scene
 
   onCompleteHandler(tween, targets, popup)
   {
+    let t = this;
     popup.isActive = false;
     popup.setVisible(false);
     popup.destroy();
-    this.notificationOn = false;
+    t.notificationOn = false;
 
-    let notifications = this.game.state['pendingNotifications'];
+    let notifications = t.game.state['pendingNotifications'];
     if (notifications.length > 0) {
       notifications.splice(0, 1);
-      this.game.save();
+      t.game.save();
       if (notifications.length > 0) {
-        this.nextDelay = 0;
-        this.emitter.emit('notification');
+        t.nextDelay = 0;
+        t.emitter.emit('notification');
       }
     }
   }
@@ -219,7 +221,7 @@ export default class PhoneUI extends Phaser.Scene
     ).setOrigin(0,0);
     let mask = new Phaser.Display.Masks.GeometryMask(t, this.notificationsMaskZone);
 
-    t.drawer = this.add.container(
+    t.drawer = t.add.container(
       0, -height,
       [
         t.add.rectangle(
@@ -254,19 +256,19 @@ export default class PhoneUI extends Phaser.Scene
       ]
     );
 
-    this.notificationsArea = new Phaser.GameObjects.Container(
-      this,
+    t.notificationsArea = new Phaser.GameObjects.Container(
+      t,
       width * 0.1,
       Math.floor(100*assetsDPR)
     );
-    t.drawer.add(this.notificationsArea);
+    t.drawer.add(t.notificationsArea);
 
-    let notifications = [...this.game.state['notifications']];
+    let notifications = [...t.game.state['notifications']];
     notifications.reverse();
 
     for (let i=0; i<notifications.length; i++) {
       this.notificationsArea.add(new Notification(
-          this,
+          t,
           'Nou '+notifications[i]['type']+': '+notifications[i]['subject'],
           notifications[i],
           {
@@ -286,34 +288,34 @@ export default class PhoneUI extends Phaser.Scene
       );
     }
 
-    this.notificationsArea.setMask(mask);
+    t.notificationsArea.setMask(mask);
   }
 
   showDrawer() {
     let t = this;
     let { width, height } = this.cameras.main;
-    this.log('Drawer out!');
-    this.tweens.add({
+    t.log('Drawer out!');
+    t.tweens.add({
       targets: [this.drawer, this.notificationsMaskZone],
       y: '+='+height,
       duration : 500
     });
-    this.tweens.add({
+    t.tweens.add({
       targets: [this.topNotificationBar],
       y: 0 - Math.floor(32*assetsDPR),
       duration : 500
     });
 
-    this.dragZone = this.add.zone(
+    t.dragZone = this.add.zone(
       0,
       Math.floor(120*assetsDPR),
       width - (16 * assetsDPR),
       height - Math.floor(120*assetsDPR) - Math.floor(48*assetsDPR)
     ).setOrigin(0).setInteractive();
 
-    let max_height = Math.floor(60*assetsDPR) * (this.game.state['notifications'].length) - Math.floor(100*assetsDPR);
+    let max_height = Math.floor(60*assetsDPR) * (t.game.state['notifications'].length) - Math.floor(100*assetsDPR);
 
-    this.dragZone.on('pointermove', function (pointer) {
+    t.dragZone.on('pointermove', function (pointer) {
       if (pointer.isDown) {
         t.notificationsArea.y += (pointer.velocity.y / 3);
         t.notificationsArea.y = Phaser.Math.Clamp(
@@ -326,23 +328,24 @@ export default class PhoneUI extends Phaser.Scene
   }
 
   hideDrawer() {
-    let { width, height } = this.cameras.main;
-    this.log('Drawer in!');
-    this.tweens.add({
-      targets: [this.drawer, this.topNotificationBar, this.notificationsMaskZone],
+    let t = this;
+    let { width, height } = t.cameras.main;
+    t.log('Drawer in!');
+    t.tweens.add({
+      targets: [t.drawer, t.topNotificationBar, t.notificationsMaskZone],
       y: '-='+height,
       duration : 500,
       onComplete: function () {
-        this.drawer.destroy()
-        this.createDrawer();
-        this.topNotificationBar.destroy();
-        this.createNotificationBar();
+        t.drawer.destroy();
+        t.createDrawer();
+        t.topNotificationBar.destroy();
+        t.createNotificationBar();
       },
-      onCompleteScope: this
+      onCompleteScope: t
     });
 
-    if (this.dragZone !== undefined) {
-      this.dragZone.destroy();
+    if (t.dragZone !== undefined) {
+      t.dragZone.destroy();
     }
   }
 }

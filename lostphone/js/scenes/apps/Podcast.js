@@ -54,16 +54,16 @@ export default class PodcastApp extends PhoneApp
     t.playlist.each(function(sound){
       sound.on('complete', function()
         {
-          var next = t.playlist.next || t.playlist.first;
+          let next = t.playlist.next || t.playlist.first;
           t.audio.stopAll();
           if (next) next.play();
         });
     });
 
     // Display tracks and buttons
-    var buttons = [
+    let buttons = [
       t.createButton.call(t, '⏯', function(){
-        var current = t.playlist.current || t.playlist.first;
+        let current = t.playlist.current || t.playlist.first;
         if (current.isPaused) {
           current.resume();
         } else if (current.isPlaying) {
@@ -82,12 +82,12 @@ export default class PodcastApp extends PhoneApp
         }
       }),
       t.createButton.call(t, '⏮', function(){
-        var prev = t.playlist.previous || t.playlist.last;
+        let prev = t.playlist.previous || t.playlist.last;
         t.audio.stopAll();
         if (prev) prev.play();
       }),
       t.createButton.call(t, '⏭', function(){
-        var next = t.playlist.next || t.playlist.first;
+        let next = t.playlist.next || t.playlist.first;
         t.audio.stopAll();
         if (next) next.play();
       })
@@ -115,7 +115,7 @@ export default class PodcastApp extends PhoneApp
 
   refresh()
   {
-    let t = this; // wtf? really?
+    let t = this;
 
     t.text.setText(t.playlist.list.map(function(s, i){
       return [
@@ -161,7 +161,8 @@ export default class PodcastApp extends PhoneApp
 
   createButton(text, callback)
   {
-    return this.add
+    let t = this;
+    return t.add
       .text(0, 0, text, { fontSize: 48 })
       .setInteractive()
       .on('pointerdown', callback);
@@ -179,14 +180,14 @@ export default class PodcastApp extends PhoneApp
     t.progressCursor.fillStyle(0xffffff, 1);
     t.progressCursor.fillRect(t.x - (t.width*0.4), t.height - 225, 3, 30);
 
-    var zone = t.add.zone(t.x - (t.width*0.4), t.height - 220, t.width *0.8, 20)
+    let zone = t.add.zone(t.x - (t.width*0.4), t.height - 220, t.width *0.8, 20)
       .setOrigin(0)
       .setInteractive();
 
     let moveToSelection = function(pointer) {
       if (pointer.isDown) {
-        var current = t.playlist.current || t.playlist.first;
-        var seconds = Math.round(((pointer.worldX - t.width*0.1) / (t.width*0.8))*current.duration.toFixed(1));
+        let current = t.playlist.current || t.playlist.first;
+        let seconds = Math.round(((pointer.worldX - t.width*0.1) / (t.width*0.8))*current.duration.toFixed(1));
         current.stop();
         current.play('',{seek: seconds});
       }

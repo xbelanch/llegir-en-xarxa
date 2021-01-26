@@ -9,8 +9,7 @@ import {WebFontFile} from "../libs/lostphone";
 
 export const PhoneEvents = {
   PreloadFinished : 'preload-finisihed'
-};
-
+}
 
 export default class Bootstrap extends Phaser.Scene
 {
@@ -18,10 +17,6 @@ export default class Bootstrap extends Phaser.Scene
   {
     super();
     this.group;
-  };
-
-  init()
-  {
   }
 
   preload()
@@ -73,17 +68,17 @@ export default class Bootstrap extends Phaser.Scene
 
 
     // --- Display logo - text - booting phone
-    var config = {
+    let config = {
         key: 'run',
         frames: 'muybridge',
         frameRate: 15,
         repeat: -1
-    };
+    }
 
-    this.anims.create(config);
+    t.anims.create(config);
 
     //  Each frame is 119px wide
-    t.group = this.add.group();
+    t.group = t.add.group();
 
     t.group.createMultiple({
       key: 'muybridge',
@@ -116,30 +111,31 @@ export default class Bootstrap extends Phaser.Scene
 
     // --- Load all the assets stuff
     if (['dev'].includes(t.game.debug)) {
-      this.scene.run('Preload');
+      t.scene.run('Preload');
     } else {
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE, (cam, effect) => {
-        this.time.delayedCall(0, () => {
-          this.scene.run('Preload');
+      t.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE, (cam, effect) => {
+        t.time.delayedCall(0, () => {
+          t.scene.run('Preload');
         });
       });
-    };
-  };
+    }
+  }
 
   handlePreloadFinished()
   {
-    this.scene.remove('Preload');
-    this.anims.remove('run');
-    this.group.remove(this);
+    let t = this;
+    t.scene.remove('Preload');
+    t.anims.remove('run');
+    t.group.remove(this);
 
 
     // --- Let's start the game
-    this.scene.launch('Phone');
-    this.scene.remove();
+    t.scene.launch('Phone');
+    t.scene.remove();
 
     // --- Play a melodic sound when display homescreen
-    if (!['dev'].includes(this.game.debug))
-      this.sound.play('startup');
+    if (!['dev'].includes(t.game.debug))
+      t.sound.play('startup');
 
   }
 }

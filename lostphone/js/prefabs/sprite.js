@@ -8,8 +8,6 @@ class Sprite extends Phaser.GameObjects.Sprite {
 
   setX(x) { super.setX(Math.round(x * assetsDPR)); }
   setY(y) { super.setY(Math.round(y * assetsDPR)); }
-
-
 }
 
 export default Sprite

@@ -9,21 +9,22 @@ export default class SandboxApp extends PhoneApp
 
   preload()
   {
-    this.load.image('raster', 'assets/images/raster-bw-64.png');
+    let t = this;
+    t.load.image('raster', 'assets/images/raster-bw-64.png');
   }
 
   create()
   {
-    this.cameras.main.setBackgroundColor(0xff0088);
+    let t = this;
 
-    var group = this.add.group();
+    t.cameras.main.setBackgroundColor(0xff0088);
+
+    let group = t.add.group();
 
     group.createMultiple({ key: 'raster', repeat: 16 });
 
-    var ci = 0;
-    var colors = [ 0xef658c, 0xff9a52, 0xffdf00, 0x31ef8c, 0x21dfff, 0x31aade, 0x5275de, 0x9c55ad, 0xbd208c ];
-
-    var _this = this;
+    let ci = 0;
+    let colors = [ 0xef658c, 0xff9a52, 0xffdf00, 0x31ef8c, 0x21dfff, 0x31aade, 0x5275de, 0x9c55ad, 0xbd208c ];
 
     group.children.iterate(function (child) {
 
@@ -35,7 +36,7 @@ export default class SandboxApp extends PhoneApp
 
         ci++;
 
-        _this.tweens.add({
+        t.tweens.add({
             targets: child,
             x: 640,
             yoyo: true,
