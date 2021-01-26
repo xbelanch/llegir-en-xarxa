@@ -31,23 +31,24 @@ export default class Phone extends Phaser.Scene
 
   create()
   {
+    let t = this;
     // -- Set a random wallpaper
-    let wallpapers = this.cache.json.get('config').wallpapers;
+    let wallpapers = t.cache.json.get('config').wallpapers;
     let wallpaper = wallpapers[Math.floor(Math.random() * wallpapers.length)] + '-wallpaper';
-    let scale = this.textures.get(wallpaper).getSourceImage();
-    this.add.image(
-      Math.round(this.game.config.width / 2),
-      Math.round(this.game.config.height / 2),
+    let scale = t.textures.get(wallpaper).getSourceImage();
+    t.add.image(
+      Math.round(t.game.config.width / 2),
+      Math.round(t.game.config.height / 2),
       wallpaper)
       .setOrigin(0.5, 0.5)
       .setScale(
-        this.game.config.width / scale.width,
-        this.game.config.height / scale.height
+        t.game.config.width / scale.width,
+        t.game.config.height / scale.height
       );
 
     // --- Set default cursor
-    this.input.setDefaultCursor("url(" + `assets/img/cursors/fingerprint.png` + ") 24 24, auto");
-    this.scene.launch('Homescreen');
-    this.scene.launch('PhoneUI');
+    t.input.setDefaultCursor("url(" + `assets/img/cursors/fingerprint.png` + ") 24 24, auto");
+    t.scene.launch('Homescreen');
+    t.scene.launch('PhoneUI');
   }
 }

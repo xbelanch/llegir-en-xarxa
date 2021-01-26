@@ -10,7 +10,7 @@ export default class TextButton extends Phaser.GameObjects.Container
     this.width = rect.width;
     this.height = rect.height;
 
-    var slice = this.scene.add.nineslice(
+    let slice = this.scene.add.nineslice(
       this.x, this.y,
       Math.round(rect.width * assetsDPR),
       Math.round(rect.height * assetsDPR),
@@ -18,7 +18,7 @@ export default class TextButton extends Phaser.GameObjects.Container
       [35, 15, 15]
     );
 
-    var label = new Phaser.GameObjects.Text(
+    let label = new Phaser.GameObjects.Text(
       scene,
       0, // position relative to container
       0,

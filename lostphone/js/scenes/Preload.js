@@ -21,12 +21,12 @@ export default class Preload extends Phaser.Scene
 
     // --- Progress Bar Loader
     // https://gamedevacademy.org/creating-a-preloading-screen-in-phaser-3/?a=13
-    var progressBox = this.add.graphics();
-    var progressBar = this.add.graphics();
+    let progressBox = this.add.graphics();
+    let progressBar = this.add.graphics();
     progressBox.fillStyle(0x000000, 1);
     progressBox.fillRect(width / 2 - 160, height - 128, 320, 50);
 
-    var loadingText = this.make.text({
+    let loadingText = this.make.text({
       x: width / 2,
       y: height - 256,
       text: 'Loading...',
@@ -37,7 +37,7 @@ export default class Preload extends Phaser.Scene
     });
     loadingText.setOrigin(0.5, 0.5);
 
-    var percentText = this.make.text({
+    let percentText = this.make.text({
       x: width / 2,
       y: height - 200,
       text: '0%',
@@ -68,7 +68,7 @@ export default class Preload extends Phaser.Scene
       t.load.image('volume-icon-off', 'assets/img/volume-icon-off.png');
       t.load.image('button-homescreen', 'assets/images/button-homescreen.png');
     /*
-      for (var i = 0; i < 2; i++) {
+      for (let i = 0; i < 2; i++) {
         t.load.image('test' + i, 'assets/img/560x1024/backgrounds/city-blurred-hd.jpg');
       };
     */
@@ -76,13 +76,13 @@ export default class Preload extends Phaser.Scene
 
     // --- Load wallpapers
     let wallpapers = t.cache.json.get('config').wallpapers;
-    for (var i = 0; i < wallpapers.length; i++)
+    for (let i = 0; i < wallpapers.length; i++)
       t.load.image(wallpapers[i]+ '-wallpaper', `assets/img/wallpapers/${wallpapers[i]}.png`);
 
     /*
     // --- Load icon apps
-    var apps = t.cache.json.get('apps');
-    for (var app in apps)
+    let apps = t.cache.json.get('apps');
+    for (let app in apps)
     {
       t.load.image(apps[app]['type'], `assets/img/${imgFolder}/appIcons/${apps[app]['icon']}`);
     }

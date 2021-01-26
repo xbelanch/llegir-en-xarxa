@@ -19,7 +19,7 @@ export default class CalculatorApp extends PhoneApp
     super.create();
 
     // @@TESTING@@
-    var numberPad = new NumberPad(t, {});
+    let numberPad = new NumberPad(t, {});
 
   }
 

@@ -215,7 +215,7 @@ Phaser.Game.prototype.updateURL = function(value) {
  */
 Phaser.Game.prototype.loadSave = function(key) {
     if (key === undefined) key = 'default';
-    var state = localStorage.getItem('save-'+key);
+    let state = localStorage.getItem('save-'+key);
     if (state) {
         this.updateURL(state);
         this.unserialize(atob(state));
@@ -228,7 +228,7 @@ Phaser.Game.prototype.loadSave = function(key) {
  */
 Phaser.Game.prototype.autosaveOn = function(interval) {
     if (interval === undefined) interval = 5000;
-    var self = this;
+    let self = this;
     this.autosaveTimer = setInterval(function() {
         console.log("Autosaving...");
         self.save('autosave');
@@ -324,20 +324,3 @@ export class WebFontFile extends Phaser.Loader.File
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

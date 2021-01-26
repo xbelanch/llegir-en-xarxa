@@ -128,23 +128,23 @@ class WifiApp extends PhoneApp
     let t = this;
     let Phone = t.game.config;
 
-    var displayPassword = '';
-    var passwordValue = '';
+    let displayPassword = '';
+    let passwordValue = '';
 
-    var numberPad  = t.add.container(0, Phone.height);
-    var numberPadButtons = t.add.container(0, Phone.height);
+    let numberPad  = t.add.container(0, Phone.height);
+    let numberPadButtons = t.add.container(0, Phone.height);
 
 
-    var boxPad = t.add.graphics({ x : 0, y : Phone.height });
-    var boxPadHeight = Math.floor(Phone.height * 0.65);
+    let boxPad = t.add.graphics({ x : 0, y : Phone.height });
+    let boxPadHeight = Math.floor(Phone.height * 0.65);
     boxPad.fillStyle(t.colors.black, 1);
     boxPad.fillRect(0, 0, Phone.width, boxPadHeight);
 
-    var enterNumberPad = new Phaser.GameObjects.Rectangle(t, boxPad.x, boxPad.y, Phone.width, 64);
+    let enterNumberPad = new Phaser.GameObjects.Rectangle(t, boxPad.x, boxPad.y, Phone.width, 64);
     enterNumberPad.setFillStyle(t.colors.white, 1);
     enterNumberPad.setOrigin(0);
 
-    var displayNumberPad = t.add.text(
+    let displayNumberPad = t.add.text(
       enterNumberPad.x + Math.floor(enterNumberPad.width / 2),
       enterNumberPad.y + Math.floor(enterNumberPad.height / 2),
       displayPassword, {
@@ -155,21 +155,21 @@ class WifiApp extends PhoneApp
       }).setOrigin(0.5);
 
     // create a second container for Pad buttons
-    var padding = 4;
-    var margin = 18;
-    var buttonWidth = Math.floor((Phone.width  - (margin * 2) - (padding * 2)) / 3 );
-    var buttonHeight = 92;
-    var yOffset = enterNumberPad.y + enterNumberPad.height + margin;
-    var buttons = new Array();
-    var numberText = new Array();
-    var row = 0;
+    let padding = 4;
+    let margin = 18;
+    let buttonWidth = Math.floor((Phone.width  - (margin * 2) - (padding * 2)) / 3 );
+    let buttonHeight = 92;
+    let yOffset = enterNumberPad.y + enterNumberPad.height + margin;
+    let buttons = new Array();
+    let numberText = new Array();
+    let row = 0;
     for (var i = 0; i < 12; i++)
     {
       // Calculem la posició de cada butó del Pad
-      var posX = ((i % 3) * buttonWidth) + (i === 0 ? margin : margin + (padding * (i % 3)));
+      let posX = ((i % 3) * buttonWidth) + (i === 0 ? margin : margin + (padding * (i % 3)));
       if (i % 3 === 0 && i > 0)
         row++;
-      var posY = yOffset + (buttonHeight * row) + (row > 0 ? padding * row : 0);
+      let posY = yOffset + (buttonHeight * row) + (row > 0 ? padding * row : 0);
 
       // Creem el butó amb la interactivitat
       buttons[i] = new Phaser.GameObjects.Rectangle(t, posX, posY, buttonWidth, buttonHeight);
@@ -196,7 +196,7 @@ class WifiApp extends PhoneApp
 
       buttons[i].setInteractive()
         .on('pointerover', function(){
-          var value = this.getData('value');
+          let value = this.getData('value');
           if (value === 'Del')
             this.setFillStyle(t.colors.numberPad_delete, 1);
           else if (value === 'Enter')
@@ -205,7 +205,7 @@ class WifiApp extends PhoneApp
             this.setFillStyle(t.colors.numberPad_buttons_over, 1);
         })
         .on('pointerout', function(){
-          var value = this.getData('value');
+          let value = this.getData('value');
           if (value === 'Del')
             this.setFillStyle(t.colors.numberPad_delete, 1);
           else if (value === 'Enter')
@@ -214,7 +214,7 @@ class WifiApp extends PhoneApp
             this.setFillStyle(t.colors.numberPad_buttons, 1);
         })
         .on('pointerup', function(){
-          var value = this.getData('value').toString();
+          let value = this.getData('value').toString();
 
           if (value.localeCompare('Del') === 0)
           {
@@ -223,7 +223,7 @@ class WifiApp extends PhoneApp
           else if (value.localeCompare('Enter') === 0)
           {
             numberPad.setVisible(false);
-            var textFormDisplay = t.wifiPasswordInputForm.getAt(6);
+            let textFormDisplay = t.wifiPasswordInputForm.getAt(6);
             console.log(passwordValue.length);
             textFormDisplay.text =  Array(passwordValue.length + 1).join('*');
             // textFormDisplay.setData('password', passwordValue);
@@ -281,15 +281,15 @@ class WifiApp extends PhoneApp
     const inputPassword = undefined;
     const displayPassword = undefined;
 
-    var container = t.add.container(x - Math.floor(width / 2), y - Math.floor(height / 2));
+    let container = t.add.container(x - Math.floor(width / 2), y - Math.floor(height / 2));
 
-    var bubble = t.add.graphics({ x: 0, y: 0 });
+    let bubble = t.add.graphics({ x: 0, y: 0 });
     bubble.fillStyle(0xacacac, 1);
     bubble.lineStyle(4, 0x565656, 1);
     bubble.strokeRoundedRect(0, 0, width, height, 16);
     bubble.fillRoundedRect(0, 0, width, height, 16);
 
-    var text = t.add.text(Math.floor(width / 2), Math.floor(padding * 1.3), "La xarxa està protegida per contrasenya", {
+    let text = t.add.text(Math.floor(width / 2), Math.floor(padding * 1.3), "La xarxa està protegida per contrasenya", {
       fontFamily: 'Roboto',
       fontSize: 24,
       color: '#ffffff',
@@ -299,7 +299,7 @@ class WifiApp extends PhoneApp
       }
     }).setOrigin(0.5);
 
-    var displayForm = new Phaser.GameObjects.Rectangle(t, text.x, text.y + 72, 192, 48);
+    let displayForm = new Phaser.GameObjects.Rectangle(t, text.x, text.y + 72, 192, 48);
     displayForm.setFillStyle(0xffffff, 1);
     displayForm.setInteractive().on('pointerup', function(){
       if (t.numberPad === undefined )
@@ -315,7 +315,7 @@ class WifiApp extends PhoneApp
     });
 
     // Mostra aquest text o popup ? si la contrasenya no és correcta
-    var passwordIncorrect = t.add.text(text.x, 300, "Contrasenya incorrecta", {
+    let passwordIncorrect = t.add.text(text.x, 300, "Contrasenya incorrecta", {
       fontFamily: 'Roboto',
       fontSize: 18,
       color: '#ff0000',
@@ -323,7 +323,7 @@ class WifiApp extends PhoneApp
     }).setVisible(false);
 
     // Mostra aquest text o popup si la contrasenya és vàlida
-    var passwordIsValid = t.add.text(text.x, 300, "Contrasenya correcta", {
+    let passwordIsValid = t.add.text(text.x, 300, "Contrasenya correcta", {
       fontFamily: 'Roboto',
       fontSize: 32,
       color: '#00ff00',
@@ -332,14 +332,14 @@ class WifiApp extends PhoneApp
 
 
     // Verifica si la contrasenya és o no correcta
-    var accept = new TextButton(t, text.x, displayForm.y + padding, "Acceptar", {
+    let accept = new TextButton(t, text.x, displayForm.y + padding, "Acceptar", {
       fontFamily: 'Roboto',
       fontSize: 24,
       color: t.colors.white,
       align: 'center'
     }, () => t.checkPassword());
 
-    var cancel = new TextButton(t, accept.x, accept.y + padding, "Cancel·lar",{
+    let cancel = new TextButton(t, accept.x, accept.y + padding, "Cancel·lar",{
       fontFamily: 'Roboto',
       fontSize: 24,
       color: t.colors.white,
@@ -347,7 +347,7 @@ class WifiApp extends PhoneApp
     }, () => t.cancelInputPassword());
 
 
-    var passwordFormDisplay = t.add.text(displayForm.x, displayForm.y, null , {
+    let passwordFormDisplay = t.add.text(displayForm.x, displayForm.y, null , {
       fontFamily : 'Roboto',
       fontSize: 32,
       color: t.colors.black,
@@ -396,12 +396,10 @@ class WifiApp extends PhoneApp
     // Actualitzem la informació de Protegida a Connectada
     t.xarxesEstat[0].text = 'Connectada';
     // Actualitzem la icona de la wifi!
-    var wifi_signal_icon = t.scene.get('phoneUI').wifi_signal_icon;
+    let wifi_signal_icon = t.scene.get('phoneUI').wifi_signal_icon;
     wifi_signal_icon.setTexture('phone_ui_icons_states', 'wifi-signal-on');
     t.registry.set('unlockWifi', true);
   }
 
 
 }
-
-
