@@ -28,12 +28,10 @@ export default class PodcastApp extends PhoneApp
       .setOrigin(0.5, 0.5)
       .setDepth(0);
 
-    // @ALERT: si les pistes d'àudio s'han carregat al preload,
-    // cal un altre cop?
+    // Tracks were load at Preload.js
     t.tracks = t.cache.json.get('tracks');
     t.progressMap = Object.fromEntries(t.tracks.map(t => [t.key, 0]));
     t.playlist = new Phaser.Structs.List();
-    t.load.audio(t.tracks);
   }
 
   create()
