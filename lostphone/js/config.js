@@ -9,6 +9,7 @@ import Phone from './scenes/Phone.js'
 import Homescreen from './scenes/Homescreen.js'
 import PhoneUI from './scenes/PhoneUI.js'
 
+import SettingsApp from './scenes/apps/Settings.js';
 import ClockApp from './scenes/apps/Clock.js';
 import SandboxApp from './scenes/apps/Sandbox.js';
 import MailApp from './scenes/apps/Mail.js';
@@ -50,6 +51,7 @@ const scenes = [
   , Bootstrap
   , Preload
   , Phone
+  , SettingsApp
   , MailApp
   , PodcastApp
   , ClockApp

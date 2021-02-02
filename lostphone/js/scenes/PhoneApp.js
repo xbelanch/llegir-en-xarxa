@@ -5,7 +5,11 @@ export default class PhoneApp extends Phaser.Scene
   {
     super(key);
     this.backFunction = undefined;
-
+    this.icons = {
+      'switchOff': 22,
+      'switchOn': 21,
+      'warning' : 23
+    }
   }
 
   init() {
@@ -23,13 +27,19 @@ export default class PhoneApp extends Phaser.Scene
     t.addGoBackFunction();
   }
 
+  preload()
+  {
+    let t = this;
+    t.load.spritesheet('icons', 'assets/sprites/pixelIcons.png', { frameWidth: 16, frameHeight: 16});
+  }
+
   getConfig(key='config') {
     let t = this;
     t.config = t.cache.json.get(key);
   }
 
 
-  addGoBackFunction(functionName = undefined) {
+  addGoBackFunction(functionName) {
     let t = this;
     t.backFunction = functionName;
 

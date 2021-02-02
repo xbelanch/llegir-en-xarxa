@@ -1,5 +1,6 @@
 import { assetsDPR } from '../../config';
 import PhoneApp from '../PhoneApp';
+import SwitchButton from '../../prefabs/switchButton';
 
 export default class SettingsApp extends PhoneApp
 {
@@ -40,12 +41,13 @@ export default class SettingsApp extends PhoneApp
   createOptions(startY)
   {
     let t = this;
+    let marginY = 40;
 
     // Option text
     t.add.text(
       Math.floor(20 * assetsDPR),
       Math.floor(startY * assetsDPR),
-      'Sons',
+      'Silenciar el mòbil',
       {
         fontFamily: 'Roboto',
         fontSize : Math.floor(13 * assetsDPR),
@@ -55,9 +57,41 @@ export default class SettingsApp extends PhoneApp
     );
 
     // Add button (spritesheet)
+    new SwitchButton(
+      t,
+      Math.floor(t.width - (2 * 20 * assetsDPR)),
+      Math.floor(startY * assetsDPR),
+      'icons',
+      'sound.mute'
+    )
+    .setRotation(Math.PI/2);
+
+    startY += marginY;
+    // Option text
+    t.add.text(
+      Math.floor(20 * assetsDPR),
+      Math.floor(startY * assetsDPR),
+      'Popups de notificacions',
+      {
+        fontFamily: 'Roboto',
+        fontSize : Math.floor(13 * assetsDPR),
+        color: '#ffffff',
+        align: 'center'
+      }
+    );
+
+    // Add button (spritesheet)
+    new SwitchButton(
+      t,
+      Math.floor(t.width - (2 * 20 * assetsDPR)),
+      Math.floor(startY * assetsDPR),
+      'icons',
+      'notifications.popup'
+    )
+    .setRotation(Math.PI/2);
 
 
-    startY += 30;
+    startY += marginY;
     // Option text
     t.add.text(
       Math.floor(20 * assetsDPR),
@@ -72,8 +106,19 @@ export default class SettingsApp extends PhoneApp
     );
 
     // Add button
+    t.add.image(
+      Math.floor(t.width - (2 * 20 * assetsDPR)),
+      Math.floor(startY * assetsDPR),
+      'icons',
+      t.icons['warning']
+    )
+    .setInteractive()
+    .setScale(2*assetsDPR)
+    .on('pointerup', function(){
+      t.game.deleteState();
+    });
 
-    startY += 40;
+    startY += marginY + 10;
     t.add.line(
       0,0,
       Math.floor(20 * assetsDPR),
@@ -84,7 +129,7 @@ export default class SettingsApp extends PhoneApp
       1.0
     ).setOrigin(0,0);
 
-    startY += 20;
+    startY += marginY;
     t.add.text(
       t.width / 2,
       Math.floor(startY * assetsDPR),

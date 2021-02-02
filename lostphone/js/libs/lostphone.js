@@ -90,7 +90,12 @@ Phaser.Game.prototype.saveState = function(app, key, value) {
       this.state[app][key] = value;
       let items = this.getNewElements(key);
       this.state['notifications'] = [...this.state['notifications'], ...items];
-      this.state['pendingNotifications'] = [...this.state['pendingNotifications'], ...items];
+
+      if (!!this.notifications && !!this.notifications.popup) {
+        this.state['pendingNotifications'] = [...this.state['pendingNotifications'], ...items];
+      } else {
+        this.state['pendingNotifications'] = [];
+      }
 
       let found = this.state['notifications'].filter(element => element['id'] === key);
       if (found.length > 0) {
@@ -105,6 +110,16 @@ Phaser.Game.prototype.saveState = function(app, key, value) {
     }
     this.save('autosave');
 };
+
+Phaser.Game.prototype.deleteState = function() {
+    this.state['complete'] = {};
+    this.state['notifications'] = [];
+    this.state['pendingNotifications'] = []
+    localStorage.removeItem('save-autosave');
+    this.updateURL();
+
+    this.emitter.emit('notification');
+}
 
 /**
  * Get a state
@@ -205,7 +220,11 @@ Phaser.Game.prototype.updateURL = function(value) {
        path = url.replace(passValue[0], "");
    }
 
-  window.history.pushState("", "", path + '?pass=' + value);
+  if (value !== undefined) {
+    window.history.pushState("", "", path + '?pass=' + value);
+  } else {
+    window.history.pushState("", "", path);
+  }
 };
 
 

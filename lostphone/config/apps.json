@@ -47,5 +47,12 @@
     "key"  : "SandboxApp",
     "name" : "Sandbox",
     "icon" : "clockApp.png"
+  },
+  {
+    "type" : "settings",
+    "class": "SettingsApp",
+    "key"  : "SettingsApp",
+    "name" : "Settings",
+    "icon" : "settingsApp.png"
   }
 ]
