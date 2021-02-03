@@ -45,14 +45,17 @@ export default class PhoneUI extends Phaser.Scene
     // --- Volume icon
     // By default, volume icon is on
     // @TODO: icon atlas
-    t.add.image(width - Math.floor(24 * t.assetsDPR), 12 * t.assetsDPR, 'volume-icon-on')
-        .setScale(1 / (t.assetsDPR * 4))
-        .setTintFill(0xffffff)
-        .setInteractive()
-        .on('pointerup', function(){
-          t.game.sound.mute === true  ? t.setTexture('volume-icon-on') : t.setTexture('volume-icon-off');
-          t.game.sound.mute = !t.game.sound.mute;
-        });
+    const muteSwitch = t.add.image(width - Math.floor(24 * t.assetsDPR), 12 * t.assetsDPR, 'volume-icon-on')
+      .setScale(1 / (t.assetsDPR * 4))
+      .setTintFill(0xffffff)
+      .setInteractive()
+      .on('pointerup', function(){
+        t.game.settings.toggleSetting('muteSound');
+      }
+    );
+    t.game.events.on(PhoneEvents.SettingsUpdated, function(){
+      !t.game.settings.getSettingValue('muteSound') ? muteSwitch.setTexture('volume-icon-on') : muteSwitch.setTexture('volume-icon-off');
+    });
 
     // --- Home button
     t.homeButton = this.add.image(Math.floor(width / 2), height - Math.floor(48 * t.assetsDPR / 2), 'button-homescreen')

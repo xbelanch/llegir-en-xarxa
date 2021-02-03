@@ -1,10 +1,7 @@
 // --- Bootstrap
 import { DPR, assetsDPR } from '/Config';
-import Preload from '/scenes/Preload';
-import Phone from '/scenes/Phone';
-import Image from '/prefabs/image';
-import Sprite from '/prefabs/sprite';
 import {WebFontFile} from "/libs/WebFontFile";
+import GameSettings from '/libs/GameSettings';
 
 export const PhoneEvents = {
   PreloadFinished : 'preload-finished',
@@ -121,6 +118,9 @@ export default class Bootstrap extends Phaser.Scene
         });
       });
     }
+
+    // --- Load settings
+    t.game.settings = new GameSettings(t.game);
   }
 
   handlePreloadFinished()

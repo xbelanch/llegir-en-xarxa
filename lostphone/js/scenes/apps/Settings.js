@@ -1,5 +1,6 @@
 import PhoneApp from '/scenes/PhoneApp';
 import SwitchButton from '/prefabs/switchButton';
+import { PhoneEvents } from '../Bootstrap';
 
 export default class SettingsApp extends PhoneApp
 {
@@ -56,14 +57,17 @@ export default class SettingsApp extends PhoneApp
     );
 
     // Add button (spritesheet)
-    new SwitchButton(
+    t.muteSwitch = new SwitchButton(
       t,
       Math.floor(t.width - (2 * 20 * t.assetsDPR)),
       Math.floor(startY * t.assetsDPR),
       'icons',
-      'sound.mute'
+      t.game.settings.getSettingValue('muteSound')
     )
-    .setRotation(Math.PI/2);
+    .setRotation(Math.PI/2)
+    .on('pointerup', function(){
+      t.game.settings.toggleSetting('muteSound');
+    });
 
     startY += marginY;
     // Option text
@@ -80,15 +84,17 @@ export default class SettingsApp extends PhoneApp
     );
 
     // Add button (spritesheet)
-    new SwitchButton(
+    t.popupSwitch = new SwitchButton(
       t,
       Math.floor(t.width - (2 * 20 * t.assetsDPR)),
       Math.floor(startY * t.assetsDPR),
       'icons',
-      'notifications.popup'
+      t.game.settings.getSettingValue('notificationPopup')
     )
-    .setRotation(Math.PI/2);
-
+    .setRotation(Math.PI/2)
+    .on('pointerup', function(){
+      t.game.settings.toggleSetting('notificationPopup');
+    });
 
     startY += marginY;
     // Option text
@@ -145,5 +151,20 @@ export default class SettingsApp extends PhoneApp
     .on('pointerdown', function(){
       window.location.href = "https://ioc.xtec.cat";
     });
+
+    t.game.events.on(PhoneEvents.SettingsUpdated, () => t.updateSwitches());
+  }
+
+  updateSwitches()
+  {
+    let t = this;
+
+    t.muteSwitch.updateState(t.game.settings.getSettingValue('muteSound'));
+    t.popupSwitch.updateState(t.game.settings.getSettingValue('notificationPopup'));
+  }
+
+  destroy()
+  {
+    t.game.events.off(PhoneEvents.SettingsUpdated, () => t.updateSwitches());
   }
 }
