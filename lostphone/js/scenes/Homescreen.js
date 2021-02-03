@@ -1,8 +1,6 @@
 import { assetsDPR } from '/Config';
 import IconApp from '/prefabs/iconApp';
-import PhoneUI from '/scenes/PhoneUI';
-import EventDispatcher from '/libs/EventDispatcher';
-
+import { PhoneEvents } from '/scenes/Bootstrap';
 
 export default class Homescreen extends Phaser.Scene
 {
@@ -12,7 +10,6 @@ export default class Homescreen extends Phaser.Scene
     super({ key: 'Homescreen'});
     this.apps;
     this.icons = {};
-    this.emitter = EventDispatcher.getInstance();
     this.assetsDPR = assetsDPR;
   }
 
@@ -34,7 +31,7 @@ export default class Homescreen extends Phaser.Scene
   {
     let t = this;
     t.addIconApps();
-    t.emitter.on('notification', () => this.addBalloons());
+    t.game.events.on(PhoneEvents.Notification, () => this.addBalloons());
     t.addBalloons();
   }
 

@@ -1,4 +1,5 @@
-import EventDispatcher from '/libs/EventDispatcher';
+
+import { PhoneEvents } from '/scenes/Bootstrap';
 
 // Phaser.Scene
 Phaser.Scene.prototype.log = function(message) {
@@ -90,8 +91,7 @@ Phaser.Game.prototype.saveState = function(app, key, value) {
         if (index !== -1) this.state['notifications'].splice(index, 1);
       }
 
-      this.emitter = EventDispatcher.getInstance();
-      this.emitter.emit('notification');
+      this.events.emit(PhoneEvents.Notification);
     } else {
       this.state[app][key] = value;
     }
@@ -105,8 +105,7 @@ Phaser.Game.prototype.deleteState = function() {
     localStorage.removeItem('save-autosave');
     this.updateURL();
 
-    this.emitter = EventDispatcher.getInstance();
-    this.emitter.emit('notification');
+    this.events.emit(PhoneEvents.Notification);
 }
 
 /**

@@ -7,7 +7,9 @@ import Sprite from '/prefabs/sprite';
 import {WebFontFile} from "/libs/WebFontFile";
 
 export const PhoneEvents = {
-  PreloadFinished : 'preload-finisihed'
+  PreloadFinished : 'preload-finished',
+  Notification: 'notification-launched',
+  SettingsUpdated: 'settings-updated'
 }
 
 export default class Bootstrap extends Phaser.Scene

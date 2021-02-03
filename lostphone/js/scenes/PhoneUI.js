@@ -5,9 +5,8 @@
 import { assetsDPR } from '/Config';
 import Time from '/prefabs/time';
 import Popup from '/prefabs/popup';
-import ExclusivePopup from '/prefabs/exclusivePopup';
 import Notification from '/prefabs/notification';
-import EventDispatcher from '/libs/EventDispatcher';
+import { PhoneEvents } from '/scenes/Bootstrap';
 
 export default class PhoneUI extends Phaser.Scene
 {
@@ -17,7 +16,6 @@ export default class PhoneUI extends Phaser.Scene
     this.time;
     this.notificationOn = false;
     this.nextDelay = 'random';
-    this.emitter = EventDispatcher.getInstance();
     this.drawer;
     this.notificationsArea;
     this.drawerOut = false;
@@ -89,7 +87,7 @@ export default class PhoneUI extends Phaser.Scene
     t.createDrawer();
     t.createNotificationBar();
 
-    t.emitter.on('notification', function() {
+    t.game.events.on(PhoneEvents.Notification, function() {
       t.launchNotification();
     });
     t.launchNotification();
@@ -164,7 +162,7 @@ export default class PhoneUI extends Phaser.Scene
       t.game.save();
       if (notifications.length > 0) {
         t.nextDelay = 0;
-        t.emitter.emit('notification');
+        t.game.events.emit(PhoneEvents.Notification);
       }
     }
   }
