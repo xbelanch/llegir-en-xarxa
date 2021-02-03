@@ -1,7 +1,6 @@
 // -- Preload.js
 //
 //
-import { assetsDPR } from '/Config';
 import { PhoneEvents } from '/scenes/Bootstrap';
 
 export default class Preload extends Phaser.Scene

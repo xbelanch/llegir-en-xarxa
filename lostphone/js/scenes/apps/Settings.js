@@ -1,4 +1,3 @@
-import { assetsDPR } from '/Config';
 import PhoneApp from '/scenes/PhoneApp';
 import SwitchButton from '/prefabs/switchButton';
 
@@ -15,11 +14,11 @@ export default class SettingsApp extends PhoneApp
 
     t.add.text(
         t.width / 2,
-        Math.floor(60 * assetsDPR),
+        Math.floor(60 * t.assetsDPR),
         'Configuració',
         {
           fontFamily: 'Roboto',
-          fontSize : Math.floor(13 * assetsDPR),
+          fontSize : Math.floor(13 * t.assetsDPR),
           color: '#ffffff',
           align: 'center'
         }
@@ -27,10 +26,10 @@ export default class SettingsApp extends PhoneApp
 
     t.add.line(
         0,0,
-        Math.floor(20 * assetsDPR),
-        Math.floor(80 * assetsDPR),
-        t.width - Math.floor(20 * assetsDPR),
-        Math.floor(80 * assetsDPR),
+        Math.floor(20 * t.assetsDPR),
+        Math.floor(80 * t.assetsDPR),
+        t.width - Math.floor(20 * t.assetsDPR),
+        Math.floor(80 * t.assetsDPR),
         0xffffff,
         1.0
     ).setOrigin(0,0);
@@ -45,12 +44,12 @@ export default class SettingsApp extends PhoneApp
 
     // Option text
     t.add.text(
-      Math.floor(20 * assetsDPR),
-      Math.floor(startY * assetsDPR),
+      Math.floor(20 * t.assetsDPR),
+      Math.floor(startY * t.assetsDPR),
       'Silenciar el mòbil',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * assetsDPR),
+        fontSize : Math.floor(13 * t.assetsDPR),
         color: '#ffffff',
         align: 'center'
       }
@@ -59,8 +58,8 @@ export default class SettingsApp extends PhoneApp
     // Add button (spritesheet)
     new SwitchButton(
       t,
-      Math.floor(t.width - (2 * 20 * assetsDPR)),
-      Math.floor(startY * assetsDPR),
+      Math.floor(t.width - (2 * 20 * t.assetsDPR)),
+      Math.floor(startY * t.assetsDPR),
       'icons',
       'sound.mute'
     )
@@ -69,12 +68,12 @@ export default class SettingsApp extends PhoneApp
     startY += marginY;
     // Option text
     t.add.text(
-      Math.floor(20 * assetsDPR),
-      Math.floor(startY * assetsDPR),
+      Math.floor(20 * t.assetsDPR),
+      Math.floor(startY * t.assetsDPR),
       'Popups de notificacions',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * assetsDPR),
+        fontSize : Math.floor(13 * t.assetsDPR),
         color: '#ffffff',
         align: 'center'
       }
@@ -83,8 +82,8 @@ export default class SettingsApp extends PhoneApp
     // Add button (spritesheet)
     new SwitchButton(
       t,
-      Math.floor(t.width - (2 * 20 * assetsDPR)),
-      Math.floor(startY * assetsDPR),
+      Math.floor(t.width - (2 * 20 * t.assetsDPR)),
+      Math.floor(startY * t.assetsDPR),
       'icons',
       'notifications.popup'
     )
@@ -94,12 +93,12 @@ export default class SettingsApp extends PhoneApp
     startY += marginY;
     // Option text
     t.add.text(
-      Math.floor(20 * assetsDPR),
-      Math.floor(startY * assetsDPR),
+      Math.floor(20 * t.assetsDPR),
+      Math.floor(startY * t.assetsDPR),
       'Esborrar tot el contingut i ajustaments',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * assetsDPR),
+        fontSize : Math.floor(13 * t.assetsDPR),
         color: '#ffffff',
         align: 'center'
       }
@@ -107,13 +106,13 @@ export default class SettingsApp extends PhoneApp
 
     // Add button
     t.add.image(
-      Math.floor(t.width - (2 * 20 * assetsDPR)),
-      Math.floor(startY * assetsDPR),
+      Math.floor(t.width - (2 * 20 * t.assetsDPR)),
+      Math.floor(startY * t.assetsDPR),
       'icons',
       t.icons['warning']
     )
     .setInteractive()
-    .setScale(2*assetsDPR)
+    .setScale(2*t.assetsDPR)
     .on('pointerup', function(){
       t.game.deleteState();
     });
@@ -121,10 +120,10 @@ export default class SettingsApp extends PhoneApp
     startY += marginY + 10;
     t.add.line(
       0,0,
-      Math.floor(20 * assetsDPR),
-      Math.floor(startY * assetsDPR),
-      t.width - Math.floor(20 * assetsDPR),
-      Math.floor(startY * assetsDPR),
+      Math.floor(20 * t.assetsDPR),
+      Math.floor(startY * t.assetsDPR),
+      t.width - Math.floor(20 * t.assetsDPR),
+      Math.floor(startY * t.assetsDPR),
       0xffffff,
       1.0
     ).setOrigin(0,0);
@@ -132,11 +131,11 @@ export default class SettingsApp extends PhoneApp
     startY += marginY;
     t.add.text(
       t.width / 2,
-      Math.floor(startY * assetsDPR),
+      Math.floor(startY * t.assetsDPR),
       'Sortir del miniop',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * assetsDPR),
+        fontSize : Math.floor(13 * t.assetsDPR),
         color: '#ff0000',
         align: 'center'
       }

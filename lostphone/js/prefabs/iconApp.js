@@ -1,8 +1,6 @@
 // --- IconApp
 //
 //
-
-import { assetsDPR } from '/Config';
 import Image from '/prefabs/image';
 
 export default class IconApp extends Image
@@ -40,11 +38,11 @@ export default class IconApp extends Image
     let t = this;
     let label = t.scene.add.text(
       t.x,
-      t.y + t.height + (assetsDPR > 2.5 ? 18 : 4),
+      t.y + t.height + (t.scene.assetsDPR > 2.5 ? 18 : 4),
       t.config.name);
     label.setOrigin(0.5, 0);
     // Set text depending on assetsDPR value
-    label.setFontSize(assetsDPR > 1.5 ? (assetsDPR >= 2.5 ? (assetsDPR > 3.5 ? 42 : 32) : 24) : 16);
+    label.setFontSize(t.scene.assetsDPR > 1.5 ? (t.scene.assetsDPR >= 2.5 ? (t.scene.assetsDPR > 3.5 ? 42 : 32) : 24) : 16);
     label.setFontFamily('Roboto');
     label.setShadow(2, 2, 0x3f3f3f, 0.4);
     label.setResolution(1);
@@ -53,7 +51,7 @@ export default class IconApp extends Image
   addBalloon(counter)
   {
     let t = this;
-    let offset = Math.floor(5*assetsDPR);
+    let offset = Math.floor(5*t.scene.assetsDPR);
 
     if (t.balloon !== undefined) {
       t.balloon.destroy();
@@ -70,8 +68,8 @@ export default class IconApp extends Image
         t.scene,
         0,
         0,
-        Math.floor(25*assetsDPR),
-        Math.floor(25*assetsDPR),
+        Math.floor(25*t.scene.assetsDPR),
+        Math.floor(25*t.scene.assetsDPR),
         0xff0000,
         1.0
       ).setOrigin(0.5, 0.5));
@@ -83,7 +81,7 @@ export default class IconApp extends Image
           counter
         )
         .setOrigin(0.5, 0.5)
-        .setFontSize(assetsDPR > 1.5 ? (assetsDPR >= 2.5 ? (assetsDPR > 3.5 ? 42 : 32) : 24) : 16)
+        .setFontSize(t.scene.assetsDPR > 1.5 ? (t.scene.assetsDPR >= 2.5 ? (t.scene.assetsDPR > 3.5 ? 42 : 32) : 24) : 16)
         .setShadow(2, 2, 0x3f3f3f, 0.4)
         .setFontFamily('Roboto')
         .setResolution(1)

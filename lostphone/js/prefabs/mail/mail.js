@@ -1,4 +1,3 @@
-import { assetsDPR } from "/Config";
 export default class MailObject extends Phaser.GameObjects.Container
 {
   constructor(scene, config, mail) {
@@ -15,7 +14,8 @@ export default class MailObject extends Phaser.GameObjects.Container
 
   print(config, mail) {
 
-    let { width, height } = this.scene.cameras.main;
+    let t = this;
+    let { width, height } = t.scene.cameras.main;
 
     const heading = config['locale']['from']
       + mail['from'] + '\n'
@@ -23,12 +23,12 @@ export default class MailObject extends Phaser.GameObjects.Container
       + mail['subject'];
     const content = mail['body'];
 
-    const margin_left = Math.floor(20*assetsDPR);
-    const margin_top = Math.floor(100*assetsDPR);
-    const margin_text = Math.floor(10*assetsDPR);
+    const margin_left = Math.floor(20*t.scene.assetsDPR);
+    const margin_top = Math.floor(100*t.scene.assetsDPR);
+    const margin_text = Math.floor(10*t.scene.assetsDPR);
 
     // Layer
-    this.scene.add.rectangle(
+    t.scene.add.rectangle(
       0,
       0,
       width,
@@ -38,8 +38,8 @@ export default class MailObject extends Phaser.GameObjects.Container
     ).setOrigin(0,0);
 
     // Rectangle reading area
-    let background = this.add(new Phaser.GameObjects.Rectangle(
-      this.scene,
+    let background = t.add(new Phaser.GameObjects.Rectangle(
+      t.scene,
       margin_left,
       margin_top,
       width - (2 * margin_left),
@@ -48,10 +48,10 @@ export default class MailObject extends Phaser.GameObjects.Container
       1.0
     ).setOrigin(0,0).setStrokeStyle(1, 0xffffff));
 
-    let mask = new Phaser.Display.Masks.GeometryMask(this.scene, background);
+    let mask = new Phaser.Display.Masks.GeometryMask(t.scene, background);
 
     // Add text
-    let text = this.scene.add.text(
+    let text = t.scene.add.text(
       margin_left + margin_text,
       margin_top + margin_text,
       heading + '\n\n' + content,
@@ -65,7 +65,7 @@ export default class MailObject extends Phaser.GameObjects.Container
     text.setMask(mask);
 
     //  The rectangle they can 'drag' within
-    let zone = this.scene.add.zone(
+    let zone = t.scene.add.zone(
       margin_left,
       margin_top,
       width - (2 * margin_left),
@@ -85,24 +85,25 @@ export default class MailObject extends Phaser.GameObjects.Container
     });
 
     // Add close button
-    this.add(new Phaser.GameObjects.Text(
-      this.scene,
-      width - margin_left - Math.floor(12*assetsDPR),
-      margin_top + Math.floor(8*assetsDPR),
+    t.add(new Phaser.GameObjects.Text(
+      t.scene,
+      width - margin_left - Math.floor(12*t.scene.assetsDPR),
+      margin_top + Math.floor(8*t.scene.assetsDPR),
       'X',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(12 * assetsDPR),
+        fontSize : Math.floor(12 * t.scene.assetsDPR),
         color: '#ffffff',
         align: 'right'
       }
-    ).setInteractive().on('pointerdown', () => this.onClose()));
+    ).setInteractive().on('pointerdown', () => t.onClose()));
 
-    this.scene.addGoBackFunction(() => this.onClose());
+    t.scene.addGoBackFunction(() => t.onClose());
   }
 
   onClose()
   {
-    this.scene.scene.restart();
+    let t = this;
+    t.scene.scene.restart();
   }
 }

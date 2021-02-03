@@ -1,4 +1,3 @@
-import { DPR, assetsDPR } from '/Config';
 import TextBox from '/prefabs/textbox';
 
 export default class Notifications extends TextBox

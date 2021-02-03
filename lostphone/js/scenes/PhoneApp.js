@@ -1,4 +1,4 @@
-
+import { DPR, assetsDPR } from '/Config';
 export default class PhoneApp extends Phaser.Scene
 {
   constructor(key)
@@ -10,6 +10,9 @@ export default class PhoneApp extends Phaser.Scene
       'switchOn': 21,
       'warning' : 23
     }
+
+    this.DPR = DPR;
+    this.assetsDPR = assetsDPR;
   }
 
   init() {

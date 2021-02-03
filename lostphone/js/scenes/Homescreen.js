@@ -1,4 +1,4 @@
-import { DPR, assetsDPR } from '/Config';
+import { assetsDPR } from '/Config';
 import IconApp from '/prefabs/iconApp';
 import PhoneUI from '/scenes/PhoneUI';
 import EventDispatcher from '/libs/EventDispatcher';
@@ -13,6 +13,7 @@ export default class Homescreen extends Phaser.Scene
     this.apps;
     this.icons = {};
     this.emitter = EventDispatcher.getInstance();
+    this.assetsDPR = assetsDPR;
   }
 
   init()
@@ -26,7 +27,7 @@ export default class Homescreen extends Phaser.Scene
     let t = this;
     // --- Testing iconApp
     if (['dev'].includes(this.game.debug))
-      t.load.image('lorem-appsum', `assets/img/iconApp-@${assetsDPR}.png`);
+      t.load.image('lorem-appsum', `assets/img/iconApp-@${t.assetsDPR}.png`);
   }
 
   create()
@@ -44,8 +45,8 @@ export default class Homescreen extends Phaser.Scene
 
     // --- Set width and height main camera
     let { width, height } = t.cameras.main;
-    width /= assetsDPR;
-    height /= assetsDPR;
+    width /= t.assetsDPR;
+    height /= t.assetsDPR;
 
     // fix values
     const left_column  = width / 3;

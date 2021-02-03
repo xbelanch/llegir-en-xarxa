@@ -1,7 +1,6 @@
 // @Todo: create a Popup based on Text phaser and
 // https://labs.phaser.io/edit.html?src=src/game%20objects/text/static/speech%20bubble.js&v=3.23.0
 // for displaying error messages
-import { DPR, assetsDPR } from '/Config';
 import TextBox from '/prefabs/textbox';
 
 export default class Popup extends TextBox
@@ -11,9 +10,9 @@ export default class Popup extends TextBox
     let { width, height } = scene.cameras.main;
 
     params['x'] = width * 0.1;
-    params['y'] = Math.floor(-140 * assetsDPR);
+    params['y'] = Math.floor(-140 * scene.assetsDPR);
     params['width'] = width * 0.8;
-    params['height'] = Math.floor(100 * assetsDPR);
+    params['height'] = Math.floor(100 * scene.assetsDPR);
     params['bgcolor'] = 0x000000;
     params['alpha'] = 0.8;
     params['strokeWidth'] = 1;

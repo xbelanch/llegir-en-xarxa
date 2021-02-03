@@ -1,4 +1,3 @@
-import { assetsDPR } from '/Config';
 import MailHeadingObject from '/prefabs/mail/mailHeading';
 export default class MailListObject extends Phaser.GameObjects.Container
 {
@@ -17,11 +16,11 @@ export default class MailListObject extends Phaser.GameObjects.Container
     let t = this;
     let { width, height } = t.scene.cameras.main;
 
-    const margin_line = Math.floor(25 * assetsDPR);
-    const margin_text_left = Math.floor(45 * assetsDPR);
-    const margin_text_top = Math.floor(10 * assetsDPR);
-    const initial_pos = Math.floor(100 * assetsDPR);
-    const box_height = Math.floor(60 * assetsDPR);
+    const margin_line = Math.floor(25 * t.scene.assetsDPR);
+    const margin_text_left = Math.floor(45 * t.scene.assetsDPR);
+    const margin_text_top = Math.floor(10 * t.scene.assetsDPR);
+    const initial_pos = Math.floor(100 * t.scene.assetsDPR);
+    const box_height = Math.floor(60 * t.scene.assetsDPR);
     const text_style = { color: '#ffffff', fontFamily: 'Roboto', fontSize: '24px'};
 
     let visible_mails = 0;

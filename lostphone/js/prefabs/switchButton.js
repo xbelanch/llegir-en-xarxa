@@ -12,7 +12,7 @@ export default class SwitchButton extends Phaser.GameObjects.Image
             this.setFrame(scene.icons['switchOn']);
         }
 
-        t.setInteractive().setScale(2*assetsDPR);
+        t.setInteractive().setScale(2*scene.assetsDPR);
         t.on('pointerup', function(){
             t.resolve(settingKey,t.scene.game) === true  ? t.setFrame(t.scene.icons['switchOff']) : t.setFrame(t.scene.icons['switchOn']);
             t.set(settingKey, t.scene.game, !t.resolve(settingKey, t.scene.game));

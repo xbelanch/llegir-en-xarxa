@@ -1,4 +1,3 @@
-import { DPR, assetsDPR } from '/Config';
 import Textbox from '/prefabs/textbox';
 
 export default class ExclusivePopup extends Phaser.GameObjects.Container
@@ -23,10 +22,10 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
     );
 
     params['x'] = width * 0.1;
-    params['y'] = height / 2 - Math.floor(50 * assetsDPR);
+    params['y'] = height / 2 - Math.floor(50 * scene.assetsDPR);
     params['bgcolor'] = 0xaaaaaa;
     params['width'] = width * 0.8;
-    params['height'] = Math.floor(100 * assetsDPR);
+    params['height'] = Math.floor(100 * scene.assetsDPR);
     params['alpha'] = 1;
     params['strokeWidth'] = 1;
     params['strokeColor'] = 0xffffff;
@@ -34,12 +33,12 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
     if (params['closeButton'] !== undefined) {
       this.add(new Phaser.GameObjects.Text(
         scene,
-        width - params['x'] - Math.floor(12 * assetsDPR),
-        params['y'] + Math.floor(2 * assetsDPR),
+        width - params['x'] - Math.floor(12 * scene.assetsDPR),
+        params['y'] + Math.floor(2 * scene.assetsDPR),
         'X',
         {
           fontFamily: 'Roboto',
-          fontSize : Math.floor(12 * assetsDPR),
+          fontSize : Math.floor(12 * scene.assetsDPR),
           color: '#ffffff',
           align: 'center'
         }
