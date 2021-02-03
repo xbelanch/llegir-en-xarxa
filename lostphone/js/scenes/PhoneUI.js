@@ -2,12 +2,12 @@
 // --- PhoneUI.js
 // ---
 
-import { DPR, assetsDPR } from '../config.js';
-import Time from '../prefabs/time.js';
-import Popup from '../prefabs/popup.js';
-import ExclusivePopup from '../prefabs/exclusivePopup.js';
-import Notification from '../prefabs/notification.js';
-import EventDispatcher from '../libs/EventDispatcher.js';
+import { DPR, assetsDPR } from '/Config';
+import Time from '/prefabs/time';
+import Popup from '/prefabs/popup';
+import ExclusivePopup from '/prefabs/exclusivePopup';
+import Notification from '/prefabs/notification';
+import EventDispatcher from '/libs/EventDispatcher';
 
 export default class PhoneUI extends Phaser.Scene
 {

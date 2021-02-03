@@ -2,8 +2,8 @@
 //
 //
 
-import { assetsDPR } from '../config.js';
-import Image from './image.js';
+import { assetsDPR } from '/Config';
+import Image from '/prefabs/image';
 
 export default class IconApp extends Image
 {

@@ -1,5 +1,5 @@
 // --- TextButton
-import { assetsDPR } from '../config.js'
+import { assetsDPR } from '/Config';
 
 export default class TextButton extends Phaser.GameObjects.Container
 {

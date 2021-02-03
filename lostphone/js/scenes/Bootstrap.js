@@ -1,11 +1,10 @@
 // --- Bootstrap
-import { DPR, assetsDPR } from '../config.js';
-import Preload from './Preload.js';
-import Phone from './Phone.js';
-import Image from '../prefabs/image.js';
-import Sprite from '../prefabs/sprite.js';
-import {WebFontFile} from "../libs/lostphone";
-
+import { DPR, assetsDPR } from '/Config';
+import Preload from '/scenes/Preload';
+import Phone from '/scenes/Phone';
+import Image from '/prefabs/image';
+import Sprite from '/prefabs/sprite';
+import {WebFontFile} from "/libs/WebFontFile";
 
 export const PhoneEvents = {
   PreloadFinished : 'preload-finisihed'

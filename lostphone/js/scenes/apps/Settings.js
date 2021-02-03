@@ -1,6 +1,6 @@
-import { assetsDPR } from '../../config';
-import PhoneApp from '../PhoneApp';
-import SwitchButton from '../../prefabs/switchButton';
+import { assetsDPR } from '/Config';
+import PhoneApp from '/scenes/PhoneApp';
+import SwitchButton from '/prefabs/switchButton';
 
 export default class SettingsApp extends PhoneApp
 {

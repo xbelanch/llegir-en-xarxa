@@ -1,5 +1,4 @@
-import { DPR, assetsDPR } from '../config.js';
-
+import { DPR, assetsDPR } from '/Config';
 export default class TextBox extends Phaser.GameObjects.Container
 {
   constructor(scene, text, params)

@@ -6,7 +6,7 @@
 //-- @From:
 
 
-class NumberPad extends Phaser.GameObjects.GameObject
+export default class NumberPad extends Phaser.GameObjects.GameObject
 {
   constructor(scene, config)
   {
@@ -22,7 +22,7 @@ class NumberPad extends Phaser.GameObjects.GameObject
 
     // --- Get config values
     t.colors = t.cache.json.get('config').colors;
-    
+
     var displayPassword = '';
     var passwordValue = '';
 
@@ -37,6 +37,4 @@ class NumberPad extends Phaser.GameObjects.GameObject
     numberPad.add(boxPad);
 
   }
-  
-  
 }

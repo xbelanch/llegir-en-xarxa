@@ -1,7 +1,7 @@
 // ---
 // --- Wifi App
 // ---
-import PhoneApp from '../PhoneApp';
+import PhoneApp from '/PhoneApp';
 
 class WifiApp extends PhoneApp
 {

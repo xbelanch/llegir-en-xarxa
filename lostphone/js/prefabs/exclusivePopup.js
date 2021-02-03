@@ -1,5 +1,5 @@
-import { DPR, assetsDPR } from '../config.js';
-import Textbox from './textbox.js';
+import { DPR, assetsDPR } from '/Config';
+import Textbox from '/prefabs/textbox';
 
 export default class ExclusivePopup extends Phaser.GameObjects.Container
 {

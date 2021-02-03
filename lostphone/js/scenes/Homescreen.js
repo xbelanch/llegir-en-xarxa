@@ -1,7 +1,7 @@
-import { DPR, assetsDPR } from '../config.js';
-import IconApp from '../prefabs/iconApp.js';
-import PhoneUI from './PhoneUI.js';
-import EventDispatcher from '../libs/EventDispatcher.js';
+import { DPR, assetsDPR } from '/Config';
+import IconApp from '/prefabs/iconApp';
+import PhoneUI from '/scenes/PhoneUI';
+import EventDispatcher from '/libs/EventDispatcher';
 
 
 export default class Homescreen extends Phaser.Scene

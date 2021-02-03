@@ -1,10 +1,6 @@
-import WebFont from './webFontLoader'
-import EventDispatcher from './EventDispatcher';
-// --- lib lostphone
+import EventDispatcher from '/libs/EventDispatcher';
 
-// --- Debug
-// --------------------------------------------------------
-
+// Phaser.Scene
 Phaser.Scene.prototype.log = function(message) {
     message = '[Scene:' + this.scene.key + '] ' + message;
 
@@ -13,16 +9,7 @@ Phaser.Scene.prototype.log = function(message) {
     }
 }
 
-// --- Common
-// --------------------------------------------------------
-// Define some bunch of methods commons to all scenes
-
-Object.defineProperty(Phaser.Structs.List.prototype, 'current', {
-  get() {
-    return this.getAt(this.position);
-  }
-});
-
+// Phaser.Game
 Phaser.Game.prototype.getNewElements = function(triggerItem) {
 
     // Change this
@@ -118,6 +105,7 @@ Phaser.Game.prototype.deleteState = function() {
     localStorage.removeItem('save-autosave');
     this.updateURL();
 
+    this.emitter = EventDispatcher.getInstance();
     this.emitter.emit('notification');
 }
 
@@ -166,11 +154,6 @@ Phaser.Game.prototype.unserialize = function(saveObject) {
     this.state = JSON.parse(saveObject);
     return true;
 };
-
-// Phaser.Game.prototype.save = function(key) {
-//     if (key === undefined) key = 'default';
-//     localStorage.setItem('save-'+key, this.serialize());
-// };
 
 /**
  * Save the game state.
@@ -264,82 +247,3 @@ Phaser.Game.prototype.autosaveOff = function() {
     }
 };
 
-// ---- WebFontFile.js
-// Source: https://gist.github.com/supertommy/bc728957ff7dcb8016da68b04d3a2768
-
-//const WebFont = window.WebFont;
-
-export class WebFontFile extends Phaser.Loader.File
-{
-  /**
-   * @param {Phaser.Loader.LoaderPlugin} loader
-   * @param {string | string[]} fontNames
-   * @param {string} [service]
-   */
-
-  constructor(loader, fontNames, service = 'google')
-  {
-    super(loader, {
-      type: 'webfont',
-      key: fontNames.toString()
-    });
-
-    this.fontNames = Array.isArray(fontNames) ? fontNames : [fontNames];
-    this.service = service;
-    this.fontsLoadedCount = 0;
-  }
-  load()
-  {
-    const config = {
-      fontactive: (familyName) => {
-	this.checkLoadedFonts(familyName)
-      },
-      fontinactive: (familyName) => {
-	this.checkLoadedFonts(familyName)
-      }
-    }
-
-    switch (this.service)
-    {
-      case 'google':
-      config[this.service] = this.getGoogleConfig()
-      break
-
-      case 'adobe-edge':
-      config['typekit'] = this.getAdobeEdgeConfig()
-
-      default:
-      throw new Error('Unsupported font service')
-    }
-    WebFont.load(config)
-  }
-
-  getGoogleConfig()
-  {
-    return {
-      families: this.fontNames
-    }
-  }
-
-  getAdobeEdgeConfig()
-  {
-    return {
-      id: this.fontNames.join(';'),
-      api: '//use.edgefonts.net'
-    }
-  }
-
-  checkLoadedFonts(familyName)
-  {
-    if (this.fontNames.indexOf(familyName) < 0)
-    {
-      return
-    }
-
-    ++this.fontsLoadedCount
-    if (this.fontsLoadedCount >= this.fontNames.length)
-    {
-      this.loader.nextFile(this, true)
-    }
-  }
-}

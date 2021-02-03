@@ -1,5 +1,5 @@
 // --- SwitchButton
-import { assetsDPR } from '../config.js'
+import { assetsDPR } from '/Config';
 
 export default class SwitchButton extends Phaser.GameObjects.Image
 {

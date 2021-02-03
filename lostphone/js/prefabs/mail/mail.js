@@ -1,5 +1,4 @@
-import { assetsDPR } from "../../config";
-
+import { assetsDPR } from "/Config";
 export default class MailObject extends Phaser.GameObjects.Container
 {
   constructor(scene, config, mail) {

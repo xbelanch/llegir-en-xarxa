@@ -1,6 +1,5 @@
-import { assetsDPR } from '../../config.js';
-import MailHeadingObject from './mailHeading.js';
-
+import { assetsDPR } from '/Config';
+import MailHeadingObject from '/prefabs/mail/mailHeading';
 export default class MailListObject extends Phaser.GameObjects.Container
 {
   constructor(scene, config) {
