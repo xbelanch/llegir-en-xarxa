@@ -8,7 +8,9 @@ export default class PhoneApp extends Phaser.Scene
     this.icons = {
       'switchOff': 22,
       'switchOn': 21,
-      'warning' : 23
+      'warning' : 23,
+      'ok': 0,
+      'ko': 7
     }
 
     this.DPR = DPR;

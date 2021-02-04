@@ -5,12 +5,12 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
   constructor(scene, text, params)
   {
     super(scene, 0, 0, []);
-    let exclusivePopup = this;
+    let t = this;
 
     let { width, height } = scene.cameras.main;
 
     // Add background
-    this.add(new Phaser.GameObjects.Rectangle(
+    t.add(new Phaser.GameObjects.Rectangle(
       scene,
       0,
       0,
@@ -31,7 +31,7 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
     params['strokeColor'] = 0xffffff;
 
     if (params['closeButton'] !== undefined) {
-      this.add(new Phaser.GameObjects.Text(
+      t.add(new Phaser.GameObjects.Text(
         scene,
         width - params['x'] - Math.floor(12 * scene.assetsDPR),
         params['y'] + Math.floor(2 * scene.assetsDPR),
@@ -44,21 +44,47 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
         }
         ).setOrigin(0,0)
         .setInteractive()
-        .on('pointerup', () => exclusivePopup.destroy())
+        .on('pointerup', () => t.destroy())
       );
       params['closeButton'] = undefined;
     }
 
-    this.addAt(new Textbox(
+    if (params['type'] !== undefined) {
+      if (params['type'] === 'yesno') {
+        //Print yes/no functions
+        t.add(new Phaser.GameObjects.Image(
+          scene,
+          width / 2 - Math.floor(20*scene.assetsDPR),
+          height / 2 + Math.floor(20 * scene.assetsDPR),
+          'icons',
+          t.scene.icons['ok']
+        )
+        .setInteractive()
+        .setScale(2*scene.assetsDPR)
+        .on('pointerup', function(){
+          params['yesfunction']();
+          t.destroy();
+        }));
+
+        t.add(new Phaser.GameObjects.Image(
+          scene,
+          width / 2 + Math.floor(20*scene.assetsDPR),
+          height / 2 + Math.floor(20 * scene.assetsDPR),
+          'icons',
+          t.scene.icons['ko']
+        )
+        .setInteractive()
+        .setScale(2*scene.assetsDPR)
+        .on('pointerup', () => t.destroy()));
+      }
+    }
+
+    t.addAt(new Textbox(
       scene,
       text,
       params
     ),1);
 
-    scene.add.existing(this);
-  }
-  display(params)
-  {
-
+    scene.add.existing(t);
   }
 }

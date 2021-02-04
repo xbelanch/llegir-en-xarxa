@@ -1,5 +1,6 @@
 import PhoneApp from '/scenes/PhoneApp';
 import SwitchButton from '/prefabs/switchButton';
+import ExclusivePopup from '/prefabs/exclusivePopup';
 import { PhoneEvents } from '../Bootstrap';
 
 export default class SettingsApp extends PhoneApp
@@ -120,7 +121,7 @@ export default class SettingsApp extends PhoneApp
     .setInteractive()
     .setScale(2*t.assetsDPR)
     .on('pointerup', function(){
-      t.game.deleteState();
+      t.resetToDefaults();
     });
 
     startY += marginY + 10;
@@ -153,6 +154,18 @@ export default class SettingsApp extends PhoneApp
     });
 
     t.game.events.on(PhoneEvents.SettingsUpdated, () => t.updateSwitches());
+  }
+
+  resetToDefaults()
+  {
+    let t = this;
+    new ExclusivePopup(t, 'Esteu segurs de voler esborrar tot el progrés?',
+    {
+      'type': 'yesno',
+      'yesfunction': function() {
+        t.game.deleteState();
+      }
+    });
   }
 
   updateSwitches()
