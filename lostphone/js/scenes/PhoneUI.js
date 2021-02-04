@@ -296,6 +296,12 @@ export default class PhoneUI extends Phaser.Scene
   showDrawer() {
     let t = this;
     let { width, height } = this.cameras.main;
+
+    t.drawer.destroy();
+    t.createDrawer();
+    t.topNotificationBar.destroy();
+    t.createNotificationBar();
+
     t.log('Drawer out!');
     t.tweens.add({
       targets: [this.drawer, this.notificationsMaskZone],
@@ -334,15 +340,16 @@ export default class PhoneUI extends Phaser.Scene
     let { width, height } = t.cameras.main;
     t.log('Drawer in!');
     t.tweens.add({
-      targets: [t.drawer, t.topNotificationBar, t.notificationsMaskZone],
+      targets: [t.drawer, t.notificationsMaskZone],
       y: '-='+height,
       duration : 500,
-      onComplete: function () {
-        t.drawer.destroy();
-        t.createDrawer();
-        t.topNotificationBar.destroy();
-        t.createNotificationBar();
-      },
+      onCompleteScope: t
+    });
+
+    t.tweens.add({
+      targets: [t.topNotificationBar],
+      y: -height,
+      duration : 500,
       onCompleteScope: t
     });
 
