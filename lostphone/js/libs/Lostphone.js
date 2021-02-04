@@ -79,7 +79,7 @@ Phaser.Game.prototype.saveState = function(app, key, value) {
       let items = this.getNewElements(key);
       this.state['notifications'] = [...this.state['notifications'], ...items];
 
-      if (!!this.notifications && !!this.notifications.popup) {
+      if (this.settings.getSettingValue('notificationPopup')) {
         this.state['pendingNotifications'] = [...this.state['pendingNotifications'], ...items];
       } else {
         this.state['pendingNotifications'] = [];
