@@ -14,6 +14,8 @@ export default class SwitchButton extends Phaser.GameObjects.Image
     updateState(state)
     {
         let t = this;
-        t.setFrame(t.scene.icons[state ? 'switchOn' : 'switchOff']);
+        if (t.scene !== undefined) {
+            t.setFrame(t.scene.icons[state ? 'switchOn' : 'switchOff']);
+        }
     }
 }

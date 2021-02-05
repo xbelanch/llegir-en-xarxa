@@ -171,13 +171,7 @@ export default class SettingsApp extends PhoneApp
   updateSwitches()
   {
     let t = this;
-
     t.muteSwitch.updateState(t.game.settings.getSettingValue('muteSound'));
     t.popupSwitch.updateState(t.game.settings.getSettingValue('notificationPopup'));
-  }
-
-  destroy()
-  {
-    t.game.events.off(PhoneEvents.SettingsUpdated, () => t.updateSwitches());
   }
 }
