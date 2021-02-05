@@ -1,7 +1,6 @@
 // --- Bootstrap
 import { DPR, assetsDPR } from '/Config';
 import {WebFontFile} from "/libs/WebFontFile";
-import GameSettings from '/libs/GameSettings';
 
 export const PhoneEvents = {
   PreloadFinished : 'preload-finished',
@@ -91,10 +90,7 @@ export default class Bootstrap extends Phaser.Scene
     t.anims.play('run', t.group.getChildren(), -100, false);
 
     // --- Initialize game and app states
-    t.game.state = {};
-    t.game.state['complete'] = {};
-    t.game.state['notifications'] = [];
-    t.game.state['pendingNotifications'] = [];
+    t.game.initializeState();
     let apps = t.cache.json.get('apps');
     for (var i = 0; i < apps.length; i++)
       t.game.state[apps[i].type] = {};
@@ -118,9 +114,6 @@ export default class Bootstrap extends Phaser.Scene
         });
       });
     }
-
-    // --- Load settings
-    t.game.settings = new GameSettings(t.game);
   }
 
   handlePreloadFinished()

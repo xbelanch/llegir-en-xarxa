@@ -45,7 +45,11 @@ export default class PhoneUI extends Phaser.Scene
     // --- Volume icon
     // By default, volume icon is on
     // @TODO: icon atlas
-    const muteSwitch = t.add.image(width - Math.floor(24 * t.assetsDPR), 12 * t.assetsDPR, 'volume-icon-on')
+    const muteSwitch = t.add.image(
+      width - Math.floor(24 * t.assetsDPR),
+      12 * t.assetsDPR,
+      !t.game.settings.getSettingValue('muteSound') ? 'volume-icon-on' : 'volume-icon-off'
+    )
       .setScale(1 / (t.assetsDPR * 4))
       .setTintFill(0xffffff)
       .setInteractive()

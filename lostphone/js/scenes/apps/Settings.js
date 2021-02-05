@@ -164,6 +164,7 @@ export default class SettingsApp extends PhoneApp
       'type': 'yesno',
       'yesfunction': function() {
         t.game.deleteState();
+        t.scene.get('PhoneUI').backHome();
       }
     });
   }

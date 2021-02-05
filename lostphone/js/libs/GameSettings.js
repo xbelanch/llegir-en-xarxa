@@ -5,12 +5,16 @@ export default class GameSettings {
         this.options = {
             'muteSound': {
                 'gameSetting': 'sound.mute',
-                'value': this.game.sound.mute
+                'defaultValue': false
             },
             'notificationPopup': {
-                'value': false
+                'defaultValue': false
             }
         };
+
+        for (let key in this.options) {
+            this.game.state['settings'][key] = this.options[key]['defaultValue'];
+        }
     }
 
     toggleSetting(key)
@@ -23,17 +27,24 @@ export default class GameSettings {
     {
         let t = this;
         if (key in t.options) {
-            t.options[key]['value'] = value;
+            t.game.state['settings'][key] = value;
 
             // Update game setting (if any)
-            if (t.options[key]['gameSetting'] !== undefined) {
-                setPropertyInPath(
-                    t.options[key]['gameSetting'],
-                    t.game,
-                    t.options[key]['value']
-                );
-            }
+            t.setGameConfigValue(key);
             t.game.events.emit(PhoneEvents.SettingsUpdated);
+            t.game.save('autosave');
+        }
+    }
+
+    setGameConfigValue(key) {
+        let t = this;
+
+        if (t.options[key]['gameSetting'] !== undefined) {
+            setPropertyInPath(
+                t.options[key]['gameSetting'],
+                t.game,
+                t.game.state['settings'][key]
+            );
         }
     }
 
@@ -41,7 +52,18 @@ export default class GameSettings {
     {
         let t = this;
         if (key in t.options) {
-            return t.options[key]['value'];
+            return t.game.state['settings'][key];
+        }
+
+        return undefined;
+    }
+
+    fullSync()
+    {
+        let t = this;
+
+        for (let key in t.options) {
+            t.setGameConfigValue(key);
         }
     }
 }

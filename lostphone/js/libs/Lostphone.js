@@ -1,5 +1,6 @@
 
 import { PhoneEvents } from '/scenes/Bootstrap';
+import GameSettings from '/libs/GameSettings';
 
 // Phaser.Scene
 Phaser.Scene.prototype.log = function(message) {
@@ -69,6 +70,14 @@ Phaser.Game.prototype.updateURL = function(value) {
   window.history.pushState("", "", path + '?pass=' + value);
 };
 
+Phaser.Game.prototype.initializeState = function() {
+    this.state = {};
+    this.state['complete'] = {};
+    this.state['settings'] = {};
+    this.state['notifications'] = [];
+    this.state['pendingNotifications'] = [];
+    this.settings = new GameSettings(this);
+}
 
 /**
  * Save a state and save the game
@@ -99,13 +108,11 @@ Phaser.Game.prototype.saveState = function(app, key, value) {
 };
 
 Phaser.Game.prototype.deleteState = function() {
-    this.state['complete'] = {};
-    this.state['notifications'] = [];
-    this.state['pendingNotifications'] = []
+    this.initializeState();
     localStorage.removeItem('save-autosave');
     this.updateURL();
-
     this.events.emit(PhoneEvents.Notification);
+    this.events.emit(PhoneEvents.SettingsUpdated);
 }
 
 /**
@@ -220,6 +227,7 @@ Phaser.Game.prototype.loadSave = function(key) {
     if (state) {
         this.updateURL(state);
         this.unserialize(atob(state));
+        this.settings.fullSync();
     }
     console.log('Loaded ' +key);
 };
