@@ -2,7 +2,7 @@
 //-- Podcast.js
 //--
 //-- @From: this code belongs to https://codepen.io/samme/pen/NWPbQJY?editors=0010
-import PhoneApp from '../PhoneApp';
+import PhoneApp from '/scenes/PhoneApp';
 
 export default class PodcastApp extends PhoneApp
 {

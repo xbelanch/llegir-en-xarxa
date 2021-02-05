@@ -1,6 +1,4 @@
 // --- TextButton
-import { assetsDPR } from '../config.js'
-
 export default class TextButton extends Phaser.GameObjects.Container
 {
   constructor(scene, rect, text, buttonType, callback)
@@ -12,8 +10,8 @@ export default class TextButton extends Phaser.GameObjects.Container
 
     let slice = this.scene.add.nineslice(
       this.x, this.y,
-      Math.round(rect.width * assetsDPR),
-      Math.round(rect.height * assetsDPR),
+      Math.round(rect.width * scene.assetsDPR),
+      Math.round(rect.height * scene.assetsDPR),
       'Button-Idle',
       [35, 15, 15]
     );

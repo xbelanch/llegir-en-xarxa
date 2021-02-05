@@ -4,9 +4,8 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
-import PhoneApp from '../PhoneApp';
-import MailListObject from '../../prefabs/mail/mailList.js';
-import { assetsDPR } from '../../config';
+import PhoneApp from '/scenes/PhoneApp';
+import MailListObject from '/prefabs/mail/mailList.js';
 
 export default class MailApp extends PhoneApp
 {
@@ -29,11 +28,11 @@ export default class MailApp extends PhoneApp
     // --- Title
     t.add.text(
       t.width / 2,
-      Math.floor(80*assetsDPR),
+      Math.floor(80*t.assetsDPR),
       "Correu",
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * assetsDPR),
+        fontSize : Math.floor(13 * t.assetsDPR),
         color: '#ffffff',
         align: 'center'
       }

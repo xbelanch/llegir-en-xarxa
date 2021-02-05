@@ -2,7 +2,7 @@
 //-- Clock.js
 //--
 //-- @From: Clock Source: https://phaser.io/examples/v3/view/scenes/drag-scenes-demo#
-import PhoneApp from '../PhoneApp';
+import PhoneApp from '/scenes/PhoneApp';
 
 export default class ClockApp extends PhoneApp
 {

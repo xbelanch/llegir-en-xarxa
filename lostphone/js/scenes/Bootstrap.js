@@ -1,14 +1,11 @@
 // --- Bootstrap
-import { DPR, assetsDPR } from '../config.js';
-import Preload from './Preload.js';
-import Phone from './Phone.js';
-import Image from '../prefabs/image.js';
-import Sprite from '../prefabs/sprite.js';
-import {WebFontFile} from "../libs/lostphone";
-
+import { DPR, assetsDPR } from '/Config';
+import {WebFontFile} from "/libs/WebFontFile";
 
 export const PhoneEvents = {
-  PreloadFinished : 'preload-finisihed'
+  PreloadFinished : 'preload-finished',
+  Notification: 'notification-launched',
+  SettingsUpdated: 'settings-updated'
 }
 
 export default class Bootstrap extends Phaser.Scene
@@ -17,6 +14,7 @@ export default class Bootstrap extends Phaser.Scene
   {
     super();
     this.group;
+    this.assetsDPR = assetsDPR;
   }
 
   preload()
@@ -55,8 +53,8 @@ export default class Bootstrap extends Phaser.Scene
 
     // --- Set width and height main camera
     let { width, height } = t.cameras.main;
-    width /= assetsDPR;
-    height /= assetsDPR;
+    width /= t.assetsDPR;
+    height /= t.assetsDPR;
 
     // --- Set background color
     t.cameras.main.setBackgroundColor('#421278');
@@ -86,16 +84,13 @@ export default class Bootstrap extends Phaser.Scene
       repeat: 7,
       setOrigin: { x: 0, y: 0 },
       setScale: { x: DPR, y: DPR },
-      setXY: { x: (width * assetsDPR) / 2 , y: (height * assetsDPR) / 2 , stepX: 0 }
+      setXY: { x: (width * t.assetsDPR) / 2 , y: (height * t.assetsDPR) / 2 , stepX: 0 }
     });
 
     t.anims.play('run', t.group.getChildren(), -100, false);
 
     // --- Initialize game and app states
-    t.game.state = {};
-    t.game.state['complete'] = {};
-    t.game.state['notifications'] = [];
-    t.game.state['pendingNotifications'] = [];
+    t.game.initializeState();
     let apps = t.cache.json.get('apps');
     for (var i = 0; i < apps.length; i++)
       t.game.state[apps[i].type] = {};

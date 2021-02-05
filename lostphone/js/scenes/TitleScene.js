@@ -1,14 +1,16 @@
-import { assetsDPR } from '../config.js'
-import Image from '../prefabs/Image.js'
-import TextButton from '../prefabs/TextButton.js'
-import Bootstrap from './Bootstrap.js'
-import Credits from './Credits.js'
+import { assetsDPR } from '/Config'
+import Image from '/prefabs/Image'
+import TextButton from '/prefabs/TextButton'
+import Bootstrap from '/scenes/Bootstrap'
+import Credits from '/scenes/Credits'
 
 export default class TitleScene extends Phaser.Scene
 {
   constructor()
   {
     super({ key : 'TitleScene' } );
+    let t = this;
+    t.assetsDPR = assetsDPR;
   };
 
   preload()
@@ -30,8 +32,8 @@ export default class TitleScene extends Phaser.Scene
     let t = this;
     // --- Get width and height from camera and aplly DPR factor
     let { width, height } = t.cameras.main;
-    width /= assetsDPR;
-    height /= assetsDPR;
+    width /= t.assetsDPR;
+    height /= t.assetsDPR;
 
     // --- Set title start screen
     let back = new Image(t, Math.round(width/2), Math.round(height/3), 'Title');
@@ -56,12 +58,12 @@ export default class TitleScene extends Phaser.Scene
 
     this.children.add(goCredits);
 
-    let offset = 16 * assetsDPR;
+    let offset = 16 * t.assetsDPR;
     let goStart = new TextButton(
       t,
       new Phaser.Geom.Rectangle(
         width / 2,
-        (goCredits.y + goCredits.height * assetsDPR) + offset,
+        (goCredits.y + goCredits.height * t.assetsDPR) + offset,
         buttonWidth,
         buttonHeight),
       "Entrar",

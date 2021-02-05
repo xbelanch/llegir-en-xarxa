@@ -1,7 +1,3 @@
-import { DPR, assetsDPR } from '../config.js';
-import Homescreen from './Homescreen.js';
-
-
 export default class Phone extends Phaser.Scene
 {
   constructor()

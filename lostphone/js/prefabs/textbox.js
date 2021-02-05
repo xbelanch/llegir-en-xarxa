@@ -1,5 +1,3 @@
-import { DPR, assetsDPR } from '../config.js';
-
 export default class TextBox extends Phaser.GameObjects.Container
 {
   constructor(scene, text, params)
@@ -34,7 +32,7 @@ export default class TextBox extends Phaser.GameObjects.Container
     if (params['icon'] !== undefined) {
       this.add(new Phaser.GameObjects.Image(
           scene,
-          Math.floor(10*assetsDPR),
+          Math.floor(10*scene.assetsDPR),
           params['height'] / 2,
           params['icon']
         ).setOrigin(0, 0.5)
@@ -53,12 +51,12 @@ export default class TextBox extends Phaser.GameObjects.Container
 
     this.add(new Phaser.GameObjects.Text(
       scene,
-      params['icon'] !== undefined ? params['width'] / 2 + Math.floor(30*assetsDPR): params['width'] / 2,
+      params['icon'] !== undefined ? params['width'] / 2 + Math.floor(30*scene.assetsDPR): params['width'] / 2,
       params['height'] / 2,
       text,
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(12 * assetsDPR),
+        fontSize : Math.floor(12 * scene.assetsDPR),
         color: '#ffffff',
         align: 'right'
       }
@@ -69,12 +67,12 @@ export default class TextBox extends Phaser.GameObjects.Container
     if (params['closeButton'] !== undefined) {
       this.add(new Phaser.GameObjects.Text(
         scene,
-        params['width'] - Math.floor(12 * assetsDPR),
-        Math.floor(2 * assetsDPR),
+        params['width'] - Math.floor(12 * scene.assetsDPR),
+        Math.floor(2 * scene.assetsDPR),
         'X',
         {
           fontFamily: 'Roboto',
-          fontSize : Math.floor(12 * assetsDPR),
+          fontSize : Math.floor(12 * scene.assetsDPR),
           color: '#ffffff',
           align: 'center'
         }

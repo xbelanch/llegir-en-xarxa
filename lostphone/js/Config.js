@@ -1,18 +1,21 @@
 // --- Set Config Phaser Game
-import Phaser from 'phaser'
-import PhaserSceneWatcherPlugin from 'phaser-plugin-scene-watcher'
-import { Plugin as NineSlice } from 'phaser3-nineslice'
-import Bootstrap from './scenes/Bootstrap.js'
-import Preload from './scenes/Preload.js';
-import TitleScene from './scenes/TitleScene.js'
-import Phone from './scenes/Phone.js'
-import Homescreen from './scenes/Homescreen.js'
-import PhoneUI from './scenes/PhoneUI.js'
+import Phaser from 'phaser';
+import PhaserSceneWatcherPlugin from 'phaser-plugin-scene-watcher';
+import { Plugin as NineSlice } from 'phaser3-nineslice';
+import Bootstrap from '/scenes/Bootstrap';
+import Preload from '/scenes/Preload';
+import TitleScene from '/scenes/TitleScene';
+import Phone from '/scenes/Phone';
+import Homescreen from '/scenes/Homescreen';
+import PhoneUI from '/scenes/PhoneUI';
+import '/libs/Lostphone';
+import '/libs/Common';
 
-import ClockApp from './scenes/apps/Clock.js';
-import SandboxApp from './scenes/apps/Sandbox.js';
-import MailApp from './scenes/apps/Mail.js';
-import PodcastApp from './scenes/apps/Podcast.js';
+import SettingsApp from '/scenes/apps/Settings';
+import ClockApp from '/scenes/apps/Clock';
+import SandboxApp from '/scenes/apps/Sandbox';
+import MailApp from '/scenes/apps/Mail';
+import PodcastApp from '/scenes/apps/Podcast';
 
 // import { Plugin as NineSlicePlugin } from './plugins/nineslice.min.js'
 // import Bootstrap from './scenes/Bootstrap.js'
@@ -50,6 +53,7 @@ const scenes = [
   , Bootstrap
   , Preload
   , Phone
+  , SettingsApp
   , MailApp
   , PodcastApp
   , ClockApp

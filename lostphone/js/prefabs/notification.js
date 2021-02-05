@@ -1,5 +1,4 @@
-import { DPR, assetsDPR } from '../config.js';
-import TextBox from './textbox.js';
+import TextBox from '/prefabs/textbox';
 
 export default class Notifications extends TextBox
 {

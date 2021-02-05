@@ -1,10 +1,8 @@
-import WebFont from './webFontLoader'
-import EventDispatcher from './EventDispatcher';
-// --- lib lostphone
 
-// --- Debug
-// --------------------------------------------------------
+import { PhoneEvents } from '/scenes/Bootstrap';
+import GameSettings from '/libs/GameSettings';
 
+// Phaser.Scene
 Phaser.Scene.prototype.log = function(message) {
     message = '[Scene:' + this.scene.key + '] ' + message;
 
@@ -13,16 +11,7 @@ Phaser.Scene.prototype.log = function(message) {
     }
 }
 
-// --- Common
-// --------------------------------------------------------
-// Define some bunch of methods commons to all scenes
-
-Object.defineProperty(Phaser.Structs.List.prototype, 'current', {
-  get() {
-    return this.getAt(this.position);
-  }
-});
-
+// Phaser.Game
 Phaser.Game.prototype.getNewElements = function(triggerItem) {
 
     // Change this
@@ -81,6 +70,14 @@ Phaser.Game.prototype.updateURL = function(value) {
   window.history.pushState("", "", path + '?pass=' + value);
 };
 
+Phaser.Game.prototype.initializeState = function() {
+    this.state = {};
+    this.state['complete'] = {};
+    this.state['settings'] = {};
+    this.state['notifications'] = [];
+    this.state['pendingNotifications'] = [];
+    this.settings = new GameSettings(this);
+}
 
 /**
  * Save a state and save the game
@@ -90,7 +87,12 @@ Phaser.Game.prototype.saveState = function(app, key, value) {
       this.state[app][key] = value;
       let items = this.getNewElements(key);
       this.state['notifications'] = [...this.state['notifications'], ...items];
-      this.state['pendingNotifications'] = [...this.state['pendingNotifications'], ...items];
+
+      if (this.settings.getSettingValue('notificationPopup')) {
+        this.state['pendingNotifications'] = [...this.state['pendingNotifications'], ...items];
+      } else {
+        this.state['pendingNotifications'] = [];
+      }
 
       let found = this.state['notifications'].filter(element => element['id'] === key);
       if (found.length > 0) {
@@ -98,13 +100,20 @@ Phaser.Game.prototype.saveState = function(app, key, value) {
         if (index !== -1) this.state['notifications'].splice(index, 1);
       }
 
-      this.emitter = EventDispatcher.getInstance();
-      this.emitter.emit('notification');
+      this.events.emit(PhoneEvents.Notification);
     } else {
       this.state[app][key] = value;
     }
     this.save('autosave');
 };
+
+Phaser.Game.prototype.deleteState = function() {
+    this.initializeState();
+    localStorage.removeItem('save-autosave');
+    this.updateURL();
+    this.events.emit(PhoneEvents.Notification);
+    this.events.emit(PhoneEvents.SettingsUpdated);
+}
 
 /**
  * Get a state
@@ -151,11 +160,6 @@ Phaser.Game.prototype.unserialize = function(saveObject) {
     this.state = JSON.parse(saveObject);
     return true;
 };
-
-// Phaser.Game.prototype.save = function(key) {
-//     if (key === undefined) key = 'default';
-//     localStorage.setItem('save-'+key, this.serialize());
-// };
 
 /**
  * Save the game state.
@@ -205,7 +209,11 @@ Phaser.Game.prototype.updateURL = function(value) {
        path = url.replace(passValue[0], "");
    }
 
-  window.history.pushState("", "", path + '?pass=' + value);
+  if (value !== undefined) {
+    window.history.pushState("", "", path + '?pass=' + value);
+  } else {
+    window.history.pushState("", "", path);
+  }
 };
 
 
@@ -219,6 +227,7 @@ Phaser.Game.prototype.loadSave = function(key) {
     if (state) {
         this.updateURL(state);
         this.unserialize(atob(state));
+        this.settings.fullSync();
     }
     console.log('Loaded ' +key);
 };
@@ -245,82 +254,3 @@ Phaser.Game.prototype.autosaveOff = function() {
     }
 };
 
-// ---- WebFontFile.js
-// Source: https://gist.github.com/supertommy/bc728957ff7dcb8016da68b04d3a2768
-
-//const WebFont = window.WebFont;
-
-export class WebFontFile extends Phaser.Loader.File
-{
-  /**
-   * @param {Phaser.Loader.LoaderPlugin} loader
-   * @param {string | string[]} fontNames
-   * @param {string} [service]
-   */
-
-  constructor(loader, fontNames, service = 'google')
-  {
-    super(loader, {
-      type: 'webfont',
-      key: fontNames.toString()
-    });
-
-    this.fontNames = Array.isArray(fontNames) ? fontNames : [fontNames];
-    this.service = service;
-    this.fontsLoadedCount = 0;
-  }
-  load()
-  {
-    const config = {
-      fontactive: (familyName) => {
-	this.checkLoadedFonts(familyName)
-      },
-      fontinactive: (familyName) => {
-	this.checkLoadedFonts(familyName)
-      }
-    }
-
-    switch (this.service)
-    {
-      case 'google':
-      config[this.service] = this.getGoogleConfig()
-      break
-
-      case 'adobe-edge':
-      config['typekit'] = this.getAdobeEdgeConfig()
-
-      default:
-      throw new Error('Unsupported font service')
-    }
-    WebFont.load(config)
-  }
-
-  getGoogleConfig()
-  {
-    return {
-      families: this.fontNames
-    }
-  }
-
-  getAdobeEdgeConfig()
-  {
-    return {
-      id: this.fontNames.join(';'),
-      api: '//use.edgefonts.net'
-    }
-  }
-
-  checkLoadedFonts(familyName)
-  {
-    if (this.fontNames.indexOf(familyName) < 0)
-    {
-      return
-    }
-
-    ++this.fontsLoadedCount
-    if (this.fontsLoadedCount >= this.fontNames.length)
-    {
-      this.loader.nextFile(this, true)
-    }
-  }
-}

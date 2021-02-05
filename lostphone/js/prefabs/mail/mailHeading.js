@@ -1,5 +1,4 @@
-import MailObject from './mail.js';
-
+import MailObject from '/prefabs/mail/mail';
 export default class MailHeadingObject extends Phaser.GameObjects.Text
 {
   constructor(scene, config, mail, x, y, text_style) {

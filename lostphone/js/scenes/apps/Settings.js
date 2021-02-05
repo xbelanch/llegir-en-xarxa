@@ -1,5 +1,7 @@
-import { assetsDPR } from '../../config';
-import PhoneApp from '../PhoneApp';
+import PhoneApp from '/scenes/PhoneApp';
+import SwitchButton from '/prefabs/switchButton';
+import ExclusivePopup from '/prefabs/exclusivePopup';
+import { PhoneEvents } from '../Bootstrap';
 
 export default class SettingsApp extends PhoneApp
 {
@@ -14,11 +16,11 @@ export default class SettingsApp extends PhoneApp
 
     t.add.text(
         t.width / 2,
-        Math.floor(60 * assetsDPR),
+        Math.floor(60 * t.assetsDPR),
         'Configuració',
         {
           fontFamily: 'Roboto',
-          fontSize : Math.floor(13 * assetsDPR),
+          fontSize : Math.floor(13 * t.assetsDPR),
           color: '#ffffff',
           align: 'center'
         }
@@ -26,10 +28,10 @@ export default class SettingsApp extends PhoneApp
 
     t.add.line(
         0,0,
-        Math.floor(20 * assetsDPR),
-        Math.floor(80 * assetsDPR),
-        t.width - Math.floor(20 * assetsDPR),
-        Math.floor(80 * assetsDPR),
+        Math.floor(20 * t.assetsDPR),
+        Math.floor(80 * t.assetsDPR),
+        t.width - Math.floor(20 * t.assetsDPR),
+        Math.floor(80 * t.assetsDPR),
         0xffffff,
         1.0
     ).setOrigin(0,0);
@@ -40,58 +42,107 @@ export default class SettingsApp extends PhoneApp
   createOptions(startY)
   {
     let t = this;
+    let marginY = 40;
 
     // Option text
     t.add.text(
-      Math.floor(20 * assetsDPR),
-      Math.floor(startY * assetsDPR),
-      'Sons',
+      Math.floor(20 * t.assetsDPR),
+      Math.floor(startY * t.assetsDPR),
+      'Silenciar el mòbil',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * assetsDPR),
+        fontSize : Math.floor(13 * t.assetsDPR),
         color: '#ffffff',
         align: 'center'
       }
     );
 
     // Add button (spritesheet)
+    t.muteSwitch = new SwitchButton(
+      t,
+      Math.floor(t.width - (2 * 20 * t.assetsDPR)),
+      Math.floor(startY * t.assetsDPR),
+      'icons',
+      t.game.settings.getSettingValue('muteSound')
+    )
+    .setRotation(Math.PI/2)
+    .on('pointerup', function(){
+      t.game.settings.toggleSetting('muteSound');
+    });
 
-
-    startY += 30;
+    startY += marginY;
     // Option text
     t.add.text(
-      Math.floor(20 * assetsDPR),
-      Math.floor(startY * assetsDPR),
+      Math.floor(20 * t.assetsDPR),
+      Math.floor(startY * t.assetsDPR),
+      'Popups de notificacions',
+      {
+        fontFamily: 'Roboto',
+        fontSize : Math.floor(13 * t.assetsDPR),
+        color: '#ffffff',
+        align: 'center'
+      }
+    );
+
+    // Add button (spritesheet)
+    t.popupSwitch = new SwitchButton(
+      t,
+      Math.floor(t.width - (2 * 20 * t.assetsDPR)),
+      Math.floor(startY * t.assetsDPR),
+      'icons',
+      t.game.settings.getSettingValue('notificationPopup')
+    )
+    .setRotation(Math.PI/2)
+    .on('pointerup', function(){
+      t.game.settings.toggleSetting('notificationPopup');
+    });
+
+    startY += marginY;
+    // Option text
+    t.add.text(
+      Math.floor(20 * t.assetsDPR),
+      Math.floor(startY * t.assetsDPR),
       'Esborrar tot el contingut i ajustaments',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * assetsDPR),
+        fontSize : Math.floor(13 * t.assetsDPR),
         color: '#ffffff',
         align: 'center'
       }
     );
 
     // Add button
+    t.add.image(
+      Math.floor(t.width - (2 * 20 * t.assetsDPR)),
+      Math.floor(startY * t.assetsDPR),
+      'icons',
+      t.icons['warning']
+    )
+    .setInteractive()
+    .setScale(2*t.assetsDPR)
+    .on('pointerup', function(){
+      t.resetToDefaults();
+    });
 
-    startY += 40;
+    startY += marginY + 10;
     t.add.line(
       0,0,
-      Math.floor(20 * assetsDPR),
-      Math.floor(startY * assetsDPR),
-      t.width - Math.floor(20 * assetsDPR),
-      Math.floor(startY * assetsDPR),
+      Math.floor(20 * t.assetsDPR),
+      Math.floor(startY * t.assetsDPR),
+      t.width - Math.floor(20 * t.assetsDPR),
+      Math.floor(startY * t.assetsDPR),
       0xffffff,
       1.0
     ).setOrigin(0,0);
 
-    startY += 20;
+    startY += marginY;
     t.add.text(
       t.width / 2,
-      Math.floor(startY * assetsDPR),
+      Math.floor(startY * t.assetsDPR),
       'Sortir del miniop',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * assetsDPR),
+        fontSize : Math.floor(13 * t.assetsDPR),
         color: '#ff0000',
         align: 'center'
       }
@@ -101,5 +152,27 @@ export default class SettingsApp extends PhoneApp
     .on('pointerdown', function(){
       window.location.href = "https://ioc.xtec.cat";
     });
+
+    t.game.events.on(PhoneEvents.SettingsUpdated, () => t.updateSwitches());
+  }
+
+  resetToDefaults()
+  {
+    let t = this;
+    new ExclusivePopup(t, 'Esteu segurs de voler esborrar tot el progrés?',
+    {
+      'type': 'yesno',
+      'yesfunction': function() {
+        t.game.deleteState();
+        t.scene.get('PhoneUI').backHome();
+      }
+    });
+  }
+
+  updateSwitches()
+  {
+    let t = this;
+    t.muteSwitch.updateState(t.game.settings.getSettingValue('muteSound'));
+    t.popupSwitch.updateState(t.game.settings.getSettingValue('notificationPopup'));
   }
 }
