@@ -18,7 +18,7 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
       height,
       0x000000,
       0.8
-      ).setOrigin(0,0)
+      ).setOrigin(0,0).setInteractive()
     );
 
     params['x'] = width * 0.1;

@@ -8,6 +8,8 @@ export default class SettingsApp extends PhoneApp
   constructor()
   {
     super({ key: 'SettingsApp'});
+    this.muteSwitch = undefined;
+    this.popupSwitch = undefined;
   }
 
   create()
@@ -65,10 +67,7 @@ export default class SettingsApp extends PhoneApp
       'icons',
       t.game.settings.getSettingValue('muteSound')
     )
-    .setRotation(Math.PI/2)
-    .on('pointerup', function(){
-      t.game.settings.toggleSetting('muteSound');
-    });
+    .setRotation(Math.PI/2);
 
     startY += marginY;
     // Option text
@@ -154,6 +153,8 @@ export default class SettingsApp extends PhoneApp
     });
 
     t.game.events.on(PhoneEvents.SettingsUpdated, () => t.updateSwitches());
+
+    t.setInputs();
   }
 
   resetToDefaults()
@@ -174,5 +175,15 @@ export default class SettingsApp extends PhoneApp
     let t = this;
     t.muteSwitch.updateState(t.game.settings.getSettingValue('muteSound'));
     t.popupSwitch.updateState(t.game.settings.getSettingValue('notificationPopup'));
+  }
+
+  setInputs()
+  {
+    let t = this;
+    t.input.on('pointerup', function(pointer, gameobject){
+      if (gameobject[0] == t.muteSwitch) {
+        t.game.settings.toggleSetting('muteSound');
+      }
+    });
   }
 }
