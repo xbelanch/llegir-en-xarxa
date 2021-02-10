@@ -96,7 +96,7 @@ export default class PodcastApp extends PhoneApp
     // display the buttons on screen
     Phaser.Actions.GridAlign(buttons, {
       x: t.x - 150,
-      y: t.height - 120,
+      y: t.height - Math.round(120*t.assetsDPR),
       width: 20,
       height: 20,
       cellWidth: 500 / buttons.length,
