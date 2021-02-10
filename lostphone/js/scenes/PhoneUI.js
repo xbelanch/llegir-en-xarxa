@@ -301,6 +301,10 @@ export default class PhoneUI extends Phaser.Scene
     let t = this;
     let { width, height } = this.cameras.main;
 
+    const drag_zone_y = Math.floor(120*t.assetsDPR);
+    const drag_zone_width = width - (16 * t.assetsDPR);
+    const drag_zone_height = height - Math.floor(120*t.assetsDPR) - Math.floor(48*t.assetsDPR);
+
     t.drawer.destroy();
     t.createDrawer();
     t.topNotificationBar.destroy();
@@ -320,19 +324,22 @@ export default class PhoneUI extends Phaser.Scene
 
     t.dragZone = this.add.zone(
       0,
-      Math.floor(120*t.assetsDPR),
-      width - (16 * t.assetsDPR),
-      height - Math.floor(120*t.assetsDPR) - Math.floor(48*t.assetsDPR)
+      drag_zone_y,
+      drag_zone_width,
+      drag_zone_height
     ).setOrigin(0).setInteractive();
 
-    let max_height = Math.floor(60*t.assetsDPR) * (t.game.state['notifications'].length) - Math.floor(100*assetsDPR);
+    const notifications_size = Math.floor(60*t.assetsDPR) * (t.game.state['notifications'].length);
+    const max_height = notifications_size - drag_zone_height - drag_zone_y;
 
     t.dragZone.on('pointermove', function (pointer) {
       if (pointer.isDown) {
         t.notificationsArea.y += (pointer.velocity.y / 3);
         t.notificationsArea.y = Phaser.Math.Clamp(
           t.notificationsArea.y,
-          -max_height,
+          notifications_size >= drag_zone_height ?
+            -max_height :
+            Math.floor(100*t.assetsDPR),
           Math.floor(100*t.assetsDPR)
         );
       }

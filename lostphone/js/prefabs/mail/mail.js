@@ -27,6 +27,9 @@ export default class MailObject extends Phaser.GameObjects.Container
     const margin_top = Math.floor(100*t.scene.assetsDPR);
     const margin_text = Math.floor(10*t.scene.assetsDPR);
 
+    const reading_area_width = width - (2 * margin_left);
+    const reading_area_height = height - (2 * margin_top);
+
     // Layer
     t.scene.add.rectangle(
       0,
@@ -42,8 +45,8 @@ export default class MailObject extends Phaser.GameObjects.Container
       t.scene,
       margin_left,
       margin_top,
-      width - (2 * margin_left),
-      height - (2 * margin_top),
+      reading_area_width,
+      reading_area_height,
       0x202020,
       1.0
     ).setOrigin(0,0).setStrokeStyle(1, 0xffffff));
@@ -68,18 +71,21 @@ export default class MailObject extends Phaser.GameObjects.Container
     let zone = t.scene.add.zone(
       margin_left,
       margin_top,
-      width - (2 * margin_left),
-      height - (2 * margin_top)
+      reading_area_width,
+      reading_area_height
     ).setOrigin(0,0).setInteractive();
 
     zone.on('pointermove', function (pointer) {
       if (pointer.isDown)
       {
         text.y += (pointer.velocity.y / 3);
+        const text_height = text.getBottomCenter().y - text.getTopCenter().y;
         // We need to know the full height of the text
         text.y = Phaser.Math.Clamp(
           text.y,
-          -(text.getBottomCenter().y - text.getTopCenter().y) + (margin_text*3) + margin_top,
+          text_height >= reading_area_height ?
+            -text_height + margin_top - margin_text + reading_area_height :
+            margin_top + margin_text,
           margin_top + margin_text);
       }
     });
