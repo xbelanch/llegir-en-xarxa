@@ -102,6 +102,8 @@ class WifiApp extends PhoneApp
         fontSize : (Phone.width >= 525 ? 20 : 12)
       });
     }
+
+    super.create();
   }
 
   disableInteractive()

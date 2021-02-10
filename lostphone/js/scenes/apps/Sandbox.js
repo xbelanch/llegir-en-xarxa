@@ -45,8 +45,9 @@ export default class SandboxApp extends PhoneApp
             duration: 1500,
             delay: 100 * ci
         });
-
     });
+
+    super.create();
   }
 
   update(delta, time)

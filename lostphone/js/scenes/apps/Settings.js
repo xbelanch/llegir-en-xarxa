@@ -39,6 +39,7 @@ export default class SettingsApp extends PhoneApp
     ).setOrigin(0,0);
 
     t.createOptions(100);
+    super.create();
   }
 
   createOptions(startY)
@@ -153,8 +154,6 @@ export default class SettingsApp extends PhoneApp
     });
 
     t.game.events.on(PhoneEvents.SettingsUpdated, () => t.updateSwitches());
-
-    t.setInputs();
   }
 
   resetToDefaults()

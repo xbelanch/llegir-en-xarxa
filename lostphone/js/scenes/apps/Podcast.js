@@ -103,8 +103,9 @@ export default class PodcastApp extends PhoneApp
       cellHeight: 40,
       position: Phaser.CENTER
     });
-  }
 
+    super.create();
+  }
 
   update(delta , time)
   {

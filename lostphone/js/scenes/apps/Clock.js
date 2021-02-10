@@ -28,6 +28,8 @@ export default class ClockApp extends PhoneApp
     let t = this;
     t.clockSize = Math.round(t.width / 2.5);
     t.graphics = t.add.graphics();
+
+    super.create();
   }
 
   update(delta, time)

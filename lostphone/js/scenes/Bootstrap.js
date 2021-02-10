@@ -32,7 +32,7 @@ export default class Bootstrap extends Phaser.Scene
 
     // --- Carreguem els fitxers de configuració
     let config = ['config', 'apps', 'tracks', 'wifi', 'mail', 'colors'];
-    for (var i = 0; i < config.length; i++) t.load.json(config[i], `config/${config[i]}.json`);
+    for (var i = 0; i < config.length; i++) t.load.json(config[i], `config/${config[i]}.json?time=`+Date.UTC());
 
     // --- Emet un esdeveniment anomenat 'preload-finished' que,
     // en el moment que s'executi (només una vegada al preload),

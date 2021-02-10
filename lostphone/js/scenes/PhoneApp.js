@@ -38,6 +38,12 @@ export default class PhoneApp extends Phaser.Scene
     t.load.spritesheet('icons', 'assets/sprites/pixelIcons.png', { frameWidth: 16, frameHeight: 16});
   }
 
+  create()
+  {
+    let t = this;
+    t.setInputs();
+  }
+
   getConfig(key='config') {
     let t = this;
     t.config = t.cache.json.get(key);
@@ -53,5 +59,9 @@ export default class PhoneApp extends Phaser.Scene
       'pointerup',
       functionName === undefined ? () => ui.backHome() : () => t.backFunction()
     ).setVisible(true);
+  }
+
+  setInputs() {
+    return undefined;
   }
 }

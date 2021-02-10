@@ -12,6 +12,7 @@ export default class MailApp extends PhoneApp
   constructor()
   {
     super({ key: 'MailApp'});
+    this.mailList;
   }
 
   init()
@@ -40,11 +41,31 @@ export default class MailApp extends PhoneApp
 
     // --- Display a list mails
     t.listMails();
+    super.create();
   }
 
   listMails()
   {
     let t = this;
-    new MailListObject(t, t.config);
+    t.mailList = new MailListObject(t, t.config);
+  }
+
+  setInputs()
+  {
+    let t = this;
+
+    t.input.on('pointermove', function(pointer, gameobject) {
+      switch(gameobject[0]) {
+        case t.mailList.dragZone:
+          if (pointer.isDown) {
+            t.mailList.y += (pointer.velocity.y / 3);
+            t.mailList.y = Phaser.Math.Clamp(
+              t.mailList.y,
+              -t.mailList.box_height * (t.mailList.visible_mails - 1),
+              0
+            );
+          }
+        }
+    });
   }
 }
