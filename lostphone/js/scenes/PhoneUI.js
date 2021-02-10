@@ -294,6 +294,7 @@ export default class PhoneUI extends Phaser.Scene
       );
     }
 
+    t.notificationsArea.setSize(width*2, Math.floor(60*t.assetsDPR) * (t.game.state['notifications'].length)*2);
     t.notificationsArea.setMask(mask);
   }
 
@@ -322,27 +323,21 @@ export default class PhoneUI extends Phaser.Scene
       duration : 500
     });
 
-    t.dragZone = this.add.zone(
-      0,
-      drag_zone_y,
-      drag_zone_width,
-      drag_zone_height
-    ).setOrigin(0).setInteractive();
+    t.notificationsArea.setInteractive();
+    t.input.setDraggable(t.notificationsArea);
 
     const notifications_size = Math.floor(60*t.assetsDPR) * (t.game.state['notifications'].length);
     const max_height = notifications_size - drag_zone_height - drag_zone_y;
 
-    t.dragZone.on('pointermove', function (pointer) {
-      if (pointer.isDown) {
-        t.notificationsArea.y += (pointer.velocity.y / 3);
-        t.notificationsArea.y = Phaser.Math.Clamp(
-          t.notificationsArea.y,
-          notifications_size >= drag_zone_height ?
-            -max_height :
-            Math.floor(100*t.assetsDPR),
-          Math.floor(100*t.assetsDPR)
-        );
-      }
+    t.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+      t.notificationsArea.y = dragY;
+      t.notificationsArea.y = Phaser.Math.Clamp(
+        t.notificationsArea.y,
+        notifications_size >= drag_zone_height ?
+          -max_height :
+          Math.floor(100*t.assetsDPR),
+        Math.floor(100*t.assetsDPR)
+      );
     });
   }
 

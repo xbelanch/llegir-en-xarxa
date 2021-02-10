@@ -64,30 +64,20 @@ export default class MailObject extends Phaser.GameObjects.Container
         fontSize: '24px',
         wordWrap: { width: width - (2 * (margin_left + margin_text)) }
       }
-    ).setOrigin(0,0).setDepth(100);
+    ).setOrigin(0,0).setDepth(100).setInteractive({ draggable: true });
+
     text.setMask(mask);
 
-    //  The rectangle they can 'drag' within
-    let zone = t.scene.add.zone(
-      margin_left,
-      margin_top,
-      reading_area_width,
-      reading_area_height
-    ).setOrigin(0,0).setInteractive();
+    text.on('drag', function (pointer, dragX, dragY) {
+      text.y = dragY;
 
-    zone.on('pointermove', function (pointer) {
-      if (pointer.isDown)
-      {
-        text.y += (pointer.velocity.y / 3);
-        const text_height = text.getBottomCenter().y - text.getTopCenter().y;
-        // We need to know the full height of the text
-        text.y = Phaser.Math.Clamp(
-          text.y,
-          text_height >= reading_area_height ?
-            -text_height + margin_top - margin_text + reading_area_height :
-            margin_top + margin_text,
-          margin_top + margin_text);
-      }
+      const text_height = text.getBottomCenter().y - text.getTopCenter().y;
+      text.y = Phaser.Math.Clamp(
+        text.y,
+        text_height >= reading_area_height ?
+          -text_height + margin_top - margin_text + reading_area_height :
+          margin_top + margin_text,
+        margin_top + margin_text);
     });
 
     // Add close button

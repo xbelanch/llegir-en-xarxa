@@ -79,22 +79,16 @@ export default class MailListObject extends Phaser.GameObjects.Container
     let mask = new Phaser.Display.Masks.GeometryMask(t, t.mailMask);
     t.setMask(mask);
 
-    t.dragZone = t.scene.add.zone(
-      margin_line,
-      initial_pos,
-      width-(margin_line*2),
-      box_height*visible_mails
-    ).setOrigin(0).setInteractive();
+    t.setSize(width*2, box_height * (visible_mails) * 3);
+    t.setInteractive({draggable: true});
 
-    t.dragZone.on('pointermove', function (pointer) {
-      if (pointer.isDown) {
-        t.y += (pointer.velocity.y / 3);
-        t.y = Phaser.Math.Clamp(
-          t.y,
-          -box_height * (visible_mails - 1),
-          0
-        );
-      }
+    t.on('drag', function (pointer, dragX, dragY) {
+      t.y = dragY;
+      t.y = Phaser.Math.Clamp(
+        t.y,
+        -box_height * (visible_mails - 1),
+        0
+      );
     });
 
   }
