@@ -21,6 +21,17 @@ export default class PodcastApp extends PhoneApp
     this.playlist;
   }
 
+  init() {
+    let t = this;
+
+    super.init();
+    t.elements = {
+      'buttons': {
+
+      }
+    };
+  }
+
   preload()
   {
     let t = this;
@@ -45,6 +56,8 @@ export default class PodcastApp extends PhoneApp
 
     t.audio = t.sound;
 
+    t.createButtons();
+
     // Afegim a la playlist els podcasts
     t.playlist.add(t.tracks.map(track => t.audio.add(track.key, track)));
 
@@ -57,6 +70,12 @@ export default class PodcastApp extends PhoneApp
           if (next) next.play();
         });
     });
+
+
+  }
+
+  createButtons() {
+    let t = this;
 
     // Display tracks and buttons
     let buttons = [
