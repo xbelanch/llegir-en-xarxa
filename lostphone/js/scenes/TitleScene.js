@@ -32,23 +32,21 @@ export default class TitleScene extends Phaser.Scene
     let t = this;
     // --- Get width and height from camera and aplly DPR factor
     let { width, height } = t.cameras.main;
-    width /= t.assetsDPR;
-    height /= t.assetsDPR;
+    //width /= t.assetsDPR;
+    //height /= t.assetsDPR;
 
     // --- Set title start screen
-    let back = new Image(t, Math.round(width/2), Math.round(height/3), 'Title');
-    back.setOrigin(0.5, 0.5);
-    t.children.add(back);
+    let back = t.add.image(Math.round(width/2), Math.round(height/3), 'Title').setOrigin(0.5, 0.5);
 
     // --- Add credits and start buttons
-    let buttonWidth = 120;
-    let buttonHeight = 45;
+    let buttonWidth = width * 0.6;
+    let buttonHeight = height * 0.1;
 
     let goCredits = new TextButton(
       this,
       new Phaser.Geom.Rectangle(
-        width / 2,
-        height,
+        width * 0.2,
+        height / 2,
         buttonWidth,
         buttonHeight),
       "Crèdits",
@@ -56,14 +54,14 @@ export default class TitleScene extends Phaser.Scene
       () => t.onClickGo('Credits')
     );
 
-    this.children.add(goCredits);
+    this.add.existing(goCredits);
 
     let offset = 16 * t.assetsDPR;
     let goStart = new TextButton(
       t,
       new Phaser.Geom.Rectangle(
-        width / 2,
-        (goCredits.y + goCredits.height * t.assetsDPR) + offset,
+        width * 0.2,
+        (goCredits.y + goCredits.height) + offset,
         buttonWidth,
         buttonHeight),
       "Entrar",
@@ -71,7 +69,7 @@ export default class TitleScene extends Phaser.Scene
       () => this.onClickGo('Bootstrap')
     );
 
-    t.children.add(goStart);
+    t.add.existing(goStart);
   };
 
   // https://stackoverflow.com/questions/20279484/how-to-access-the-correct-this-inside-a-callback

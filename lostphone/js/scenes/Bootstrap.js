@@ -53,8 +53,8 @@ export default class Bootstrap extends Phaser.Scene
 
     // --- Set width and height main camera
     let { width, height } = t.cameras.main;
-    width /= t.assetsDPR;
-    height /= t.assetsDPR;
+    //width /= t.assetsDPR;
+    //height /= t.assetsDPR;
 
     // --- Set background color
     t.cameras.main.setBackgroundColor('#421278');
@@ -82,9 +82,9 @@ export default class Bootstrap extends Phaser.Scene
       key: 'muybridge',
       frame: 10,
       repeat: 7,
-      setOrigin: { x: 0, y: 0 },
+      setOrigin: { x: 0.5, y: 0.5 },
       setScale: { x: DPR, y: DPR },
-      setXY: { x: (width * t.assetsDPR) / 2 , y: (height * t.assetsDPR) / 2 , stepX: 0 }
+      setXY: { x: width / 2 , y: height / 2 , stepX: 0 }
     });
 
     t.anims.play('run', t.group.getChildren(), -100, false);

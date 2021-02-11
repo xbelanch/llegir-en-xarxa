@@ -1,7 +1,7 @@
 // --- IconApp
 //
 //
-import Image from '/prefabs/image';
+import Image from '/prefabs/Image';
 
 export default class IconApp extends Image
 {

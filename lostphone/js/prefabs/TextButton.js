@@ -10,8 +10,8 @@ export default class TextButton extends Phaser.GameObjects.Container
 
     let slice = this.scene.add.nineslice(
       this.x, this.y,
-      Math.round(rect.width * scene.assetsDPR),
-      Math.round(rect.height * scene.assetsDPR),
+      rect.width,
+      rect.height,
       'Button-Idle',
       [35, 15, 15]
     );

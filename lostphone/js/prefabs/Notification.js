@@ -1,4 +1,4 @@
-import TextBox from '/prefabs/textbox';
+import TextBox from '/prefabs/TextBox';
 
 export default class Notifications extends TextBox
 {

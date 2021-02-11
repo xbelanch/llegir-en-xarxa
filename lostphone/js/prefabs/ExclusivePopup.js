@@ -1,4 +1,4 @@
-import Textbox from '/prefabs/textbox';
+import Textbox from '/prefabs/TextBox';
 
 export default class ExclusivePopup extends Phaser.GameObjects.Container
 {

@@ -1,5 +1,5 @@
 import { assetsDPR } from '/Config';
-import IconApp from '/prefabs/iconApp';
+import IconApp from '/prefabs/IconApp';
 import { PhoneEvents } from '/scenes/Bootstrap';
 
 export default class Homescreen extends Phaser.Scene

@@ -1,7 +1,7 @@
 // @Todo: create a Popup based on Text phaser and
 // https://labs.phaser.io/edit.html?src=src/game%20objects/text/static/speech%20bubble.js&v=3.23.0
 // for displaying error messages
-import TextBox from '/prefabs/textbox';
+import TextBox from '/prefabs/TextBox';
 
 export default class Popup extends TextBox
 {
