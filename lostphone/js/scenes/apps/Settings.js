@@ -10,17 +10,35 @@ export default class SettingsApp extends PhoneApp
     super({ key: 'SettingsApp'});
   }
 
+  init() {
+    let t = this;
+
+    super.init();
+
+    t.elements = {
+      'options': {
+        'fontSize': t.calcDPR(20),
+        'x': t.width * 0.1,
+        'padding': t.calcDPR(32)
+      },
+      'title': {
+        'fontSize': t.calcDPR(26),
+        'padding': t.calcDPR(40)
+      }
+    };
+  }
+
   create()
   {
     let t = this;
 
-    t.add.text(
+    t.title = t.add.text(
         t.width / 2,
-        Math.floor(60 * t.assetsDPR),
+        t.UIelements['topBar']['height'] + t.elements['title']['padding'],
         'Configuració',
         {
           fontFamily: 'Roboto',
-          fontSize : Math.floor(13 * t.assetsDPR),
+          fontSize : t.elements['title']['fontSize'],
           color: '#ffffff',
           align: 'center'
         }
@@ -28,30 +46,29 @@ export default class SettingsApp extends PhoneApp
 
     t.add.line(
         0,0,
-        Math.floor(20 * t.assetsDPR),
-        Math.floor(80 * t.assetsDPR),
-        t.width - Math.floor(20 * t.assetsDPR),
-        Math.floor(80 * t.assetsDPR),
+        t.width * 0.1,
+        t.title.getBottomCenter().y + t.elements['title']['padding'],
+        t.width * 0.9,
+        t.title.getBottomCenter().y + t.elements['title']['padding'],
         0xffffff,
         1.0
     ).setOrigin(0,0);
 
-    t.createOptions(100);
+    t.createOptions(t.title.getBottomCenter().y + t.elements['title']['padding'] + t.elements['options']['padding']);
   }
 
   createOptions(startY)
   {
     let t = this;
-    let marginY = 40;
 
     // Option text
     t.add.text(
-      Math.floor(20 * t.assetsDPR),
-      Math.floor(startY * t.assetsDPR),
+      t.elements['options']['x'],
+      startY,
       'Silenciar el mòbil',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * t.assetsDPR),
+        fontSize : t.elements['options']['fontSize'],
         color: '#ffffff',
         align: 'center'
       }
@@ -60,8 +77,8 @@ export default class SettingsApp extends PhoneApp
     // Add button (spritesheet)
     t.muteSwitch = new SwitchButton(
       t,
-      Math.floor(t.width - (2 * 20 * t.assetsDPR)),
-      Math.floor(startY * t.assetsDPR),
+      t.width - t.elements['options']['x'],
+      startY,
       'icons',
       t.game.settings.getSettingValue('muteSound')
     )
@@ -70,15 +87,15 @@ export default class SettingsApp extends PhoneApp
       t.game.settings.toggleSetting('muteSound');
     });
 
-    startY += marginY;
+    startY += t.elements['options']['fontSize'] + t.elements['options']['padding'];
     // Option text
     t.add.text(
-      Math.floor(20 * t.assetsDPR),
-      Math.floor(startY * t.assetsDPR),
+      t.elements['options']['x'],
+      startY,
       'Popups de notificacions',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * t.assetsDPR),
+        fontSize : t.elements['options']['fontSize'],
         color: '#ffffff',
         align: 'center'
       }
@@ -87,8 +104,8 @@ export default class SettingsApp extends PhoneApp
     // Add button (spritesheet)
     t.popupSwitch = new SwitchButton(
       t,
-      Math.floor(t.width - (2 * 20 * t.assetsDPR)),
-      Math.floor(startY * t.assetsDPR),
+      t.width - t.elements['options']['x'],
+      startY,
       'icons',
       t.game.settings.getSettingValue('notificationPopup')
     )
@@ -97,15 +114,15 @@ export default class SettingsApp extends PhoneApp
       t.game.settings.toggleSetting('notificationPopup');
     });
 
-    startY += marginY;
+    startY += t.elements['options']['fontSize'] + t.elements['options']['padding'];
     // Option text
     t.add.text(
-      Math.floor(20 * t.assetsDPR),
-      Math.floor(startY * t.assetsDPR),
-      'Esborrar tot el contingut i ajustaments',
+      t.elements['options']['x'],
+      startY,
+      'Esborrar tot el contingut',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * t.assetsDPR),
+        fontSize : t.elements['options']['fontSize'],
         color: '#ffffff',
         align: 'center'
       }
@@ -113,8 +130,8 @@ export default class SettingsApp extends PhoneApp
 
     // Add button
     t.add.image(
-      Math.floor(t.width - (2 * 20 * t.assetsDPR)),
-      Math.floor(startY * t.assetsDPR),
+      t.width - t.elements['options']['x'],
+      startY,
       'icons',
       t.icons['warning']
     )
@@ -124,25 +141,25 @@ export default class SettingsApp extends PhoneApp
       t.resetToDefaults();
     });
 
-    startY += marginY + 10;
+    startY += t.elements['options']['fontSize'] + t.elements['options']['padding'];
     t.add.line(
       0,0,
-      Math.floor(20 * t.assetsDPR),
-      Math.floor(startY * t.assetsDPR),
-      t.width - Math.floor(20 * t.assetsDPR),
-      Math.floor(startY * t.assetsDPR),
+      t.width * 0.1,
+      startY,
+      t.width * 0.9,
+      startY,
       0xffffff,
       1.0
     ).setOrigin(0,0);
 
-    startY += marginY;
+    startY += t.elements['options']['fontSize'] + t.elements['options']['padding'];
     t.add.text(
       t.width / 2,
-      Math.floor(startY * t.assetsDPR),
+      startY,
       'Sortir del miniop',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * t.assetsDPR),
+        fontSize : t.elements['options']['fontSize'],
         color: '#ff0000',
         align: 'center'
       }
