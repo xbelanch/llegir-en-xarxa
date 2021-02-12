@@ -5,7 +5,7 @@
 //-- @Todo:
 //-- @From:
 import PhoneApp from '/scenes/PhoneApp';
-import MailListObject from '/prefabs/mail/mailList.js';
+import MailListObject from '/prefabs/mail/MailList.js';
 
 export default class MailApp extends PhoneApp
 {
@@ -16,8 +16,21 @@ export default class MailApp extends PhoneApp
 
   init()
   {
+    let t = this;
+
     super.init();
     super.getConfig('mail');
+
+    t.elements = {
+      'title': {
+        'fontSize': t.calcDPR(26),
+        'y': t.calcDPR(80)
+      },
+      'headings': {
+        'fontSize': t.calcDPR(20),
+        'padding': t.calcDPR(28)
+      }
+    }
   }
 
   create()
@@ -28,23 +41,17 @@ export default class MailApp extends PhoneApp
     // --- Title
     t.add.text(
       t.width / 2,
-      Math.floor(80*t.assetsDPR),
+      t.elements['title']['y'],
       "Correu",
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(13 * t.assetsDPR),
+        fontSize : t.elements['title']['fontSize'],
         color: '#ffffff',
         align: 'center'
       }
     ).setOrigin(0.5);
 
     // --- Display a list mails
-    t.listMails();
-  }
-
-  listMails()
-  {
-    let t = this;
     new MailListObject(t, t.config);
   }
 }

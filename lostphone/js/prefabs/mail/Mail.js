@@ -23,9 +23,9 @@ export default class MailObject extends Phaser.GameObjects.Container
       + mail['subject'];
     const content = mail['body'];
 
-    const margin_left = Math.floor(20*t.scene.assetsDPR);
-    const margin_top = Math.floor(100*t.scene.assetsDPR);
-    const margin_text = Math.floor(10*t.scene.assetsDPR);
+    const margin_left = t.scene.elements['headings']['padding'];
+    const margin_top = t.scene.elements['title']['y'] + t.scene.elements['headings']['padding'];
+    const margin_text = t.scene.elements['headings']['padding'];
 
     const reading_area_width = width - (2 * margin_left);
     const reading_area_height = height - (2 * margin_top);
@@ -34,8 +34,8 @@ export default class MailObject extends Phaser.GameObjects.Container
     t.scene.add.rectangle(
       0,
       0,
-      width,
-      height,
+      t.scene.width,
+      t.scene.height,
       0xffffff,
       0.2
     ).setOrigin(0,0);
@@ -61,8 +61,8 @@ export default class MailObject extends Phaser.GameObjects.Container
       {
         color: '#ffffff',
         fontFamily: 'Roboto',
-        fontSize: '24px',
-        wordWrap: { width: width - (2 * (margin_left + margin_text)) }
+        fontSize: t.scene.elements['headings']['fontSize'],
+        wordWrap: { width: t.scene.width - (2 * (margin_left + margin_text)) }
       }
     ).setOrigin(0,0).setDepth(100).setInteractive({ draggable: true });
 
@@ -83,12 +83,12 @@ export default class MailObject extends Phaser.GameObjects.Container
     // Add close button
     t.add(new Phaser.GameObjects.Text(
       t.scene,
-      width - margin_left - Math.floor(12*t.scene.assetsDPR),
-      margin_top + Math.floor(8*t.scene.assetsDPR),
+      t.scene.width - margin_left - t.scene.elements['headings']['fontSize'],
+      margin_top + t.scene.elements['headings']['fontSize']*0.6,
       'X',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(12 * t.scene.assetsDPR),
+        fontSize : t.scene.elements['headings']['fontSize'],
         color: '#ffffff',
         align: 'right'
       }

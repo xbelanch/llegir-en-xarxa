@@ -51,6 +51,9 @@ export default class PhoneUI extends Phaser.Scene
       'clock': {
         'fontSize': t.calcDPR(16)
       },
+      'notification': {
+        'fontSize': t.calcDPR(12)
+      },
       'notificationBar': {
         'color': 0x9c9c9c,
         'width': t.width / 12,
@@ -316,6 +319,7 @@ export default class PhoneUI extends Phaser.Scene
             alpha: 1.0 - (Math.min(i*0.2, 0.6)),
             strokeWidth: 2,
             strokeColor: 0xdddddd,
+            textSize: t.elements['notification']['fontSize'],
             //icon: notifications[i]['type']
             icon: 'lorem-appsum-test',
             ellipsis: 30,

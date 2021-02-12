@@ -21,24 +21,25 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
       ).setOrigin(0,0)
     );
 
-    params['x'] = width * 0.1;
-    params['y'] = height / 2 - Math.floor(50 * scene.assetsDPR);
     params['bgcolor'] = 0xaaaaaa;
     params['width'] = width * 0.8;
-    params['height'] = Math.floor(100 * scene.assetsDPR);
+    params['height'] = t.scene.calcDPR(100);
+    params['x'] = width * 0.1;
+    params['y'] = (height - params['height']) / 2 ;
     params['alpha'] = 1;
     params['strokeWidth'] = 1;
     params['strokeColor'] = 0xffffff;
+    params['textSize'] = t.scene.calcDPR(24);
 
     if (params['closeButton'] !== undefined) {
       t.add(new Phaser.GameObjects.Text(
         scene,
-        width - params['x'] - Math.floor(12 * scene.assetsDPR),
+        width - params['x'] - params['textSize'],
         params['y'] + Math.floor(2 * scene.assetsDPR),
         'X',
         {
           fontFamily: 'Roboto',
-          fontSize : Math.floor(12 * scene.assetsDPR),
+          fontSize : params['textSize'],
           color: '#ffffff',
           align: 'center'
         }
@@ -49,13 +50,20 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
       params['closeButton'] = undefined;
     }
 
+    t.textbox = new Textbox(
+      scene,
+      text,
+      params
+    );
+    t.addAt(t.textbox,1);
+
     if (params['type'] !== undefined) {
       if (params['type'] === 'yesno') {
         //Print yes/no functions
         t.add(new Phaser.GameObjects.Image(
           scene,
           width / 2 - Math.floor(20*scene.assetsDPR),
-          height / 2 + Math.floor(20 * scene.assetsDPR),
+          (height + t.textbox.text.getBottomCenter().y) / 2,
           'icons',
           t.scene.icons['ok']
         )
@@ -69,7 +77,7 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
         t.add(new Phaser.GameObjects.Image(
           scene,
           width / 2 + Math.floor(20*scene.assetsDPR),
-          height / 2 + Math.floor(20 * scene.assetsDPR),
+          (height + t.textbox.text.getBottomCenter().y) / 2 ,
           'icons',
           t.scene.icons['ko']
         )
@@ -78,12 +86,6 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
         .on('pointerup', () => t.destroy()));
       }
     }
-
-    t.addAt(new Textbox(
-      scene,
-      text,
-      params
-    ),1);
 
     scene.add.existing(t);
   }

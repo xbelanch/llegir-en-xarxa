@@ -11,6 +11,22 @@ export default class TextBox extends Phaser.GameObjects.Container
 
     let textbox = this;
 
+    this.text = new Phaser.GameObjects.Text(
+      scene,
+      params['icon'] !== undefined ? params['width'] / 2 + Math.floor(30*scene.assetsDPR): params['width'] / 2,
+      params['height'] / 2,
+      text,
+      {
+        fontFamily: 'Roboto',
+        fontSize : params['textSize'],
+        color: '#ffffff',
+        align: 'left',
+        wordWrap: {width: params['width'] }
+      }
+      ).setOrigin(0.5, 0.5)
+      .setAlpha(params['alpha'] !== undefined ? params['alpha'] : 1)
+    ;
+
     // Add box rectangle
     this.add(new Phaser.GameObjects.Rectangle(
         scene,
@@ -49,30 +65,17 @@ export default class TextBox extends Phaser.GameObjects.Container
       }
     }
 
-    this.add(new Phaser.GameObjects.Text(
-      scene,
-      params['icon'] !== undefined ? params['width'] / 2 + Math.floor(30*scene.assetsDPR): params['width'] / 2,
-      params['height'] / 2,
-      text,
-      {
-        fontFamily: 'Roboto',
-        fontSize : Math.floor(12 * scene.assetsDPR),
-        color: '#ffffff',
-        align: 'right'
-      }
-      ).setOrigin(0.5, 0.5)
-      .setAlpha(params['alpha'] !== undefined ? params['alpha'] : 1)
-    );
+    this.add(this.text);
 
     if (params['closeButton'] !== undefined) {
       this.add(new Phaser.GameObjects.Text(
         scene,
-        params['width'] - Math.floor(12 * scene.assetsDPR),
+        params['width'] - params['textSize'],
         Math.floor(2 * scene.assetsDPR),
         'X',
         {
           fontFamily: 'Roboto',
-          fontSize : Math.floor(12 * scene.assetsDPR),
+          fontSize : params['textSize'],
           color: '#ffffff',
           align: 'center'
         }

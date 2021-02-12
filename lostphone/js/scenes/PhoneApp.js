@@ -22,14 +22,13 @@ export default class PhoneApp extends Phaser.Scene
 
     t.getConfig();
     t.colors = t.config.colors;
+    t.UIelements = t.scene.get('PhoneUI').elements;
 
     let { width, height } = t.cameras.main;
     t.width = width;
     t.height = height;
     t.x = t.width / 2;
     t.y = t.height / 2;
-
-    t.UIelements = t.scene.get('PhoneUI').elements;
 
     t.addGoBackFunction();
   }
