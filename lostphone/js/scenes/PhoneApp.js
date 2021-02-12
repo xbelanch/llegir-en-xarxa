@@ -29,6 +29,8 @@ export default class PhoneApp extends Phaser.Scene
     t.x = t.width / 2;
     t.y = t.height / 2;
 
+    t.UIelements = t.scene.get('PhoneUI').elements;
+
     t.addGoBackFunction();
   }
 

@@ -26,8 +26,29 @@ export default class PodcastApp extends PhoneApp
 
     super.init();
     t.elements = {
+      'playlist': {
+        'fontSize': t.calcDPR(24)
+      },
+      'playlistBox': {
+        'padding': t.calcDPR(10),
+        'bgcolor': 0x000000,
+        'alpha': 0.6,
+        'stroke': 0xffffff
+      },
       'buttons': {
-
+        'fontSize': 48,
+        'padding': t.calcDPR(16)
+      },
+      'progressBar': {
+        'x': t.width * 0.1,
+        'padding': t.calcDPR(30),
+        'height': t.calcDPR(30),
+        'width': t.width * 0.8,
+        'bgcolor': 0xffff00,
+        'progressColor': 0x222222,
+        'cursorColor': 0xffffff,
+        'cursorHeight': t.calcDPR(40),
+        'cursorWidth': t.calcDPR(3)
       }
     };
   }
@@ -50,7 +71,22 @@ export default class PodcastApp extends PhoneApp
     let t = this;
     t.loadingText.destroy();
 
-    t.text = t.add.text(t.x, t.y, 'Tracks loaded!')
+    t.playlistBox = t.add.rectangle(
+      0,
+      0,
+      t.width,
+      0,
+      t.elements['playlistBox']['bgcolor'],
+      t.elements['playlistBox']['alpha']
+    ).setOrigin(0, 0.5)
+    .setStrokeStyle(1,t.elements['playlistBox']['stroke'],t.elements['playlistBox']['alpha']);
+
+    t.text = t.add.text(t.x, t.y, 'Tracks loaded!', {
+        fontFamily: 'Roboto',
+        fontSize : t.elements['playlist']['fontSize'],
+        color: '#ffffff',
+        align: 'center'
+    })
       .setOrigin(0.5, 0.5)
       .setDepth(0);
 
@@ -78,7 +114,7 @@ export default class PodcastApp extends PhoneApp
     let t = this;
 
     // Display tracks and buttons
-    let buttons = [
+    let buttons = t.add.group([
       t.createButton.call(t, '⏯', function(){
         let current = t.playlist.current || t.playlist.first;
         if (current.isPaused) {
@@ -108,19 +144,19 @@ export default class PodcastApp extends PhoneApp
         t.audio.stopAll();
         if (next) next.play();
       })
-    ];
+    ]);
 
     // Actualment no és possible centrar de manera fàcil
     // el grup de butons
     // display the buttons on screen
-    Phaser.Actions.GridAlign(buttons, {
-      x: t.x - 150,
-      y: t.height - Math.round(120*t.assetsDPR),
-      width: 20,
-      height: 20,
-      cellWidth: 500 / buttons.length,
-      cellHeight: 40,
-      position: Phaser.CENTER
+    Phaser.Actions.GridAlign(buttons.getChildren(), {
+      x: t.width / buttons.getLength() / 2,
+      y: t.height - t.UIelements['bottomBar']['height'] - t.elements['buttons']['fontSize'] - t.elements['buttons']['padding'],
+      width: -1,
+      height: 1,
+      cellWidth: t.width / buttons.getLength(),
+      cellHeight: t.elements['buttons']['fontSize'],
+      position: Phaser.Display.Align.CENTER
     });
   }
 
@@ -143,33 +179,40 @@ export default class PodcastApp extends PhoneApp
       ].join('  ');
     }));
 
+    // Refresh box size
+    t.playlistBox
+      .setY(t.text.getTopLeft().y - t.elements['playlistBox']['padding'])
+      .setSize(
+        t.width,
+        t.text.displayHeight + 2*t.elements['playlistBox']['padding']
+    );
+
     if (t.progressBar !== undefined) {
        t.progressBar.clear();
-       t.progressBar.fillStyle(0xffff00, 1);
+       t.progressBar.fillStyle(t.elements['progressBar']['bgcolor'], 1);
        t.progressCursor.clear();
-       t.progressCursor.fillStyle(0xffffff, 1);
+       t.progressCursor.fillStyle(t.elements['progressBar']['cursorColor'], 1);
     }
 
     t.playlist.list.map(function(s, i){
       if (s.isPlaying || s.isPaused) {
-
 
         if (t.progressBar === undefined || !t.progressBar.active) {
           t.createBar();
         }
 
         t.progressBar.fillRect(
-          t.x - (t.width*0.4),
-          t.height - 220,
-          Math.round((t.width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
-          20
+          t.elements['progressBar']['x'],
+          t.text.getBottomCenter().y + t.elements['progressBar']['padding'],
+          Math.round((t.elements['progressBar']['width']) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
+          t.elements['progressBar']['height']
         );
 
         t.progressCursor.fillRect(
-          t.x - (t.width*0.4) + Math.round((t.width*0.8) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
-          t.height - 225,
-          3,
-          30
+          t.elements['progressBar']['x'] + Math.round((t.elements['progressBar']['width']) * (s.seek.toFixed(1) / s.duration.toFixed(1))),
+          t.text.getBottomCenter().y + t.elements['progressBar']['padding'] - (t.elements['progressBar']['cursorHeight'] - t.elements['progressBar']['height'])/2,
+          t.elements['progressBar']['cursorWidth'],
+          t.elements['progressBar']['cursorHeight']
         );
       }
     });
@@ -180,9 +223,11 @@ export default class PodcastApp extends PhoneApp
   {
     let t = this;
     return t.add
-      .text(0, 0, text, { fontSize: 48 })
+      .text(0, 0, text, { fontSize: t.elements['buttons']['fontSize'] })
       .setInteractive()
-      .on('pointerdown', callback);
+      .on('pointerdown', callback)
+      .setScale(t.assetsDPR)
+      .setOrigin(0.5,0);
   }
 
   createBar()
@@ -192,19 +237,38 @@ export default class PodcastApp extends PhoneApp
     t.progressBar = t.add.graphics();
     t.progressBox = t.add.graphics();
     t.progressCursor = t.add.graphics();
-    t.progressBox.fillStyle(0x222222, 0.8);
-    t.progressBox.fillRect(t.x - (t.width*0.4), t.height - 220, t.width *0.8, 20);
-    t.progressCursor.fillStyle(0xffffff, 1);
-    t.progressCursor.fillRect(t.x - (t.width*0.4), t.height - 225, 3, 30);
+    t.progressBox.fillStyle(t.elements['progressBar']['progressColor'], 0.8);
+    t.progressBox.fillRect(
+      t.elements['progressBar']['x'],
+      t.text.getBottomCenter().y + t.elements['progressBar']['padding'],
+      t.elements['progressBar']['width'],
+      t.elements['progressBar']['height']
+    );
+    t.progressCursor.fillStyle(t.elements['progressBar']['cursorColor'], 1);
+    t.progressCursor.fillRect(
+      t.elements['progressBar']['x'],
+      t.text.getBottomCenter().y + t.elements['progressBar']['padding'] - (t.elements['progressBar']['cursorHeight'] - t.elements['progressBar']['height'])/2,
+      t.elements['progressBar']['cursorWidth'],
+      t.elements['progressBar']['cursorHeight']
+    );
 
-    let zone = t.add.zone(t.x - (t.width*0.4), t.height - 220, t.width *0.8, 20)
+    let zone = t.add.zone(
+      t.elements['progressBar']['x'],
+      t.text.getBottomCenter().y + t.elements['progressBar']['padding'],
+      t.elements['progressBar']['width'],
+      t.elements['progressBar']['height']
+    )
       .setOrigin(0)
       .setInteractive();
 
     let moveToSelection = function(pointer) {
       if (pointer.isDown) {
         let current = t.playlist.current || t.playlist.first;
-        let seconds = Math.round(((pointer.worldX - t.width*0.1) / (t.width*0.8))*current.duration.toFixed(1));
+        let seconds = Math.round(
+          (
+            (pointer.worldX - t.elements['progressBar']['x']) / (t.elements['progressBar']['width'])
+          )*current.duration.toFixed(1)
+        );
         current.stop();
         current.play('',{seek: seconds});
       }
