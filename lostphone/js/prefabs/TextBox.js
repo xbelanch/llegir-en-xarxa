@@ -43,6 +43,8 @@ export default class TextBox extends Phaser.GameObjects.Container
       params['strokeColor'] !== undefined ? params['strokeColor'] : 0x000000
     );
 
+    this.add(this.box);
+
     //Add icon
     if (params['icon'] !== undefined) {
       this.add(new Phaser.GameObjects.Image(
@@ -64,7 +66,7 @@ export default class TextBox extends Phaser.GameObjects.Container
       }
     }
 
-    this.add(this.box);
+
     this.add(this.text);
 
     if (params['closeButton'] !== undefined) {

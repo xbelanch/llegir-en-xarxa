@@ -198,6 +198,18 @@ export default class PhoneUI extends Phaser.Scene
   createNotificationBar() {
     let t = this;
 
+    let arrow = t.add.text(
+      t.elements['notificationBar']['width'] / 2,
+      t.height + t.elements['topBar']['height'] / 2,
+      t.drawerOut ? '↟' : '↡',
+      {
+        fontFamily: 'Roboto',
+        fontSize : t.elements['notificationBar']['fontSize'],
+        color: '#ffffff',
+        align: 'center'
+      }
+    ).setOrigin(0.5, 0.5);
+
     this.topNotificationBar = this.add.container(
       t.width - t.elements['notificationBar']['width'],
       -t.height,
@@ -207,7 +219,14 @@ export default class PhoneUI extends Phaser.Scene
           t.elements['notificationBar']['width'],
           t.height + t.elements['topBar']['height'],
           t.elements['notificationBar']['color']
-        ).setOrigin(0,0),
+        ).setOrigin(0,0)
+        .setInteractive()
+        .on('pointerup', function(){
+          console.log('Drawer!');
+            t.drawerOut = !t.drawerOut;
+            !t.drawerOut ? arrow.setText('↡') : arrow.setText('↟');
+            !t.drawerOut ? t.hideDrawer() : t.showDrawer();
+        }),
         t.add.triangle(
           0, 0,
           0,t.height+t.elements['topBar']['height'],
@@ -217,24 +236,7 @@ export default class PhoneUI extends Phaser.Scene
           t.height + t.elements['topBar']['height'] + t.elements['notificationBar']['width']/2,
           t.elements['notificationBar']['color']
         ).setOrigin(0,0),
-        t.add.text(
-          t.elements['notificationBar']['width'] / 2,
-          t.height + t.elements['topBar']['height'] / 2,
-          t.drawerOut ? '↟' : '↡',
-          {
-            fontFamily: 'Roboto',
-            fontSize : t.elements['notificationBar']['fontSize'],
-            color: '#ffffff',
-            align: 'center'
-          }
-        )
-          .setOrigin(0.5, 0.5)
-          .setInteractive()
-          .on('pointerup', function(){
-              t.drawerOut = !t.drawerOut;
-              !t.drawerOut ? this.setText('↡') : this.setText('↟');
-              !t.drawerOut ? t.hideDrawer() : t.showDrawer();
-            })
+        arrow
       ]
     );
   }
