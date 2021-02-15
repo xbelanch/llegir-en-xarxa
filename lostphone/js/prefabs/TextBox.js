@@ -21,27 +21,26 @@ export default class TextBox extends Phaser.GameObjects.Container
         fontSize : params['textSize'],
         color: '#ffffff',
         align: 'left',
-        wordWrap: {width: params['width'] }
+        wordWrap: { width: params['width'] }
       }
       ).setOrigin(0.5, 0.5)
       .setAlpha(params['alpha'] !== undefined ? params['alpha'] : 1)
     ;
 
     // Add box rectangle
-    this.add(new Phaser.GameObjects.Rectangle(
-        scene,
-        0,
-        0,
-        params['width'],
-        params['height'],
-        params['bgcolor'],
-        params['alpha'] !== undefined ? params['alpha'] : 1
-      )
-      .setOrigin(0,0)
-      .setStrokeStyle(
-        params['strokeWidth'] !== undefined ? params['strokeWidth'] : 0,
-        params['strokeColor'] !== undefined ? params['strokeColor'] : 0x000000
-      )
+    this.box = new Phaser.GameObjects.Rectangle(
+      scene,
+      0,
+      0,
+      params['width'],
+      this.text.getBottomCenter().y - this.text.getTopCenter().y + 2*this.scene.calcDPR(20),
+      params['bgcolor'],
+      params['alpha'] !== undefined ? params['alpha'] : 1
+    )
+    .setOrigin(0,0)
+    .setStrokeStyle(
+      params['strokeWidth'] !== undefined ? params['strokeWidth'] : 0,
+      params['strokeColor'] !== undefined ? params['strokeColor'] : 0x000000
     );
 
     //Add icon
@@ -65,6 +64,7 @@ export default class TextBox extends Phaser.GameObjects.Container
       }
     }
 
+    this.add(this.box);
     this.add(this.text);
 
     if (params['closeButton'] !== undefined) {

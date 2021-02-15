@@ -27,7 +27,7 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
     params['x'] = width * 0.1;
     params['y'] = (height - params['height']) / 2 ;
     params['alpha'] = 1;
-    params['strokeWidth'] = 1;
+    params['strokeWidth'] = 3;
     params['strokeColor'] = 0xffffff;
     params['textSize'] = t.scene.calcDPR(24);
 
@@ -59,16 +59,19 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
 
     if (params['type'] !== undefined) {
       if (params['type'] === 'yesno') {
+
+        t.textbox.box.displayHeight += t.scene.calcDPR(20);
+
         //Print yes/no functions
         t.add(new Phaser.GameObjects.Image(
           scene,
           width / 2 - Math.floor(20*scene.assetsDPR),
-          (height + t.textbox.text.getBottomCenter().y) / 2,
+          (height + t.textbox.text.getBottomCenter().y + t.scene.calcDPR(20)) / 2,
           'icons',
           t.scene.icons['ok']
         )
         .setInteractive()
-        .setScale(2*scene.assetsDPR)
+        .setScale(3*scene.assetsDPR)
         .on('pointerup', function(){
           params['yesfunction']();
           t.destroy();
@@ -77,12 +80,12 @@ export default class ExclusivePopup extends Phaser.GameObjects.Container
         t.add(new Phaser.GameObjects.Image(
           scene,
           width / 2 + Math.floor(20*scene.assetsDPR),
-          (height + t.textbox.text.getBottomCenter().y) / 2 ,
+          (height + t.textbox.text.getBottomCenter().y + t.scene.calcDPR(20)) / 2 ,
           'icons',
           t.scene.icons['ko']
         )
         .setInteractive()
-        .setScale(2*scene.assetsDPR)
+        .setScale(3*scene.assetsDPR)
         .on('pointerup', () => t.destroy()));
       }
     }

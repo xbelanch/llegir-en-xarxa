@@ -23,12 +23,12 @@ export default class MailObject extends Phaser.GameObjects.Container
       + mail['subject'];
     const content = mail['body'];
 
-    const margin_left = t.scene.elements['headings']['padding'];
-    const margin_top = t.scene.elements['title']['y'] + t.scene.elements['headings']['padding'];
+    const margin_left = 0;
+    const margin_top = t.scene.UIelements['topBar']['height'];
     const margin_text = t.scene.elements['headings']['padding'];
 
-    const reading_area_width = width - (2 * margin_left);
-    const reading_area_height = height - (2 * margin_top);
+    const reading_area_width = width;
+    const reading_area_height = height - margin_top - t.scene.UIelements['bottomBar']['height'];
 
     // Layer
     t.scene.add.rectangle(
@@ -49,7 +49,7 @@ export default class MailObject extends Phaser.GameObjects.Container
       reading_area_height,
       0x202020,
       1.0
-    ).setOrigin(0,0).setStrokeStyle(1, 0xffffff));
+    ).setOrigin(0,0));
 
     let mask = new Phaser.Display.Masks.GeometryMask(t.scene, background);
 
@@ -84,7 +84,7 @@ export default class MailObject extends Phaser.GameObjects.Container
     t.add(new Phaser.GameObjects.Text(
       t.scene,
       t.scene.width - margin_left - t.scene.elements['headings']['fontSize'],
-      margin_top + t.scene.elements['headings']['fontSize']*0.6,
+      margin_top + t.scene.elements['headings']['fontSize'],
       'X',
       {
         fontFamily: 'Roboto',
