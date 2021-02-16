@@ -26,7 +26,57 @@ export default class PhoneUI extends Phaser.Scene
     this.dragZone;
     this.notificationsMaskZone;
     this.assetsDPR = assetsDPR;
+
   };
+
+  init() {
+    let t = this;
+
+    let { width, height } = t.cameras.main;
+    t.width = width;
+    t.height = height;
+
+    t.elements = {
+      'topBar' : {
+        'width': t.width,
+        'height': t.calcDPR(36),
+      },
+      'bottomBar': {
+        'width': t.width,
+        'height': t.calcDPR(60)
+      },
+      'backButton': {
+        'fontSize': t.calcDPR(30)
+      },
+      'clock': {
+        'fontSize': t.calcDPR(16)
+      },
+      'notification': {
+        'fontSize': t.calcDPR(12)
+      },
+      'notificationBar': {
+        'color': 0x9c9c9c,
+        'width': t.width / 12,
+        'fontSize': t.calcDPR(24)
+      },
+      'notificationTitle': {
+        'y': t.calcDPR(16),
+        'fontSize': t.calcDPR(24)
+      },
+      'drawerLines' : {
+        'y': t.calcDPR(24),
+        'padding': t.calcDPR(5)
+      },
+      'notificationArea': {
+        'y': t.calcDPR(20)
+      },
+      'notificationBox': {
+        'height': t.calcDPR(50),
+        'offset': t.calcDPR(10),
+        'bgcolor': 0x999999
+      }
+    }
+  }
 
   preload() {
     let t = this;
@@ -36,60 +86,11 @@ export default class PhoneUI extends Phaser.Scene
   create()
   {
     let t = this;
-    let { width, height } = t.cameras.main;
 
-    // --- Display top and bottom bars
-    let topBar = t.add.rectangle(0, 0, width, Math.floor(24 * t.assetsDPR), t.barColor, 1.0).setOrigin(0);
-    let bottomBar = t.add.rectangle(0, height - Math.floor(48 * t.assetsDPR), width, Math.floor(48 * assetsDPR), t.barColor, 1.0).setOrigin(0);
-
-    // --- Volume icon
-    // By default, volume icon is on
-    // @TODO: icon atlas
-    const muteSwitch = t.add.image(
-      width - Math.floor(24 * t.assetsDPR),
-      12 * t.assetsDPR,
-      !t.game.settings.getSettingValue('muteSound') ? 'volume-icon-on' : 'volume-icon-off'
-    )
-      .setScale(1 / (t.assetsDPR * 4))
-      .setTintFill(0xffffff)
-      .setInteractive()
-      .on('pointerup', function(){
-        t.game.settings.toggleSetting('muteSound');
-      }
-    );
-    t.game.events.on(PhoneEvents.SettingsUpdated, function(){
-      !t.game.settings.getSettingValue('muteSound') ? muteSwitch.setTexture('volume-icon-on') : muteSwitch.setTexture('volume-icon-off');
-    });
-
-    // --- Home button
-    t.homeButton = this.add.image(Math.floor(width / 2), height - Math.floor(48 * t.assetsDPR / 2), 'button-homescreen')
-      .setInteractive()
-      .on('pointerup', () => t.backHome());
-
-    // --- Go back Button
-    t.backButton = t.add.text(
-      Math.floor(width / 5), height - Math.floor(48 * t.assetsDPR / 2),
-       "↩",
-      {
-        fontFamily: 'Roboto',
-        fontSize : Math.floor(30 * t.assetsDPR),
-        color: '#ffffff',
-        align: 'center'
-      }
-    )
-    .setOrigin(0.5, 0.5)
-    .setInteractive()
-    .setVisible(false);
-
-    // --- Clock time at the upper bar
-    t.time = new Time(t, Math.floor(width / 2), height / 56, {
-      fontFamily: 'Roboto',
-      fontSize : Math.floor(13 * t.assetsDPR),
-      color: '#ffffff',
-      align: 'center'
-    })
-      .setOrigin(0.5, 0.5)
-      .setResolution(Math.floor(t.assetsDPR));
+    t.createBars();
+    t.createButtons();
+    t.createClock();
+    t.createIcons();
 
     t.createDrawer();
     t.createNotificationBar();
@@ -99,6 +100,243 @@ export default class PhoneUI extends Phaser.Scene
     });
     t.launchNotification();
   };
+
+  createBars() {
+    let t = this;
+
+    // --- Display top and bottom bars
+    let topBar = t.add.rectangle(
+      0,
+      0,
+      t.elements['topBar']['width'],
+      t.elements['topBar']['height'],
+      t.barColor,
+      1.0
+    ).setOrigin(0);
+    let bottomBar = t.add.rectangle(
+      0,
+      t.height - t.elements['bottomBar']['height'],
+      t.elements['bottomBar']['width'],
+      t.elements['bottomBar']['height'],
+      t.barColor,
+      1.0
+    ).setOrigin(0);
+  }
+
+  createButtons() {
+    let t = this;
+
+    // --- Home button
+    t.homeButton = this.add.image(
+      t.elements['bottomBar']['width']/2,
+      t.height - t.elements['bottomBar']['height']/2,
+      'button-homescreen'
+    )
+      .setInteractive()
+      .setOrigin(0.5, 0.5)
+      .on('pointerup', () => t.backHome())
+      .setScale(t.assetsDPR * 0.5);
+
+    // --- Go back Button
+    t.backButton = t.add.text(
+      t.width / 5,
+      t.height - t.elements['bottomBar']['height']/2,
+       "↩",
+      {
+        fontFamily: 'Roboto',
+        fontSize : t.elements['backButton']['fontSize'],
+        color: '#ffffff',
+        align: 'center'
+      }
+    )
+    .setOrigin(0.5, 0.5)
+    .setInteractive()
+    .setVisible(false);
+  }
+
+  createClock() {
+    let t = this;
+
+    // --- Clock time at the upper bar
+    t.time = new Time(t,
+    t.elements['topBar']['width'] / 2,
+    t.elements['topBar']['height'] / 2,
+    {
+      fontFamily: 'Roboto',
+      fontSize : t.elements['clock']['fontSize'],
+      color: '#ffffff',
+      align: 'center'
+    })
+      .setOrigin(0.5, 0.5)
+      .setResolution(t.assetsDPR);
+  }
+
+  createIcons() {
+    let t = this;
+
+    // --- Volume icon
+    // By default, volume icon is on
+    // @TODO: icon atlas
+    const muteSwitch = t.add.image(
+      t.width - t.elements['notificationBar']['width']*2.1,
+      t.elements['topBar']['height'] / 2,
+      !t.game.settings.getSettingValue('muteSound') ? 'volume-icon-on' : 'volume-icon-off'
+    )
+      .setScale(t.assetsDPR * 0.15)
+      .setTintFill(0xffffff)
+      .setInteractive()
+      .setOrigin(0, 0.5)
+      .on('pointerup', function(){
+        t.game.settings.toggleSetting('muteSound');
+      }
+    );
+    t.game.events.on(PhoneEvents.SettingsUpdated, function(){
+      !t.game.settings.getSettingValue('muteSound') ? muteSwitch.setTexture('volume-icon-on') : muteSwitch.setTexture('volume-icon-off');
+    });
+  }
+
+  createNotificationBar() {
+    let t = this;
+
+    let arrow = t.add.text(
+      t.elements['notificationBar']['width'] / 2,
+      t.height + t.elements['topBar']['height'] / 2,
+      t.drawerOut ? '↟' : '↡',
+      {
+        fontFamily: 'Roboto',
+        fontSize : t.elements['notificationBar']['fontSize'],
+        color: '#ffffff',
+        align: 'center'
+      }
+    ).setOrigin(0.5, 0.5);
+
+    this.topNotificationBar = this.add.container(
+      t.width - t.elements['notificationBar']['width'],
+      -t.height,
+      [
+        t.add.rectangle(
+          0, 0,
+          t.elements['notificationBar']['width'],
+          t.height + t.elements['topBar']['height'],
+          t.elements['notificationBar']['color']
+        ).setOrigin(0,0)
+        .setInteractive()
+        .on('pointerup', function(){
+          console.log('Drawer!');
+            t.drawerOut = !t.drawerOut;
+            !t.drawerOut ? arrow.setText('↡') : arrow.setText('↟');
+            !t.drawerOut ? t.hideDrawer() : t.showDrawer();
+        }),
+        t.add.triangle(
+          0, 0,
+          0,t.height+t.elements['topBar']['height'],
+          t.elements['notificationBar']['width'],
+          t.height+t.elements['topBar']['height'],
+          t.elements['notificationBar']['width'] / 2,
+          t.height + t.elements['topBar']['height'] + t.elements['notificationBar']['width']/2,
+          t.elements['notificationBar']['color']
+        ).setOrigin(0,0),
+        arrow
+      ]
+    );
+  }
+
+  createDrawer() {
+    let t = this;
+    let y = 0;
+
+    this.notificationsMaskZone = t.add.rectangle(
+      0,
+      - t.height + t.elements['topBar']['height'] + t.elements['notificationTitle']['y'] + t.elements['notificationTitle']['fontSize'],
+      t.width,
+      t.height - t.elements['topBar']['height'] - t.elements['notificationTitle']['y'] - t.elements['notificationTitle']['fontSize'] - t.elements['bottomBar']['height'],
+      t.barColor,
+      0.0
+    ).setOrigin(0,0);
+    let mask = new Phaser.Display.Masks.GeometryMask(t, this.notificationsMaskZone);
+
+    t.drawer = t.add.container(
+      0, -t.height,
+      [
+        t.add.rectangle(
+          0, 0,
+          t.width,
+          t.height,
+          t.barColor,
+          1.0
+        ).setOrigin(0,0),
+        t.add.text(
+          (t.width - t.elements['notificationBar']['width']) / 2,
+          t.elements['topBar']['height'] + t.elements['notificationTitle']['y'],
+          "Notificacions",
+          {
+            fontFamily: 'Roboto',
+            fontSize : t.elements['notificationTitle']['fontSize'],
+            color: '#ffffff',
+            align: 'center'
+          }
+        )
+        .setOrigin(0.5, 0.5),
+        t.add.line(
+          0, 0,
+          (t.width - t.elements['notificationBar']['width']) * 0.1 - t.elements['drawerLines']['padding'],
+          t.elements['topBar']['height'] + t.elements['notificationTitle']['y'] + t.elements['notificationTitle']['fontSize'],
+          (t.width - t.elements['notificationBar']['width']) * 0.9 + t.elements['drawerLines']['padding'],
+          t.elements['topBar']['height'] + t.elements['notificationTitle']['y'] + t.elements['notificationTitle']['fontSize'],
+         0xffffff)
+        .setOrigin(0,0),
+        t.add.line(
+          0, 0,
+          (t.width - t.elements['notificationBar']['width']) * 0.1 - t.elements['drawerLines']['padding'],
+          t.height - t.elements['bottomBar']['height'] - 1,
+          (t.width - t.elements['notificationBar']['width']) * 0.9 + t.elements['drawerLines']['padding'],
+          t.height - t.elements['bottomBar']['height'] - 1,
+         0xffffff)
+        .setOrigin(0,0)
+      ]
+    );
+
+    y = t.elements['topBar']['height'] + t.elements['notificationTitle']['y'] + t.elements['notificationTitle']['fontSize'];
+
+    t.notificationsArea = new Phaser.GameObjects.Container(
+      t,
+      (t.width - t.elements['notificationBar']['width']) * 0.1,
+      y + t.elements['notificationArea']['y']
+    );
+    t.drawer.add(t.notificationsArea);
+
+    let notifications = [...t.game.state['notifications']];
+    notifications.reverse();
+
+    for (let i=0; i<notifications.length; i++) {
+      this.notificationsArea.add(new Notification(
+          t,
+          'Nou '+notifications[i]['type']+': '+notifications[i]['subject'],
+          notifications[i],
+          {
+            y: (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * i,
+            width: (t.width - t.elements['notificationBar']['width'])*0.8,
+            height: t.elements['notificationBox']['height'],
+            bgcolor: t.elements['notificationBox']['bgcolor'],
+            alpha: 1.0 - (Math.min(i*0.2, 0.6)),
+            strokeWidth: 2,
+            strokeColor: 0xdddddd,
+            textSize: t.elements['notification']['fontSize'],
+            //icon: notifications[i]['type']
+            icon: 'lorem-appsum-test',
+            ellipsis: 30,
+            iconScale: 0.5
+          }
+        )
+      );
+    }
+
+    t.notificationsArea.setSize(
+      t.width * 2,
+      (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (t.game.state['notifications'].length) * 2
+    );
+    t.notificationsArea.setMask(mask);
+  }
 
   backHome()
   {
@@ -174,137 +412,11 @@ export default class PhoneUI extends Phaser.Scene
     }
   }
 
-  createNotificationBar() {
-    let t = this;
-    let { width, height } = t.cameras.main;
-    let notificationBarColor = 0x9c9c9c;
-    t.drawerOut = false;
-
-    this.topNotificationBar = this.add.container(
-      width - Math.floor(16 * t.assetsDPR),
-      -height,
-      [
-        t.add.rectangle(
-          0, 0,
-          16 * t.assetsDPR,
-          height + Math.floor(24 * t.assetsDPR),
-          notificationBarColor
-        ).setOrigin(0,0),
-        t.add.triangle(
-          0, 0,
-          0,height+Math.floor(24 * t.assetsDPR),
-          Math.floor(16 * t.assetsDPR), height+Math.floor(24 * t.assetsDPR),
-          Math.floor(16 * t.assetsDPR) / 2, height + Math.floor(24 * t.assetsDPR) + Math.floor(8 * assetsDPR),
-          notificationBarColor
-        ).setOrigin(0,0),
-        t.add.text(
-          Math.floor(8*t.assetsDPR), height + Math.floor(10*t.assetsDPR), "↡", {
-          fontFamily: 'Roboto',
-          fontSize : Math.floor(13 * t.assetsDPR),
-          color: '#ffffff',
-          align: 'center'
-        })
-          .setOrigin(0.5, 0.5)
-          .setResolution(Math.floor(t.assetsDPR))
-          .setInteractive()
-          .on('pointerup', function(){
-              t.drawerOut ? this.setText('↡') : this.setText('↟');
-              t.drawerOut ? t.hideDrawer() : t.showDrawer();
-              t.drawerOut = !t.drawerOut;
-            })
-      ]
-    );
-  }
-
-  createDrawer() {
-    let t = this;
-    let { width, height } = t.cameras.main;
-
-    this.notificationsMaskZone = t.add.rectangle(
-      0, - height + Math.floor(70*t.assetsDPR),
-      width, height - Math.floor(70*t.assetsDPR) - Math.floor(48*t.assetsDPR),
-      t.barColor, 1.0
-    ).setOrigin(0,0);
-    let mask = new Phaser.Display.Masks.GeometryMask(t, this.notificationsMaskZone);
-
-    t.drawer = t.add.container(
-      0, -height,
-      [
-        t.add.rectangle(
-          0, 0,
-          width, height - Math.floor(48*t.assetsDPR),
-          t.barColor, 1.0
-        ).setOrigin(0,0),
-        t.add.text(
-          Math.floor(width / 2), Math.floor(50*t.assetsDPR),
-          "Notificacions",
-          {
-            fontFamily: 'Roboto',
-            fontSize : Math.floor(13 * t.assetsDPR),
-            color: '#ffffff',
-            align: 'center'
-          }
-        )
-        .setOrigin(0.5, 0)
-        .setResolution(Math.floor(t.assetsDPR)),
-        t.add.line(
-          0, 0,
-          Math.floor(30*t.assetsDPR), Math.floor(70*t.assetsDPR),
-          width - Math.floor(30*t.assetsDPR), Math.floor(70*t.assetsDPR),
-         0xffffff)
-        .setOrigin(0,0),
-        t.add.line(
-          0, 0,
-          Math.floor(30*t.assetsDPR), height - Math.floor(48*t.assetsDPR) - 1,
-          width - Math.floor(30*t.assetsDPR), height - Math.floor(48*t.assetsDPR) - 1,
-         0xffffff)
-        .setOrigin(0,0)
-      ]
-    );
-
-    t.notificationsArea = new Phaser.GameObjects.Container(
-      t,
-      width * 0.1,
-      Math.floor(100*t.assetsDPR)
-    );
-    t.drawer.add(t.notificationsArea);
-
-    let notifications = [...t.game.state['notifications']];
-    notifications.reverse();
-
-    for (let i=0; i<notifications.length; i++) {
-      this.notificationsArea.add(new Notification(
-          t,
-          'Nou '+notifications[i]['type']+': '+notifications[i]['subject'],
-          notifications[i],
-          {
-            y: Math.floor(60*t.assetsDPR) * i,
-            width: width*0.8,
-            height: Math.floor(50*t.assetsDPR),
-            bgcolor: 0x999999,
-            alpha: 1.0 - (Math.min(i*0.2, 0.6)),
-            strokeWidth: 2,
-            strokeColor: 0xdddddd,
-            //icon: notifications[i]['type']
-            icon: 'lorem-appsum-test',
-            ellipsis: 30,
-            iconScale: 0.5
-          }
-        )
-      );
-    }
-
-    t.notificationsArea.setSize(width*2, Math.floor(60*t.assetsDPR) * (t.game.state['notifications'].length)*2);
-    t.notificationsArea.setMask(mask);
-  }
-
   showDrawer() {
     let t = this;
-    let { width, height } = this.cameras.main;
 
-    const drag_zone_y = Math.floor(120*t.assetsDPR);
-    const drag_zone_width = width - (16 * t.assetsDPR);
-    const drag_zone_height = height - Math.floor(120*t.assetsDPR) - Math.floor(48*t.assetsDPR);
+    const drag_zone_y = t.elements['topBar']['height'] + t.elements['notificationTitle']['y'] + t.elements['notificationTitle']['fontSize'];
+    const drag_zone_height = t.height - (t.elements['topBar']['height'] + t.elements['notificationTitle']['y'] + t.elements['notificationTitle']['fontSize']) - t.elements['bottomBar']['height'];
 
     t.drawer.destroy();
     t.createDrawer();
@@ -314,19 +426,19 @@ export default class PhoneUI extends Phaser.Scene
     t.log('Drawer out!');
     t.tweens.add({
       targets: [this.drawer, this.notificationsMaskZone],
-      y: '+='+height,
+      y: '+='+t.height,
       duration : 500
     });
     t.tweens.add({
       targets: [this.topNotificationBar],
-      y: 0 - Math.floor(32*t.assetsDPR),
+      y: 0 - t.elements['topBar']['height'],
       duration : 500
     });
 
     t.notificationsArea.setInteractive();
     t.input.setDraggable(t.notificationsArea);
 
-    const notifications_size = Math.floor(60*t.assetsDPR) * (t.game.state['notifications'].length);
+    const notifications_size = (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (t.game.state['notifications'].length);
     const max_height = notifications_size - drag_zone_height - drag_zone_y;
 
     t.input.on('drag', function (pointer, gameObject, dragX, dragY) {
@@ -335,8 +447,8 @@ export default class PhoneUI extends Phaser.Scene
         t.notificationsArea.y,
         notifications_size >= drag_zone_height ?
           -max_height :
-          Math.floor(100*t.assetsDPR),
-        Math.floor(100*t.assetsDPR)
+          drag_zone_y + t.elements['notificationArea']['y'],
+        drag_zone_y + t.elements['notificationArea']['y']
       );
     });
   }

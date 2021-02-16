@@ -254,3 +254,8 @@ Phaser.Game.prototype.autosaveOff = function() {
     }
 };
 
+// Scene
+
+Phaser.Scene.prototype.calcDPR = function(elem) {
+    return Math.floor(elem * this.assetsDPR);
+}

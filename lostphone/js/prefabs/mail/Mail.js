@@ -23,19 +23,19 @@ export default class MailObject extends Phaser.GameObjects.Container
       + mail['subject'];
     const content = mail['body'];
 
-    const margin_left = Math.floor(20*t.scene.assetsDPR);
-    const margin_top = Math.floor(100*t.scene.assetsDPR);
-    const margin_text = Math.floor(10*t.scene.assetsDPR);
+    const margin_left = 0;
+    const margin_top = t.scene.UIelements['topBar']['height'];
+    const margin_text = t.scene.elements['headings']['padding'];
 
-    const reading_area_width = width - (2 * margin_left);
-    const reading_area_height = height - (2 * margin_top);
+    const reading_area_width = width;
+    const reading_area_height = height - margin_top - t.scene.UIelements['bottomBar']['height'];
 
     // Layer
     t.scene.add.rectangle(
       0,
       0,
-      width,
-      height,
+      t.scene.width,
+      t.scene.height,
       0xffffff,
       0.2
     ).setOrigin(0,0);
@@ -49,7 +49,7 @@ export default class MailObject extends Phaser.GameObjects.Container
       reading_area_height,
       0x202020,
       1.0
-    ).setOrigin(0,0).setStrokeStyle(1, 0xffffff));
+    ).setOrigin(0,0));
 
     let mask = new Phaser.Display.Masks.GeometryMask(t.scene, background);
 
@@ -61,8 +61,8 @@ export default class MailObject extends Phaser.GameObjects.Container
       {
         color: '#ffffff',
         fontFamily: 'Roboto',
-        fontSize: '24px',
-        wordWrap: { width: width - (2 * (margin_left + margin_text)) }
+        fontSize: t.scene.elements['headings']['fontSize'],
+        wordWrap: { width: t.scene.width - (2 * (margin_left + margin_text)) }
       }
     ).setOrigin(0,0).setDepth(100).setInteractive({ draggable: true });
 
@@ -83,12 +83,12 @@ export default class MailObject extends Phaser.GameObjects.Container
     // Add close button
     t.add(new Phaser.GameObjects.Text(
       t.scene,
-      width - margin_left - Math.floor(12*t.scene.assetsDPR),
-      margin_top + Math.floor(8*t.scene.assetsDPR),
+      t.scene.width - margin_left - t.scene.elements['headings']['fontSize'],
+      margin_top + t.scene.elements['headings']['fontSize'],
       'X',
       {
         fontFamily: 'Roboto',
-        fontSize : Math.floor(12 * t.scene.assetsDPR),
+        fontSize : t.scene.elements['headings']['fontSize'],
         color: '#ffffff',
         align: 'right'
       }
