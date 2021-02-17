@@ -26,7 +26,7 @@ export default class Homescreen extends PhoneApp
     let t = this;
     // --- Testing iconApp
     if (['dev'].includes(this.game.debug))
-      t.load.image('lorem-appsum', `assets/img/iconApp-@${t.assetsDPR}.png`);
+      t.load.image('lorem-appsum', `assets/img/iconApp-@4.png`);
   }
 
   create()
@@ -55,7 +55,7 @@ export default class Homescreen extends PhoneApp
       apps.push(app);
     };
 
-    t.addGrid(apps, { columns:3, height: 2, y: 1 });
+    t.addGrid(apps, { columns:3, rows: 5 , offsetY: t.calcDPR(10)});
   };
 
   addBalloons()

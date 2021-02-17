@@ -14,7 +14,7 @@ export default class PhoneApp extends Phaser.Scene
     };
 
     this.rowCount = 12;
-    this.colCount = 6;
+    this.colCount = 4;
 
     this.DPR = DPR;
     this.assetsDPR = assetsDPR;
@@ -120,7 +120,7 @@ export default class PhoneApp extends Phaser.Scene
     t.lastY += options['height'];
   }
 
-  addColumn(elements, options = {}) {
+  /*addColumn(elements, options = {}) {
     let t = this;
 
     // Accept single elements
@@ -141,7 +141,7 @@ export default class PhoneApp extends Phaser.Scene
       cellHeight: t.height / elements.length,
       position: options['position']
     });
-  }
+  }*/
 
   addGrid(elements, options = {}) {
     let t = this;
@@ -149,6 +149,10 @@ export default class PhoneApp extends Phaser.Scene
     // Accept single elements
     if (!Array.isArray(elements)) {
       elements = [elements];
+    }
+
+    if (options['offsetY'] === undefined) {
+      options['offsetY'] = 0;
     }
 
     if (options['y'] !== undefined) {
@@ -173,11 +177,11 @@ export default class PhoneApp extends Phaser.Scene
 
     Phaser.Actions.GridAlign(elements, {
       x: (t.width / elements.length / 2) +  (t.width / options['columns']) / options['columns'],
-      y: t.atRow(t.lastY),
+      y: t.atRow(t.lastY) + options['offsetY'],
       width: options['columns'],
       height: options['rows'],
       cellWidth: t.width / options['columns'],
-      cellHeight: (t.height / t.rowCount) * options['height'],
+      cellHeight: (t.height / options['rows']) * options['height'],
       position: options['position']
     });
 
@@ -187,11 +191,15 @@ export default class PhoneApp extends Phaser.Scene
   rowHeight() {
     let t = this;
 
-    return (t.height - t.UIelements['topBar']['height'] - t.UIelements['bottomBar']['height']) / 12;
+    return (t.height - t.UIelements['topBar']['height'] - t.UIelements['bottomBar']['height']) / t.rowCount;
   }
 
   atRow(rowNumber) {
     let t = this;
+
+    if (rowNumber < 0) {
+      rowNumber = t.rowCount + rowNumber + 1;
+    }
 
     return (t.rowHeight() * rowNumber) + t.UIelements['topBar']['height'];
   }

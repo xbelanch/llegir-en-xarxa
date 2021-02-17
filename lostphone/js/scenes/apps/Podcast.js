@@ -32,12 +32,6 @@ export default class PodcastApp extends PhoneApp
       'playlist': {
         'fontSize': t.calcDPR(24)
       },
-      'playlistBox': {
-        'padding': t.calcDPR(10),
-        'bgcolor': 0x000000,
-        'alpha': 0.6,
-        'stroke': 0xffffff
-      },
       'buttons': {
         'fontSize': 48,
         'padding': t.calcDPR(16)
@@ -81,18 +75,6 @@ export default class PodcastApp extends PhoneApp
 
     t.addRow(text);
 
-    t.playlistBox = t.add.rectangle(
-      0,
-      0,
-      t.width,
-      0,
-      t.elements['playlistBox']['bgcolor'],
-      t.elements['playlistBox']['alpha']
-    ).setOrigin(0, 0.5)
-    .setStrokeStyle(1,t.elements['playlistBox']['stroke'],t.elements['playlistBox']['alpha']);
-
-    t.addRow(t.playlistBox);
-
     t.text = t.add.text(t.x, t.y, 'Tracks loaded!', {
         fontFamily: 'Roboto',
         fontSize : t.elements['playlist']['fontSize'],
@@ -102,7 +84,16 @@ export default class PodcastApp extends PhoneApp
       .setOrigin(0.5, 0.5)
       .setDepth(0);
 
-    t.addRow(t.text);
+    t.text.setText(t.playlist.list.map(function(s, i){
+      return [
+        i === t.playlist.position ? `[${i + 1}]` : ` ${i + 1} `,
+        (s.isPlaying && '>') || (s.isPaused && ':') || ' ',
+        s.key,
+        `${s.seek.toFixed(1)}/${s.duration.toFixed(1)}`
+      ].join('  ');
+    }));
+
+    t.addRow(t.text, {y: 2});
 
     t.audio = t.sound;
 
@@ -160,7 +151,7 @@ export default class PodcastApp extends PhoneApp
       })
     ]);
 
-    t.addRow(buttons.getChildren(),{'y': 12});
+    t.addRow(buttons.getChildren(),{'y': -1});
   }
 
 
@@ -181,15 +172,6 @@ export default class PodcastApp extends PhoneApp
         `${s.seek.toFixed(1)}/${s.duration.toFixed(1)}`
       ].join('  ');
     }));
-
-    // Refresh box size
-    t.playlistBox
-      .setSize(
-        t.width,
-        t.text.displayHeight + 4*t.elements['playlistBox']['padding']
-    );
-
-    t.addRow(t.playlistBox, {y: 1});
 
     if (t.progressBar !== undefined) {
        t.progressBar.clear();

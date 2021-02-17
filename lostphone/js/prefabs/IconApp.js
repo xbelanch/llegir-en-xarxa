@@ -1,3 +1,5 @@
+import { assetsDPR } from "../Config";
+
 // --- IconApp
 export default class IconApp extends Phaser.GameObjects.Container
 {
@@ -9,7 +11,7 @@ export default class IconApp extends Phaser.GameObjects.Container
       x,y,
       texture,
       frame
-    ).setInteractive();
+    ).setInteractive().setScale(scene.assetsDPR / 4);
     this.add(this.icon);
 
     this.init();
@@ -44,7 +46,7 @@ export default class IconApp extends Phaser.GameObjects.Container
     let t = this;
     let label = t.scene.add.text(
       t.x,
-      t.y + t.icon.height / 2 + t.scene.calcDPR(5),
+      t.y + t.icon.displayHeight / 2 + t.scene.calcDPR(5),
       t.config.name);
     t.add(label);
     label.setOrigin(0.5, 0);
@@ -69,8 +71,8 @@ export default class IconApp extends Phaser.GameObjects.Container
     if (counter > 0) {
       t.balloon = new Phaser.GameObjects.Container(
         t.scene,
-        t.icon.width/2 - offset,
-        - t.icon.height/2 + offset
+        t.icon.displayWidth/2 - offset,
+        - t.icon.displayHeight/2 + offset
       );
 
       t.balloon.add(new Phaser.GameObjects.Ellipse(
