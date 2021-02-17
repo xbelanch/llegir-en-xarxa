@@ -6,7 +6,7 @@ import { assetsDPR } from '/Config';
 import Time from '/prefabs/Time';
 import Popup from '/prefabs/Popup';
 import Notification from '/prefabs/Notification';
-import { PhoneEvents } from '/scenes/Bootstrap';
+import { PhoneEvents } from '/scenes/main/Bootstrap';
 
 export default class PhoneUI extends Phaser.Scene
 {
@@ -305,7 +305,7 @@ export default class PhoneUI extends Phaser.Scene
     );
     t.drawer.add(t.notificationsArea);
 
-    let notifications = [...t.game.state['notifications']];
+    let notifications = t.game.registry.get('notifications');
     notifications.reverse();
 
     for (let i=0; i<notifications.length; i++) {
@@ -333,7 +333,7 @@ export default class PhoneUI extends Phaser.Scene
 
     t.notificationsArea.setSize(
       t.width * 2,
-      (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (t.game.state['notifications'].length) * 2
+      (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (notifications.length) * 2
     );
     t.notificationsArea.setMask(mask);
   }
@@ -365,7 +365,7 @@ export default class PhoneUI extends Phaser.Scene
   launchNotification()
   {
     let t = this;
-    let notifications = this.game.state['pendingNotifications'];
+    let notifications = this.game.registry.get('pendingNotifications');
 
     if (!this.notificationOn && notifications !== undefined && notifications.length > 0) {
 
@@ -401,7 +401,7 @@ export default class PhoneUI extends Phaser.Scene
     popup.destroy();
     t.notificationOn = false;
 
-    let notifications = t.game.state['pendingNotifications'];
+    let notifications = t.game.registry.get('pendingNotifications');
     if (notifications.length > 0) {
       notifications.splice(0, 1);
       t.game.save();
@@ -438,7 +438,8 @@ export default class PhoneUI extends Phaser.Scene
     t.notificationsArea.setInteractive();
     t.input.setDraggable(t.notificationsArea);
 
-    const notifications_size = (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (t.game.state['notifications'].length);
+    let notifications = t.game.registry.get('notifications');
+    const notifications_size = (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (notifications.length);
     const max_height = notifications_size - drag_zone_height - drag_zone_y;
 
     t.input.on('drag', function (pointer, gameObject, dragX, dragY) {

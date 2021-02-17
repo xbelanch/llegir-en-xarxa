@@ -1,6 +1,6 @@
-import PhoneApp from '/scenes/PhoneApp';
+import PhoneApp from '/scenes/main/PhoneApp';
 import IconApp from '/prefabs/IconApp';
-import { PhoneEvents } from '/scenes/Bootstrap';
+import { PhoneEvents } from '/scenes/main/Bootstrap';
 
 export default class Homescreen extends PhoneApp
 {
@@ -73,7 +73,7 @@ export default class Homescreen extends PhoneApp
   addBalloons()
   {
     let t = this;
-    let notifications = t.game.state['notifications'];
+    let notifications = t.game.registry.get('notifications');
 
     for (var index in t.apps) {
       let found = notifications.filter(element => element['type'] === this.apps[index]['type']).length;

@@ -4,7 +4,7 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
-import PhoneApp from '/scenes/PhoneApp';
+import PhoneApp from '/scenes/main/PhoneApp';
 import MailListObject from '/prefabs/mail/MailList.js';
 
 export default class MailApp extends PhoneApp

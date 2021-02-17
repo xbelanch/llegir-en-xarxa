@@ -4,7 +4,7 @@
 //-- @Note:
 //-- @Todo:
 //-- @From:
-import PhoneApp from '/scenes/PhoneApp';
+import PhoneApp from '/scenes/main/PhoneApp';
 
 export default class CalendarApp extends PhoneApp
 {
