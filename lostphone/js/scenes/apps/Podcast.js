@@ -26,6 +26,9 @@ export default class PodcastApp extends PhoneApp
 
     super.init();
     t.elements = {
+      'title': {
+        'fontSize': t.calcDPR(24)
+      },
       'playlist': {
         'fontSize': t.calcDPR(24)
       },
@@ -71,6 +74,13 @@ export default class PodcastApp extends PhoneApp
     let t = this;
     t.loadingText.destroy();
 
+    let text = t.add.text(0, 0,
+      'Podcasts',
+      t.getTextProperties({fontSize : t.elements['title']['fontSize']})
+    );
+
+    t.addRow(text);
+
     t.playlistBox = t.add.rectangle(
       0,
       0,
@@ -81,6 +91,8 @@ export default class PodcastApp extends PhoneApp
     ).setOrigin(0, 0.5)
     .setStrokeStyle(1,t.elements['playlistBox']['stroke'],t.elements['playlistBox']['alpha']);
 
+    t.addRow(t.playlistBox);
+
     t.text = t.add.text(t.x, t.y, 'Tracks loaded!', {
         fontFamily: 'Roboto',
         fontSize : t.elements['playlist']['fontSize'],
@@ -89,6 +101,8 @@ export default class PodcastApp extends PhoneApp
     })
       .setOrigin(0.5, 0.5)
       .setDepth(0);
+
+    t.addRow(t.text);
 
     t.audio = t.sound;
 
@@ -146,18 +160,7 @@ export default class PodcastApp extends PhoneApp
       })
     ]);
 
-    // Actualment no és possible centrar de manera fàcil
-    // el grup de butons
-    // display the buttons on screen
-    Phaser.Actions.GridAlign(buttons.getChildren(), {
-      x: t.width / buttons.getLength() / 2,
-      y: t.height - t.elements['buttons']['fontSize'] - t.elements['buttons']['padding'],
-      width: -1,
-      height: 1,
-      cellWidth: t.width / buttons.getLength(),
-      cellHeight: t.elements['buttons']['fontSize'],
-      position: Phaser.Display.Align.CENTER
-    });
+    t.addRow(buttons.getChildren(),{'y': 12});
   }
 
 
@@ -181,11 +184,12 @@ export default class PodcastApp extends PhoneApp
 
     // Refresh box size
     t.playlistBox
-      .setY(t.text.getTopLeft().y - t.elements['playlistBox']['padding'])
       .setSize(
         t.width,
-        t.text.displayHeight + 2*t.elements['playlistBox']['padding']
+        t.text.displayHeight + 4*t.elements['playlistBox']['padding']
     );
+
+    t.addRow(t.playlistBox, {y: 1});
 
     if (t.progressBar !== undefined) {
        t.progressBar.clear();

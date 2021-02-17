@@ -39,19 +39,14 @@ export default class MailApp extends PhoneApp
     let t = this;
 
     // --- Title
-    t.add.text(
-      t.width / 2,
-      t.elements['title']['y'],
+    let text = t.add.text(0,0,
       "Correu",
-      {
-        fontFamily: 'Roboto',
-        fontSize : t.elements['title']['fontSize'],
-        color: '#ffffff',
-        align: 'center'
-      }
-    ).setOrigin(0.5);
+      t.getTextProperties({fontSize : t.elements['title']['fontSize']})
+    );
+
+    t.addRow(text);
 
     // --- Display a list mails
-    new MailListObject(t, t.config);
+    let mails = new MailListObject(t, t.config);
   }
 }

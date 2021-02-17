@@ -41,30 +41,21 @@ export default class Homescreen extends PhoneApp
     // Files de quatre icones
     let t = this;
 
-    // fix values
-    const left_column  = t.width / 3;
-    const center_column = t.width / 2;
-    const right_column = 2 * left_column;
-    // change this values to play with space between icon apps and margin top
-    const margin = t.width / 8;
-    const top_margin = t.height / 12;
-
     // ubica les icones de les apps a tres columenes.
-    let row = 0;
-    for (let index in this.apps) {
-      let app = undefined;
-      if (index % 3 === 0) row += 1;
+    let apps = [];
+    let app = undefined;
+    for (let index in t.apps) {
       if (['dev'].includes(t.game.debug)) {
-        app = new IconApp(t, t.apps[index], 0, 0, 'lorem-appsum');
+        app = new IconApp(t, t.apps[index], 0, 0, 'lorem-appsum').addLabel(t.apps[index].name);
       } else {
-        app = new IconApp(t, t.apps[index], 0, 0, t.apps[index].key);
+        app = new IconApp(t, t.apps[index], 0, 0, t.apps[index].key).addLabel(t.apps[index].name);
       };
-      app.setX(index % 3 == 0 ? left_column - margin : (index % 3 == 1 ? center_column : right_column + margin));
-      app.setY(top_margin +  ((top_margin * 2) * (row - 1)));
-      app.addLabel(t.apps[index].name);
 
       t.icons[t.apps[index]['type']] = app;
+      apps.push(app);
     };
+
+    t.addGrid(apps, { columns:3, height: 2, y: 1 });
   };
 
   addBalloons()
@@ -74,7 +65,7 @@ export default class Homescreen extends PhoneApp
 
     for (let index in t.apps) {
       let found = notifications.filter(element => element['type'] === this.apps[index]['type']).length;
-      t.icons[this.apps[index]['type']].addBalloon(found);
+      t.icons[t.apps[index]['type']].addBalloon(found);
     }
   }
 };
