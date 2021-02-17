@@ -1,6 +1,6 @@
 import PhoneApp from '/scenes/main/PhoneApp';
 import IconApp from '/prefabs/IconApp';
-import { PhoneEvents } from '/scenes/main/Bootstrap';
+import { PhoneEvents } from '/libs/Const';
 
 export default class Homescreen extends PhoneApp
 {

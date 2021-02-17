@@ -6,7 +6,7 @@ import { assetsDPR } from '/Config';
 import Time from '/prefabs/Time';
 import Popup from '/prefabs/Popup';
 import Notification from '/prefabs/Notification';
-import { PhoneEvents } from '/scenes/main/Bootstrap';
+import { PhoneEvents } from '/libs/Const';
 
 export default class PhoneUI extends Phaser.Scene
 {

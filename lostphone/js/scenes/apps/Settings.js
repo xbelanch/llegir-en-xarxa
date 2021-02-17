@@ -1,7 +1,7 @@
 import PhoneApp from '/scenes/main/PhoneApp';
 import SwitchButton from '/prefabs/SwitchButton';
 import ExclusivePopup from '/prefabs/ExclusivePopup';
-import { PhoneEvents } from '/scenes/main/Bootstrap';
+import { PhoneEvents } from '/libs/Const';
 
 export default class SettingsApp extends PhoneApp
 {

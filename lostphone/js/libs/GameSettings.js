@@ -1,4 +1,4 @@
-import { PhoneEvents } from '/scenes/main/Bootstrap';
+import { PhoneEvents } from '/libs/Const';
 export default class GameSettings {
   constructor(game) {
     this.game = game;

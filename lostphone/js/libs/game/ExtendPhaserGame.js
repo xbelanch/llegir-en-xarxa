@@ -1,4 +1,4 @@
-import { PhoneEvents } from '/scenes/main/Bootstrap';
+import { PhoneEvents } from '/libs/Const';
 import GameSettings from '/libs/GameSettings';
 import '/libs/game/ExtendPhaserGameURL';
 

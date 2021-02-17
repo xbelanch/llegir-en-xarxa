@@ -1,13 +1,7 @@
 // --- Bootstrap
 import { DPR, assetsDPR } from '/Config';
+import { PhoneEvents } from '/libs/Const';
 import {WebFontFile} from "/libs/webfont/WebFontFile";
-
-export const PhoneEvents = {
-  PreloadFinished : 'preload-finished',
-  Notification: 'notification-launched',
-  SettingsUpdated: 'settings-updated'
-}
-
 export default class Bootstrap extends Phaser.Scene
 {
   constructor()
