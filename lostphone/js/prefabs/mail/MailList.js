@@ -83,7 +83,7 @@ export default class MailListObject extends Phaser.GameObjects.Container
     t.mailMask = t.scene.add.rectangle(
       0, initial_pos,
       t.scene.width,
-      t.scene.height - t.scene.UIelements['bottomBar']['height'] - initial_pos - t.scene.elements['headings']['padding'],
+      t.scene.height - initial_pos - t.scene.elements['headings']['padding'],
       0x000000, 0.0
     ).setOrigin(0,0).setVisible(false);
     let mask = new Phaser.Display.Masks.GeometryMask(t, t.mailMask);

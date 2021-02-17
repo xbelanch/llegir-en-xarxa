@@ -19,7 +19,7 @@ export default class MailApp extends PhoneApp
     let t = this;
 
     super.init();
-    super.getConfig('mail');
+    t.getConfig('mail');
 
     t.elements = {
       'title': {

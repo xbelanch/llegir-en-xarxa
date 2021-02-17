@@ -56,9 +56,12 @@ export default class PhoneApp extends Phaser.Scene
     t.backFunction = functionName;
 
     let ui = t.scene.get('PhoneUI');
-    ui.backButton.off('pointerup').on(
-      'pointerup',
-      functionName === undefined ? () => ui.backHome() : () => t.backFunction()
-    ).setVisible(true);
+
+    if (ui.backButton !== undefined) {
+      ui.backButton.off('pointerup').on(
+        'pointerup',
+        functionName === undefined ? () => ui.backHome() : () => t.backFunction()
+      ).setVisible(true);
+    }
   }
 }

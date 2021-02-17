@@ -34,7 +34,7 @@ export default class SettingsApp extends PhoneApp
 
     t.title = t.add.text(
         t.width / 2,
-        t.UIelements['topBar']['height'] + t.elements['title']['padding'],
+        t.elements['title']['padding'],
         'Configuració',
         {
           fontFamily: 'Roboto',

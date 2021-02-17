@@ -24,11 +24,11 @@ export default class MailObject extends Phaser.GameObjects.Container
     const content = mail['body'];
 
     const margin_left = 0;
-    const margin_top = t.scene.UIelements['topBar']['height'];
+    const margin_top = 0;
     const margin_text = t.scene.elements['headings']['padding'];
 
     const reading_area_width = width;
-    const reading_area_height = height - margin_top - t.scene.UIelements['bottomBar']['height'];
+    const reading_area_height = height - margin_top;
 
     // Layer
     t.scene.add.rectangle(
