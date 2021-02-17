@@ -21,6 +21,8 @@ export default class PhoneApp extends Phaser.Scene
 
     this.lastX = 0;
     this.lastY = 0;
+
+    this.dragZone;
   }
 
   init() {
@@ -44,6 +46,11 @@ export default class PhoneApp extends Phaser.Scene
     t.x = t.width / 2;
     t.y = t.height / 2;
 
+    if (t.height / t.assetsDPR < 640) {
+      t.rowCount = 8;
+    }
+
+    t.createDragZone();
     t.addGoBackFunction();
   }
 
@@ -70,6 +77,24 @@ export default class PhoneApp extends Phaser.Scene
     }
 
     return textProperties;
+  }
+
+  createDragZone() {
+    let t = this;
+
+    t.dragZone = t.add.zone(0,0,t.width*3,t.height*3).setInteractive({ draggable: true });
+
+    t.input.on('drag', function(pointer, gameObject, dragX, dragY) {
+      //if (gameObject[0] == t.dragZone) {
+        t.cameras.main.scrollY -= (pointer.position.y - pointer.prevPosition.y);
+
+        t.cameras.main.scrollY = Phaser.Math.Clamp(
+          t.cameras.main.scrollY,
+          0,
+          t.atRow(t.lastY) > t.height ? t.atRow(t.lastY) - t.height : 0
+        );
+      //}
+    });
   }
 
   addGoBackFunction(functionName) {
