@@ -23,6 +23,12 @@ export default class PhoneApp extends Phaser.Scene
     t.getConfig();
     t.colors = t.config.colors;
     t.UIelements = t.scene.get('PhoneUI').elements;
+    t.cameras.main.setViewport(
+      0,
+      t.UIelements['topBar']['height'],
+      t.cameras.main.width,
+      t.cameras.main.height - t.UIelements['topBar']['height'] - t.UIelements['bottomBar']['height']
+    );
 
     let { width, height } = t.cameras.main;
     t.width = width;

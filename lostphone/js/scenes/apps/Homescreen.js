@@ -1,8 +1,8 @@
-import { assetsDPR } from '/Config';
+import PhoneApp from '/scenes/PhoneApp';
 import IconApp from '/prefabs/IconApp';
 import { PhoneEvents } from '/scenes/Bootstrap';
 
-export default class Homescreen extends Phaser.Scene
+export default class Homescreen extends PhoneApp
 {
 
   constructor()
@@ -10,7 +10,6 @@ export default class Homescreen extends Phaser.Scene
     super({ key: 'Homescreen'});
     this.apps;
     this.icons = {};
-    this.assetsDPR = assetsDPR;
   }
 
   init()
