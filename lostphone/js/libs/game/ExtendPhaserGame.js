@@ -140,8 +140,12 @@ Phaser.Game.prototype.getNewElements = function(triggerItem) {
         }
         if (conditions.includes(triggerItem)) {
           if (this.checkCondition(conditions)) {
-            content[type+'s'][element]['type'] = type;
-            items.push(content[type+'s'][element]);
+            //TO DO: review this
+            items.push({
+              'id': content[type+'s'][element]['id'],
+              'type' : type,
+              'title': content[type+'s'][element]['title']
+            });
           }
         }
       }

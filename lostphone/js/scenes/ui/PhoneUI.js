@@ -311,7 +311,7 @@ export default class PhoneUI extends Phaser.Scene
     for (let i=0; i<notifications.length; i++) {
       this.notificationsArea.add(new Notification(
           t,
-          'Nou '+notifications[i]['type']+': '+notifications[i]['subject'],
+          'Nou '+notifications[i]['type']+': '+notifications[i]['title'],
           notifications[i],
           {
             y: (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * i,
@@ -350,7 +350,8 @@ export default class PhoneUI extends Phaser.Scene
 
     if (typeof app !== 'undefined') {
       t.game.scene.stop(app);
-      t.game.scene.wake('Homescreen')
+      t.game.scene.wake('Homescreen');
+      t.scene.get('Homescreen').addBalloons();
       t.backButton.setVisible(false);
       t.hideDrawer();
     }

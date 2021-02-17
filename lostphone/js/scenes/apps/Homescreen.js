@@ -30,7 +30,6 @@ export default class Homescreen extends PhoneApp
   {
     let t = this;
     t.addIconApps();
-    t.game.events.on(PhoneEvents.Notification, () => this.addBalloons());
     t.addBalloons();
   }
 
@@ -53,8 +52,8 @@ export default class Homescreen extends PhoneApp
     const top_margin = height / 12;
 
     // ubica les icones de les apps a tres columenes.
-    var row = 0;
-    for (var index in this.apps) {
+    let row = 0;
+    for (let index in this.apps) {
       let app = undefined;
       if (index % 3 === 0) row += 1;
       if (['dev'].includes(t.game.debug)) {
@@ -75,7 +74,7 @@ export default class Homescreen extends PhoneApp
     let t = this;
     let notifications = t.game.registry.get('notifications');
 
-    for (var index in t.apps) {
+    for (let index in t.apps) {
       let found = notifications.filter(element => element['type'] === this.apps[index]['type']).length;
       t.icons[this.apps[index]['type']].addBalloon(found);
     }
