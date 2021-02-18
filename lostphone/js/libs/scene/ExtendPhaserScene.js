@@ -8,5 +8,5 @@ Phaser.Scene.prototype.log = function(message) {
 }
 
 Phaser.Scene.prototype.calcDPR = function(elem) {
-    return Math.floor(elem * this.assetsDPR);
+    return Math.ceil(elem * this.assetsDPR);
 }

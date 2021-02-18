@@ -39,11 +39,11 @@ export default class PhoneUI extends Phaser.Scene
     t.elements = {
       'topBar' : {
         'width': t.width,
-        'height': t.calcDPR(36),
+        'height': t.height/12,
       },
       'bottomBar': {
         'width': t.width,
-        'height': t.calcDPR(60)
+        'height': t.height/12,
       },
       'backButton': {
         'fontSize': t.calcDPR(30)
@@ -80,7 +80,7 @@ export default class PhoneUI extends Phaser.Scene
 
   preload() {
     let t = this;
-    t.load.image('lorem-appsum-test', `assets/img/iconApp-@${t.assetsDPR}.png`);
+    t.load.image('lorem-appsum-test', `assets/img/iconApp-@4.png`);
   }
 
   create()
@@ -311,7 +311,7 @@ export default class PhoneUI extends Phaser.Scene
     for (let i=0; i<notifications.length; i++) {
       this.notificationsArea.add(new Notification(
           t,
-          'Nou '+notifications[i]['type']+': '+notifications[i]['title'],
+          notifications[i]['title'],
           notifications[i],
           {
             y: (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * i,
@@ -325,7 +325,7 @@ export default class PhoneUI extends Phaser.Scene
             //icon: notifications[i]['type']
             icon: 'lorem-appsum-test',
             ellipsis: 30,
-            iconScale: 0.5
+            iconScale: (t.assetsDPR/4)*0.5
           }
         )
       );
@@ -436,8 +436,7 @@ export default class PhoneUI extends Phaser.Scene
       duration : 500
     });
 
-    t.notificationsArea.setInteractive();
-    t.input.setDraggable(t.notificationsArea);
+    t.notificationsArea.setInteractive({draggable: true});
 
     let notifications = t.game.registry.get('notifications');
     const notifications_size = (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (notifications.length);

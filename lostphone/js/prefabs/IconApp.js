@@ -33,7 +33,7 @@ export default class IconApp extends Phaser.GameObjects.Container
       t.setAlpha(1.0);
     });
 
-    t.icon.on('pointerdown', function(event) {
+    t.icon.on('pointerup', function(event) {
       t.scene.scene.launch(t.config.key);
       t.scene.scene.sleep('Homescreen');
       t.scene.scene.get('PhoneUI').homeButton.setVisible(true);

@@ -68,13 +68,6 @@ export default class PodcastApp extends PhoneApp
     let t = this;
     t.loadingText.destroy();
 
-    let text = t.add.text(0, 0,
-      'Podcasts',
-      t.getTextProperties({fontSize : t.elements['title']['fontSize']})
-    );
-
-    t.addRow(text);
-
     t.text = t.add.text(t.x, t.y, 'Tracks loaded!', {
         fontFamily: 'Roboto',
         fontSize : t.elements['playlist']['fontSize'],
@@ -93,7 +86,7 @@ export default class PodcastApp extends PhoneApp
       ].join('  ');
     }));
 
-    t.addRow(t.text, {y: 2});
+    t.addRow(t.text, {y: 1});
 
     t.audio = t.sound;
 
@@ -212,7 +205,7 @@ export default class PodcastApp extends PhoneApp
       .setInteractive()
       .on('pointerdown', callback)
       .setScale(t.assetsDPR)
-      .setOrigin(0.5,0);
+      .setOrigin(0.5);
   }
 
   createBar()

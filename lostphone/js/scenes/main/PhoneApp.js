@@ -33,9 +33,9 @@ export default class PhoneApp extends Phaser.Scene
     t.UIelements = t.scene.get('PhoneUI').elements;
     t.cameras.main.setViewport(
       0,
-      t.UIelements['topBar']['height'],
+      t.UIelements['topBar']['height'] - 2,
       t.cameras.main.width,
-      t.cameras.main.height - t.UIelements['topBar']['height'] - t.UIelements['bottomBar']['height']
+      t.cameras.main.height - t.UIelements['topBar']['height'] - t.UIelements['bottomBar']['height'] + 2
     );
 
     this.lastY = 0;
@@ -46,7 +46,7 @@ export default class PhoneApp extends Phaser.Scene
     t.x = t.width / 2;
     t.y = t.height / 2;
 
-    t.createDragZone();
+    //t.createDragZone();
     t.addGoBackFunction();
   }
 
@@ -61,14 +61,14 @@ export default class PhoneApp extends Phaser.Scene
     t.config = t.cache.json.get(key);
   }
 
-  getTextProperties(properties) {
+  getTextProperties(properties = {}) {
     let textProperties = {
       fontFamily: 'Roboto',
       color: '#ffffff',
       align: 'center'
     };
 
-    for (key in properties) {
+    for (let key in properties) {
       textProperties[key] = properties[key];
     }
 
@@ -77,7 +77,8 @@ export default class PhoneApp extends Phaser.Scene
 
   createDragZone() {
     let t = this;
-    t.dragZone = t.add.zone(0,0,t.width*3,t.height*3)
+    t.dragZone = t.add.zone(0,0,t.width,t.height)
+      .setOrigin(0,0)
       .setInteractive({ draggable: true })
       .setDepth(0)
       .setName('SceneDragZone');
@@ -136,7 +137,7 @@ export default class PhoneApp extends Phaser.Scene
       width: -1,
       height: 1,
       cellWidth: t.width / elements.length,
-      cellHeight: (t.height / t.rowCount) * options['height'],
+      cellHeight: t.rowHeight() * options['height'],
       position: options['position']
     });
 
@@ -214,16 +215,16 @@ export default class PhoneApp extends Phaser.Scene
   rowHeight() {
     let t = this;
 
-    return (t.height - t.UIelements['topBar']['height'] - t.UIelements['bottomBar']['height']) / t.rowCount;
+    return t.height / t.rowCount;
   }
 
   atRow(rowNumber) {
     let t = this;
 
     if (rowNumber < 0) {
-      rowNumber = t.rowCount + rowNumber + 1;
+      rowNumber = t.rowCount + rowNumber;
     }
 
-    return (t.rowHeight() * rowNumber) + t.UIelements['topBar']['height'];
+    return Math.floor((t.rowHeight() * rowNumber) + t.rowHeight()/2);
   }
 }

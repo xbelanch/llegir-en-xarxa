@@ -6,6 +6,7 @@
 //-- @From:
 import PhoneApp from '/scenes/main/PhoneApp';
 import MailListObject from '/prefabs/mail/MailList.js';
+import MailObject from '/prefabs/mail/Mail';
 
 export default class MailApp extends PhoneApp
 {
@@ -35,18 +36,20 @@ export default class MailApp extends PhoneApp
 
   create()
   {
-    // --- This need to refactor?
     let t = this;
 
-    // --- Title
-    let text = t.add.text(0,0,
-      "Correu",
-      t.getTextProperties({fontSize : t.elements['title']['fontSize']})
-    );
-
-    t.addRow(text);
-
     // --- Display a list mails
-    let mails = new MailListObject(t, t.config);
+    t.mails = new MailListObject(t, t.config);
+    t.addRow(t.mails,{y:0, position: Phaser.Display.Align.LEFT_CENTER});
+
+    t.input.on('pointerup', function(pointer, gameObjects) {
+      if (gameObjects.length > 0) {
+        if (gameObjects[0].type == 'Container') {
+          t.game.saveState('complete', gameObjects[0].name, true);
+          new MailObject(t, t.config, t.config.mails.find(element => element.id == gameObjects[0].name));
+          t.input.off('pointerup');
+        }
+      }
+    });
   }
 }

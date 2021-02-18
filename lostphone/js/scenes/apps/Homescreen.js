@@ -55,7 +55,7 @@ export default class Homescreen extends PhoneApp
       apps.push(app);
     };
 
-    t.addGrid(apps, { columns:3, rows: 5 , offsetY: t.calcDPR(10)});
+    t.addGrid(apps, { columns:3, rows: 5 , position: Phaser.Display.Align.BOTTOM_CENTER});
   };
 
   addBalloons()

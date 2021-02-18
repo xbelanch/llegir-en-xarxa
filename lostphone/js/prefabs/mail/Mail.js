@@ -51,8 +51,6 @@ export default class MailObject extends Phaser.GameObjects.Container
       1.0
     ).setOrigin(0,0));
 
-    let mask = new Phaser.Display.Masks.GeometryMask(t.scene, background);
-
     // Add text
     let text = t.scene.add.text(
       margin_left + margin_text,
@@ -65,8 +63,6 @@ export default class MailObject extends Phaser.GameObjects.Container
         wordWrap: { width: t.scene.width - (2 * (margin_left + margin_text)) }
       }
     ).setOrigin(0,0).setDepth(100).setInteractive({ draggable: true });
-
-    text.setMask(mask);
 
     text.on('drag', function (pointer, dragX, dragY) {
       text.y = dragY;
@@ -92,7 +88,7 @@ export default class MailObject extends Phaser.GameObjects.Container
         color: '#ffffff',
         align: 'right'
       }
-    ).setInteractive().on('pointerdown', () => t.onClose()));
+    ).setInteractive().on('pointerup', () => t.onClose()));
 
     t.scene.addGoBackFunction(() => t.onClose());
   }
