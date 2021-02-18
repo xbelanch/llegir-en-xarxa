@@ -48,6 +48,8 @@ export default class MailApp extends PhoneApp
           t.game.saveState('complete', gameObjects[0].name, true);
           new MailObject(t, t.config, t.config.mails.find(element => element.id == gameObjects[0].name));
           t.input.off('pointerup');
+          t.dragZone.off('drag');
+          t.cameras.main.scrollY = 0;
         }
       }
     });

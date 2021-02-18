@@ -21,6 +21,7 @@ export default class PhoneApp extends Phaser.Scene
 
     this.lastX = 0;
     this.lastY = 0;
+    this.biggestY = 0;
 
     this.dragZone;
   }
@@ -31,6 +32,10 @@ export default class PhoneApp extends Phaser.Scene
     t.getConfig();
     t.colors = t.config.colors;
     t.UIelements = t.scene.get('PhoneUI').elements;
+
+    t.originalHeight = t.cameras.main.height;
+    t.originalWidth = t.cameras.main.width;
+
     t.cameras.main.setViewport(
       0,
       t.UIelements['topBar']['height'] - 2,
@@ -46,7 +51,6 @@ export default class PhoneApp extends Phaser.Scene
     t.x = t.width / 2;
     t.y = t.height / 2;
 
-    //t.createDragZone();
     t.addGoBackFunction();
   }
 
@@ -77,20 +81,29 @@ export default class PhoneApp extends Phaser.Scene
 
   createDragZone() {
     let t = this;
-    t.dragZone = t.add.zone(0,0,t.width,t.height)
+    t.log('Added drag zone!');
+
+    if (t.dragZone !== undefined) {
+      t.dragZone.destroy();
+    }
+
+    t.dragZone = t.add.rectangle(0,0,t.width,t.atRow(t.biggestY+1))
       .setOrigin(0,0)
-      .setInteractive({ draggable: true })
-      .setDepth(0)
+      .setInteractive({draggable: true})
       .setName('SceneDragZone');
 
+    t.input.dragDistanceThreshold = 16;
     t.input.on('drag', function(pointer, gameObject) {
+      if (typeof gameObject !== 'object') {
+        return;
+      }
       if (gameObject.name = 'SceneDragZone') {
         t.cameras.main.scrollY -= (pointer.position.y - pointer.prevPosition.y);
 
         t.cameras.main.scrollY = Phaser.Math.Clamp(
           t.cameras.main.scrollY,
           0,
-          t.atRow(t.lastY) > t.height ? t.atRow(t.lastY) - t.height : 0
+          t.atRow(t.biggestY+1) - t.height
         );
       }
     });
@@ -140,6 +153,13 @@ export default class PhoneApp extends Phaser.Scene
       cellHeight: t.rowHeight() * options['height'],
       position: options['position']
     });
+
+    if (t.lastY > t.biggestY) {
+      t.biggestY = t.lastY;
+      if (t.biggestY > t.rowCount) {
+        t.createDragZone();
+      }
+    }
 
     t.lastY += options['height'];
   }
@@ -208,6 +228,13 @@ export default class PhoneApp extends Phaser.Scene
       cellHeight: (t.height / options['rows']) * options['height'],
       position: options['position']
     });
+
+    if (t.lastY > t.biggestY) {
+      t.biggestY = t.lastY;
+      if (t.biggestY > t.rowCount) {
+        t.createDragZone();
+      }
+    }
 
     t.lastY += Math.floor(elements.length / options['columns'] * options['height']);
   }

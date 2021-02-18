@@ -2,20 +2,15 @@ import MailHeadingObject from '/prefabs/mail/MailHeading';
 export default class MailListObject extends Phaser.GameObjects.Container
 {
   constructor(scene, config) {
-    super(
-      scene,
-      config['x'] !== undefined ? config['x'] : 0,
-      config['y'] !== undefined ? config['y'] : 0,
-      []
-    );
-    this.print(config);
+    super(scene, 0, 0, []);
     scene.add.existing(this);
+    this.print(config);
   }
 
   print(config) {
     let t = this;
 
-    for (let i=0; i<config.mails.length; i++) {
+    for (let i=config.mails.length-1; i>=0; i--) {
       // Check if we have to show it
       if (!t.scene.game.checkCondition(config.mails[i].condition)) {
         continue;
