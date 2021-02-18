@@ -46,10 +46,6 @@ export default class PhoneApp extends Phaser.Scene
     t.x = t.width / 2;
     t.y = t.height / 2;
 
-    if (t.height / t.assetsDPR < 640) {
-      t.rowCount = 8;
-    }
-
     t.createDragZone();
     t.addGoBackFunction();
   }
@@ -81,11 +77,13 @@ export default class PhoneApp extends Phaser.Scene
 
   createDragZone() {
     let t = this;
+    t.dragZone = t.add.zone(0,0,t.width*3,t.height*3)
+      .setInteractive({ draggable: true })
+      .setDepth(0)
+      .setName('SceneDragZone');
 
-    t.dragZone = t.add.zone(0,0,t.width*3,t.height*3).setInteractive({ draggable: true });
-
-    t.input.on('drag', function(pointer, gameObject, dragX, dragY) {
-      //if (gameObject[0] == t.dragZone) {
+    t.input.on('drag', function(pointer, gameObject) {
+      if (gameObject.name = 'SceneDragZone') {
         t.cameras.main.scrollY -= (pointer.position.y - pointer.prevPosition.y);
 
         t.cameras.main.scrollY = Phaser.Math.Clamp(
@@ -93,7 +91,7 @@ export default class PhoneApp extends Phaser.Scene
           0,
           t.atRow(t.lastY) > t.height ? t.atRow(t.lastY) - t.height : 0
         );
-      //}
+      }
     });
   }
 

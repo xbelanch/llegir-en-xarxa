@@ -47,10 +47,7 @@ const { width, height } = viewport(DPR);
 // Determinem els valors de les mides d'amplada i alçada del mòbil
 const WIDTH = height > width ? width : Math.min(width, Math.round(360 * height / 640));
 const HEIGHT = height > width ? height : Math.round(height);
-export const assetsDPR = Math.floor(DPR);
-
-console.log('DPR equals '+DPR);
-console.log('AssetsDPR equals '+assetsDPR);
+export const assetsDPR = DPR;
 
 // Loading scenes order
 const scenes = [
@@ -79,8 +76,9 @@ export default {
     parent : 'phone',
     mode : Phaser.Scale.FIT,
     autoCenter : Phaser.Scale.CENTER_BOTH,
-    width: WIDTH,
-    height: HEIGHT
+    orientation: Phaser.Scale.Orientation.PORTRAIT,
+    width: 900,
+    height: 900 * (HEIGHT/WIDTH)
   },
   scene: scenes,
   plugins: {

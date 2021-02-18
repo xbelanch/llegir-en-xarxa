@@ -121,6 +121,7 @@ export default class PodcastApp extends PhoneApp
     // Display tracks and buttons
     let buttons = t.add.group([
       t.createButton.call(t, '⏯', function(){
+        t.createBar();
         let current = t.playlist.current || t.playlist.first;
         if (current.isPaused) {
           current.resume();
@@ -140,11 +141,13 @@ export default class PodcastApp extends PhoneApp
         }
       }),
       t.createButton.call(t, '⏮', function(){
+        t.createBar();
         let prev = t.playlist.previous || t.playlist.last;
         t.audio.stopAll();
         if (prev) prev.play();
       }),
       t.createButton.call(t, '⏭', function(){
+        t.createBar();
         let next = t.playlist.next || t.playlist.first;
         t.audio.stopAll();
         if (next) next.play();
@@ -183,10 +186,6 @@ export default class PodcastApp extends PhoneApp
     t.playlist.list.map(function(s, i){
       if (s.isPlaying || s.isPaused) {
 
-        if (t.progressBar === undefined || !t.progressBar.active) {
-          t.createBar();
-        }
-
         t.progressBar.fillRect(
           t.elements['progressBar']['x'],
           t.text.getBottomCenter().y + t.elements['progressBar']['padding'],
@@ -220,6 +219,12 @@ export default class PodcastApp extends PhoneApp
   {
     let t = this;
 
+    if (t.progressBar !== undefined) {
+      t.progressBar.destroy();
+      t.progressBox.destroy();
+      t.progressCursor.destroy();
+    }
+
     t.progressBar = t.add.graphics();
     t.progressBox = t.add.graphics();
     t.progressCursor = t.add.graphics();
@@ -238,14 +243,15 @@ export default class PodcastApp extends PhoneApp
       t.elements['progressBar']['cursorHeight']
     );
 
-    let zone = t.add.zone(
+    t.zone = t.add.rectangle(
       t.elements['progressBar']['x'],
       t.text.getBottomCenter().y + t.elements['progressBar']['padding'],
       t.elements['progressBar']['width'],
       t.elements['progressBar']['height']
     )
-      .setOrigin(0)
-      .setInteractive();
+    .setOrigin(0)
+    .setInteractive()
+    .setName('ProgressBarZone');
 
     let moveToSelection = function(pointer) {
       if (pointer.isDown) {
@@ -260,8 +266,6 @@ export default class PodcastApp extends PhoneApp
       }
     };
 
-    zone
-      .on('pointermove', moveToSelection)
-      .on('pointerdown', moveToSelection);
+    t.zone.on('pointermove', moveToSelection).on('pointerdown', moveToSelection);
   }
 }
