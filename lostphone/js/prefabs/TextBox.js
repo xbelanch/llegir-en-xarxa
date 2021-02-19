@@ -27,13 +27,17 @@ export default class TextBox extends Phaser.GameObjects.Container
       .setAlpha(params['alpha'] !== undefined ? params['alpha'] : 1)
     ;
 
+    if (params['height'] === undefined) {
+      params['height'] = this.text.getBottomCenter().y - this.text.getTopCenter().y + 2*this.scene.calcDPR(20)
+    }
+
     // Add box rectangle
     this.box = new Phaser.GameObjects.Rectangle(
       scene,
       0,
       0,
       params['width'],
-      this.text.getBottomCenter().y - this.text.getTopCenter().y + 2*this.scene.calcDPR(20),
+      params['height'],
       params['bgcolor'],
       params['alpha'] !== undefined ? params['alpha'] : 1
     )

@@ -1,4 +1,4 @@
-import WebFont from '/libs/webFontLoader'
+import WebFont from '/libs/webfont/webFontLoader';
 // ---- WebFontFile.js
 // Source: https://gist.github.com/supertommy/bc728957ff7dcb8016da68b04d3a2768
 
@@ -27,33 +27,34 @@ export class WebFontFile extends Phaser.Loader.File
   {
     const config = {
       fontactive: (familyName) => {
-	this.checkLoadedFonts(familyName)
+	      this.checkLoadedFonts(familyName);
       },
       fontinactive: (familyName) => {
-	this.checkLoadedFonts(familyName)
+	      this.checkLoadedFonts(familyName);
       }
-    }
+    };
 
     switch (this.service)
     {
       case 'google':
-      config[this.service] = this.getGoogleConfig()
-      break
+        config[this.service] = this.getGoogleConfig();
+        break;
 
       case 'adobe-edge':
-      config['typekit'] = this.getAdobeEdgeConfig()
+        config['typekit'] = this.getAdobeEdgeConfig();
+        break;
 
       default:
-      throw new Error('Unsupported font service')
+        throw new Error('Unsupported font service');
     }
-    WebFont.load(config)
+    WebFont.load(config);
   }
 
   getGoogleConfig()
   {
     return {
       families: this.fontNames
-    }
+    };
   }
 
   getAdobeEdgeConfig()
@@ -61,20 +62,20 @@ export class WebFontFile extends Phaser.Loader.File
     return {
       id: this.fontNames.join(';'),
       api: '//use.edgefonts.net'
-    }
+    };
   }
 
   checkLoadedFonts(familyName)
   {
     if (this.fontNames.indexOf(familyName) < 0)
     {
-      return
+      return;
     }
 
-    ++this.fontsLoadedCount
+    ++this.fontsLoadedCount;
     if (this.fontsLoadedCount >= this.fontNames.length)
     {
-      this.loader.nextFile(this, true)
+      this.loader.nextFile(this, true);
     }
   }
 }

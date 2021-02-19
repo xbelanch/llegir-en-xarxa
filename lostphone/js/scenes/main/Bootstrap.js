@@ -1,13 +1,7 @@
 // --- Bootstrap
 import { DPR, assetsDPR } from '/Config';
-import {WebFontFile} from "/libs/WebFontFile";
-
-export const PhoneEvents = {
-  PreloadFinished : 'preload-finished',
-  Notification: 'notification-launched',
-  SettingsUpdated: 'settings-updated'
-}
-
+import { PhoneEvents } from '/libs/Const';
+import {WebFontFile} from "/libs/webfont/WebFontFile";
 export default class Bootstrap extends Phaser.Scene
 {
   constructor()
@@ -92,8 +86,9 @@ export default class Bootstrap extends Phaser.Scene
     // --- Initialize game and app states
     t.game.initializeState();
     let apps = t.cache.json.get('apps');
-    for (var i = 0; i < apps.length; i++)
-      t.game.state[apps[i].type] = {};
+    for (var i = 0; i < apps.length; i++) {
+      t.game.registry.set(apps[i].type, {});
+    }
 
     // ---  Check if password via URL
     let passValue = t.game.getPassword();

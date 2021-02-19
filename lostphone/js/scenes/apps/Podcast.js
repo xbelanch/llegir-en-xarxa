@@ -2,7 +2,7 @@
 //-- Podcast.js
 //--
 //-- @From: this code belongs to https://codepen.io/samme/pen/NWPbQJY?editors=0010
-import PhoneApp from '/scenes/PhoneApp';
+import PhoneApp from '/scenes/main/PhoneApp';
 
 export default class PodcastApp extends PhoneApp
 {
@@ -26,14 +26,11 @@ export default class PodcastApp extends PhoneApp
 
     super.init();
     t.elements = {
-      'playlist': {
+      'title': {
         'fontSize': t.calcDPR(24)
       },
-      'playlistBox': {
-        'padding': t.calcDPR(10),
-        'bgcolor': 0x000000,
-        'alpha': 0.6,
-        'stroke': 0xffffff
+      'playlist': {
+        'fontSize': t.calcDPR(24)
       },
       'buttons': {
         'fontSize': 48,
@@ -71,16 +68,6 @@ export default class PodcastApp extends PhoneApp
     let t = this;
     t.loadingText.destroy();
 
-    t.playlistBox = t.add.rectangle(
-      0,
-      0,
-      t.width,
-      0,
-      t.elements['playlistBox']['bgcolor'],
-      t.elements['playlistBox']['alpha']
-    ).setOrigin(0, 0.5)
-    .setStrokeStyle(1,t.elements['playlistBox']['stroke'],t.elements['playlistBox']['alpha']);
-
     t.text = t.add.text(t.x, t.y, 'Tracks loaded!', {
         fontFamily: 'Roboto',
         fontSize : t.elements['playlist']['fontSize'],
@@ -89,6 +76,17 @@ export default class PodcastApp extends PhoneApp
     })
       .setOrigin(0.5, 0.5)
       .setDepth(0);
+
+    t.text.setText(t.playlist.list.map(function(s, i){
+      return [
+        i === t.playlist.position ? `[${i + 1}]` : ` ${i + 1} `,
+        (s.isPlaying && '>') || (s.isPaused && ':') || ' ',
+        s.key,
+        `${s.seek.toFixed(1)}/${s.duration.toFixed(1)}`
+      ].join('  ');
+    }));
+
+    t.addRow(t.text, {y: 1});
 
     t.audio = t.sound;
 
@@ -116,6 +114,7 @@ export default class PodcastApp extends PhoneApp
     // Display tracks and buttons
     let buttons = t.add.group([
       t.createButton.call(t, '⏯', function(){
+        t.createBar();
         let current = t.playlist.current || t.playlist.first;
         if (current.isPaused) {
           current.resume();
@@ -135,29 +134,20 @@ export default class PodcastApp extends PhoneApp
         }
       }),
       t.createButton.call(t, '⏮', function(){
+        t.createBar();
         let prev = t.playlist.previous || t.playlist.last;
         t.audio.stopAll();
         if (prev) prev.play();
       }),
       t.createButton.call(t, '⏭', function(){
+        t.createBar();
         let next = t.playlist.next || t.playlist.first;
         t.audio.stopAll();
         if (next) next.play();
       })
     ]);
 
-    // Actualment no és possible centrar de manera fàcil
-    // el grup de butons
-    // display the buttons on screen
-    Phaser.Actions.GridAlign(buttons.getChildren(), {
-      x: t.width / buttons.getLength() / 2,
-      y: t.height - t.UIelements['bottomBar']['height'] - t.elements['buttons']['fontSize'] - t.elements['buttons']['padding'],
-      width: -1,
-      height: 1,
-      cellWidth: t.width / buttons.getLength(),
-      cellHeight: t.elements['buttons']['fontSize'],
-      position: Phaser.Display.Align.CENTER
-    });
+    t.addRow(buttons.getChildren(),{'y': -1});
   }
 
 
@@ -179,14 +169,6 @@ export default class PodcastApp extends PhoneApp
       ].join('  ');
     }));
 
-    // Refresh box size
-    t.playlistBox
-      .setY(t.text.getTopLeft().y - t.elements['playlistBox']['padding'])
-      .setSize(
-        t.width,
-        t.text.displayHeight + 2*t.elements['playlistBox']['padding']
-    );
-
     if (t.progressBar !== undefined) {
        t.progressBar.clear();
        t.progressBar.fillStyle(t.elements['progressBar']['bgcolor'], 1);
@@ -196,10 +178,6 @@ export default class PodcastApp extends PhoneApp
 
     t.playlist.list.map(function(s, i){
       if (s.isPlaying || s.isPaused) {
-
-        if (t.progressBar === undefined || !t.progressBar.active) {
-          t.createBar();
-        }
 
         t.progressBar.fillRect(
           t.elements['progressBar']['x'],
@@ -227,12 +205,18 @@ export default class PodcastApp extends PhoneApp
       .setInteractive()
       .on('pointerdown', callback)
       .setScale(t.assetsDPR)
-      .setOrigin(0.5,0);
+      .setOrigin(0.5);
   }
 
   createBar()
   {
     let t = this;
+
+    if (t.progressBar !== undefined) {
+      t.progressBar.destroy();
+      t.progressBox.destroy();
+      t.progressCursor.destroy();
+    }
 
     t.progressBar = t.add.graphics();
     t.progressBox = t.add.graphics();
@@ -252,14 +236,15 @@ export default class PodcastApp extends PhoneApp
       t.elements['progressBar']['cursorHeight']
     );
 
-    let zone = t.add.zone(
+    t.zone = t.add.rectangle(
       t.elements['progressBar']['x'],
       t.text.getBottomCenter().y + t.elements['progressBar']['padding'],
       t.elements['progressBar']['width'],
       t.elements['progressBar']['height']
     )
-      .setOrigin(0)
-      .setInteractive();
+    .setOrigin(0)
+    .setInteractive()
+    .setName('ProgressBarZone');
 
     let moveToSelection = function(pointer) {
       if (pointer.isDown) {
@@ -274,8 +259,6 @@ export default class PodcastApp extends PhoneApp
       }
     };
 
-    zone
-      .on('pointermove', moveToSelection)
-      .on('pointerdown', moveToSelection);
+    t.zone.on('pointermove', moveToSelection).on('pointerdown', moveToSelection);
   }
 }

@@ -44,7 +44,7 @@ export default class Phone extends Phaser.Scene
 
     // --- Set default cursor
     t.input.setDefaultCursor("url(" + `assets/img/cursors/fingerprint.png` + ") 24 24, auto");
-    t.scene.launch('Homescreen');
     t.scene.launch('PhoneUI');
+    t.scene.launch('Homescreen');
   }
 }

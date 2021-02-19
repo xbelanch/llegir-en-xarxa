@@ -1,8 +1,7 @@
-import { assetsDPR } from '/Config'
-import Image from '/prefabs/Image'
-import TextButton from '/prefabs/TextButton'
-import Bootstrap from '/scenes/Bootstrap'
-import Credits from '/scenes/Credits'
+import { assetsDPR } from '/Config';
+import TextButton from '/prefabs/TextButton';
+import Bootstrap from '/scenes/main/Bootstrap';
+import Credits from '/scenes/main/Credits';
 
 export default class TitleScene extends Phaser.Scene
 {

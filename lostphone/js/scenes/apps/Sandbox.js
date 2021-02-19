@@ -1,4 +1,4 @@
-import PhoneApp from '/scenes/PhoneApp';
+import PhoneApp from '/scenes/main/PhoneApp';
 
 export default class SandboxApp extends PhoneApp
 {

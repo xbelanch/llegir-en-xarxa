@@ -1,7 +1,7 @@
-import PhoneApp from '/scenes/PhoneApp';
+import PhoneApp from '/scenes/main/PhoneApp';
 import SwitchButton from '/prefabs/SwitchButton';
 import ExclusivePopup from '/prefabs/ExclusivePopup';
-import { PhoneEvents } from '../Bootstrap';
+import { PhoneEvents } from '/libs/Const';
 
 export default class SettingsApp extends PhoneApp
 {
@@ -19,7 +19,7 @@ export default class SettingsApp extends PhoneApp
       'options': {
         'fontSize': t.calcDPR(20),
         'x': t.width * 0.1,
-        'padding': t.calcDPR(32)
+        'padding': t.calcDPR(28)
       },
       'title': {
         'fontSize': t.calcDPR(26),
@@ -32,80 +32,52 @@ export default class SettingsApp extends PhoneApp
   {
     let t = this;
 
-    t.title = t.add.text(
-        t.width / 2,
-        t.UIelements['topBar']['height'] + t.elements['title']['padding'],
-        'Configuració',
-        {
-          fontFamily: 'Roboto',
-          fontSize : t.elements['title']['fontSize'],
-          color: '#ffffff',
-          align: 'center'
-        }
-    ).setOrigin(0.5, 0.5);
+    t.title = t.add.text(0,0,
+      'Configuració',
+      t.getTextProperties({fontSize : t.elements['title']['fontSize']})
+    );
 
-    t.add.line(
-        0,0,
-        t.width * 0.1,
-        t.title.getBottomCenter().y + t.elements['title']['padding'],
-        t.width * 0.9,
-        t.title.getBottomCenter().y + t.elements['title']['padding'],
-        0xffffff,
-        1.0
-    ).setOrigin(0,0);
+    t.addRow(t.title);
 
-    t.createOptions(t.title.getBottomCenter().y + t.elements['title']['padding'] + t.elements['options']['padding']);
+    const line = t.add.line(0,0,
+      0, 0,
+      t.width * 0.8, 0,
+      0xffffff, 1.0
+    );
+
+    t.addRow(line);
+
+    t.createOptions();
   }
 
-  createOptions(startY)
+  createOptions()
   {
     let t = this;
 
-    // Option text
-    t.add.text(
-      t.elements['options']['x'],
-      startY,
+    // Mute option
+    let text1 = t.add.text(0,0,
       'Silenciar el mòbil',
-      {
-        fontFamily: 'Roboto',
-        fontSize : t.elements['options']['fontSize'],
-        color: '#ffffff',
-        align: 'center'
-      }
+      t.getTextProperties({fontSize : t.elements['options']['fontSize']})
     );
 
-    // Add button (spritesheet)
-    t.muteSwitch = new SwitchButton(
-      t,
-      t.width - t.elements['options']['x'],
-      startY,
+    // Add button
+    t.muteSwitch = new SwitchButton(t, 0, 0,
       'icons',
       t.game.settings.getSettingValue('muteSound')
-    )
-    .setRotation(Math.PI/2)
+    ).setRotation(Math.PI/2)
     .on('pointerup', function(){
       t.game.settings.toggleSetting('muteSound');
     });
 
-    startY += t.elements['options']['fontSize'] + t.elements['options']['padding'];
-    // Option text
-    t.add.text(
-      t.elements['options']['x'],
-      startY,
+    t.addRow(['',text1,'',t.muteSwitch]);
+
+    // Popups option
+    let text2 = t.add.text(0, 0,
       'Popups de notificacions',
-      {
-        fontFamily: 'Roboto',
-        fontSize : t.elements['options']['fontSize'],
-        color: '#ffffff',
-        align: 'center'
-      }
+      t.getTextProperties({fontSize : t.elements['options']['fontSize']})
     );
 
-    // Add button (spritesheet)
-    t.popupSwitch = new SwitchButton(
-      t,
-      t.width - t.elements['options']['x'],
-      startY,
+    t.popupSwitch = new SwitchButton(t, 0, 0,
       'icons',
       t.game.settings.getSettingValue('notificationPopup')
     )
@@ -114,24 +86,15 @@ export default class SettingsApp extends PhoneApp
       t.game.settings.toggleSetting('notificationPopup');
     });
 
-    startY += t.elements['options']['fontSize'] + t.elements['options']['padding'];
-    // Option text
-    t.add.text(
-      t.elements['options']['x'],
-      startY,
+    t.addRow(['',text2,'', t.popupSwitch]);
+
+    // Reset game option
+    let text3 = t.add.text(0, 0,
       'Esborrar tot el contingut',
-      {
-        fontFamily: 'Roboto',
-        fontSize : t.elements['options']['fontSize'],
-        color: '#ffffff',
-        align: 'center'
-      }
+      t.getTextProperties({fontSize : t.elements['options']['fontSize']})
     );
 
-    // Add button
-    t.add.image(
-      t.width - t.elements['options']['x'],
-      startY,
+    let button3 = t.add.image(0, 0,
       'icons',
       t.icons['warning']
     )
@@ -141,34 +104,28 @@ export default class SettingsApp extends PhoneApp
       t.resetToDefaults();
     });
 
-    startY += t.elements['options']['fontSize'] + t.elements['options']['padding'];
-    t.add.line(
+    t.addRow(['',text3,'',button3]);
+
+    let line = t.add.line(
       0,0,
-      t.width * 0.1,
-      startY,
-      t.width * 0.9,
-      startY,
+      0,0,
+      t.width * 0.8, 0,
       0xffffff,
       1.0
     ).setOrigin(0,0);
 
-    startY += t.elements['options']['fontSize'] + t.elements['options']['padding'];
-    t.add.text(
-      t.width / 2,
-      startY,
+    t.addRow(line);
+
+    let text4 = t.add.text(0, 0,
       'Sortir del miniop',
-      {
-        fontFamily: 'Roboto',
-        fontSize : t.elements['options']['fontSize'],
-        color: '#ff0000',
-        align: 'center'
-      }
+      t.getTextProperties({fontSize : t.elements['options']['fontSize'], color: '#ff0000'})
     )
-    .setOrigin(0.5)
     .setInteractive()
     .on('pointerdown', function(){
       window.location.href = "https://ioc.xtec.cat";
     });
+
+    t.addRow(text4);
 
     t.game.events.on(PhoneEvents.SettingsUpdated, () => t.updateSwitches());
   }

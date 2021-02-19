@@ -1,32 +1,44 @@
-// --- IconApp
-//
-//
-import Image from '/prefabs/Image';
+import { assetsDPR } from "../Config";
 
-export default class IconApp extends Image
+// --- IconApp
+export default class IconApp extends Phaser.GameObjects.Container
 {
   constructor(scene, appConfig, x, y, texture, frame){
-    super(scene, x, y, texture, frame);
-    this.setInteractive();
+    super(scene, x, y, []);
+
+    this.icon = new Phaser.GameObjects.Image(
+      scene,
+      x,y,
+      texture,
+      frame
+    ).setInteractive().setScale(scene.assetsDPR / 4);
+    this.add(this.icon);
+
     this.init();
     this.config = appConfig;
     this.balloon;
+
+    scene.add.existing(this);
   };
 
   init()
   {
     // --- Interaction with the icon
     let t = this;
-    t.on('pointerover', function(event){
+    t.icon.on('pointerover', function(event){
       t.setAlpha(0.7);
     });
 
-    t.on('pointerout', function(event){
+    t.icon.on('pointerout', function(event){
       t.setAlpha(1.0);
     });
 
-    t.on('pointerdown', function(event) {
-      t.scene.scene.launch(t.config.key);
+    t.icon.on('pointerup', function(event) {
+      if (t.scene.scene.isSleeping(t.config.key)) {
+        t.scene.scene.wake(t.config.key);
+      } else {
+        t.scene.scene.launch(t.config.key);
+      }
       t.scene.scene.sleep('Homescreen');
       t.scene.scene.get('PhoneUI').homeButton.setVisible(true);
     });
@@ -38,58 +50,61 @@ export default class IconApp extends Image
     let t = this;
     let label = t.scene.add.text(
       t.x,
-      t.y + t.height + (t.scene.assetsDPR > 2.5 ? 18 : 4),
+      t.y + t.icon.displayHeight / 2 + t.scene.calcDPR(5),
       t.config.name);
+    t.add(label);
     label.setOrigin(0.5, 0);
     // Set text depending on assetsDPR value
-    label.setFontSize(t.scene.assetsDPR > 1.5 ? (t.scene.assetsDPR >= 2.5 ? (t.scene.assetsDPR > 3.5 ? 42 : 32) : 24) : 16);
+    label.setFontSize(t.scene.calcDPR(16));
     label.setFontFamily('Roboto');
     label.setShadow(2, 2, 0x3f3f3f, 0.4);
     label.setResolution(1);
+
+    return this;
   }
 
   addBalloon(counter)
   {
     let t = this;
-    let offset = Math.floor(5*t.scene.assetsDPR);
+    let offset = t.scene.calcDPR(5);
 
     if (t.balloon !== undefined) {
       t.balloon.destroy();
     }
 
     if (counter > 0) {
-      let container = new Phaser.GameObjects.Container(
+      t.balloon = new Phaser.GameObjects.Container(
         t.scene,
-        t.x + t.width/2 - offset,
-        t.y + offset
+        t.icon.displayWidth/2 - offset,
+        - t.icon.displayHeight/2 + offset
       );
 
-      container.add(new Phaser.GameObjects.Ellipse(
+      t.balloon.add(new Phaser.GameObjects.Ellipse(
         t.scene,
         0,
         0,
-        Math.floor(25*t.scene.assetsDPR),
-        Math.floor(25*t.scene.assetsDPR),
+        t.scene.calcDPR(25),
+        t.scene.calcDPR(25),
         0xff0000,
         1.0
       ).setOrigin(0.5, 0.5));
 
-      container.add(new Phaser.GameObjects.Text(
+      t.balloon.add(new Phaser.GameObjects.Text(
           t.scene,
           0,
           0,
           counter
         )
         .setOrigin(0.5, 0.5)
-        .setFontSize(t.scene.assetsDPR > 1.5 ? (t.scene.assetsDPR >= 2.5 ? (t.scene.assetsDPR > 3.5 ? 42 : 32) : 24) : 16)
+        .setFontSize(t.scene.calcDPR(16))
         .setShadow(2, 2, 0x3f3f3f, 0.4)
         .setFontFamily('Roboto')
         .setResolution(1)
       );
 
-      t.balloon = container;
-
-      t.scene.add.existing(container);
+      t.add(t.balloon);
     }
+
+    return this;
   }
 }

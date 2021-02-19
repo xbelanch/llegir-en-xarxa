@@ -2,13 +2,15 @@
 import Phaser from 'phaser';
 import PhaserSceneWatcherPlugin from 'phaser-plugin-scene-watcher';
 import { Plugin as NineSlice } from 'phaser3-nineslice';
-import Bootstrap from '/scenes/Bootstrap';
-import Preload from '/scenes/Preload';
-import TitleScene from '/scenes/TitleScene';
-import Phone from '/scenes/Phone';
-import Homescreen from '/scenes/Homescreen';
-import PhoneUI from '/scenes/PhoneUI';
-import '/libs/Lostphone';
+import Bootstrap from '/scenes/main/Bootstrap';
+import Preload from '/scenes/main/Preload';
+import TitleScene from '/scenes/main/TitleScene';
+import Phone from '/scenes/main/Phone';
+import Homescreen from '/scenes/apps/Homescreen';
+import PhoneUI from '/scenes/ui/PhoneUI';
+import '/libs/game/ExtendPhaserGame';
+import '/libs/scene/ExtendPhaserScene';
+import '/libs/dataManager/ExtendPhaserDataManager';
 import '/libs/Common';
 
 import SettingsApp from '/scenes/apps/Settings';
@@ -43,9 +45,9 @@ const roundHalf = num => Math.round(num * 2) / 2;
 export const DPR = window.devicePixelRatio;
 const { width, height } = viewport(DPR);
 // Determinem els valors de les mides d'amplada i alçada del mòbil
-const WIDTH = Math.round(360 * height / 640);
-const HEIGHT = Math.round(height);
-export const assetsDPR = roundHalf(Math.min(Math.max(HEIGHT / 640, 1), 4));
+const WIDTH = height > width ? width : Math.min(width, Math.round(360 * height / 640));
+const HEIGHT = height > width ? height : Math.round(height);
+export const assetsDPR = DPR;
 
 // Loading scenes order
 const scenes = [
@@ -74,8 +76,9 @@ export default {
     parent : 'phone',
     mode : Phaser.Scale.FIT,
     autoCenter : Phaser.Scale.CENTER_BOTH,
-    width: WIDTH,
-    height: HEIGHT
+    orientation: Phaser.Scale.Orientation.PORTRAIT,
+    width: 900,
+    height: 900 * (HEIGHT/WIDTH)
   },
   scene: scenes,
   plugins: {

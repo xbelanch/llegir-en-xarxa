@@ -6,7 +6,7 @@ import { assetsDPR } from '/Config';
 import Time from '/prefabs/Time';
 import Popup from '/prefabs/Popup';
 import Notification from '/prefabs/Notification';
-import { PhoneEvents } from '/scenes/Bootstrap';
+import { PhoneEvents } from '/libs/Const';
 
 export default class PhoneUI extends Phaser.Scene
 {
@@ -39,11 +39,11 @@ export default class PhoneUI extends Phaser.Scene
     t.elements = {
       'topBar' : {
         'width': t.width,
-        'height': t.calcDPR(36),
+        'height': t.height/12,
       },
       'bottomBar': {
         'width': t.width,
-        'height': t.calcDPR(60)
+        'height': t.height/12,
       },
       'backButton': {
         'fontSize': t.calcDPR(30)
@@ -52,7 +52,7 @@ export default class PhoneUI extends Phaser.Scene
         'fontSize': t.calcDPR(16)
       },
       'notification': {
-        'fontSize': t.calcDPR(12)
+        'fontSize': t.calcDPR(18)
       },
       'notificationBar': {
         'color': 0x9c9c9c,
@@ -71,7 +71,7 @@ export default class PhoneUI extends Phaser.Scene
         'y': t.calcDPR(20)
       },
       'notificationBox': {
-        'height': t.calcDPR(50),
+        'height': t.calcDPR(100),
         'offset': t.calcDPR(10),
         'bgcolor': 0x999999
       }
@@ -80,7 +80,7 @@ export default class PhoneUI extends Phaser.Scene
 
   preload() {
     let t = this;
-    t.load.image('lorem-appsum-test', `assets/img/iconApp-@${t.assetsDPR}.png`);
+    t.load.image('lorem-appsum-test', `assets/img/iconApp-@4.png`);
   }
 
   create()
@@ -112,7 +112,7 @@ export default class PhoneUI extends Phaser.Scene
       t.elements['topBar']['height'],
       t.barColor,
       1.0
-    ).setOrigin(0);
+    ).setOrigin(0).setInteractive();
     let bottomBar = t.add.rectangle(
       0,
       t.height - t.elements['bottomBar']['height'],
@@ -120,7 +120,7 @@ export default class PhoneUI extends Phaser.Scene
       t.elements['bottomBar']['height'],
       t.barColor,
       1.0
-    ).setOrigin(0);
+    ).setOrigin(0).setInteractive();
   }
 
   createButtons() {
@@ -305,13 +305,13 @@ export default class PhoneUI extends Phaser.Scene
     );
     t.drawer.add(t.notificationsArea);
 
-    let notifications = [...t.game.state['notifications']];
+    let notifications = [...t.game.registry.get('notifications')];
     notifications.reverse();
 
     for (let i=0; i<notifications.length; i++) {
       this.notificationsArea.add(new Notification(
           t,
-          'Nou '+notifications[i]['type']+': '+notifications[i]['subject'],
+          notifications[i]['title'],
           notifications[i],
           {
             y: (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * i,
@@ -325,7 +325,7 @@ export default class PhoneUI extends Phaser.Scene
             //icon: notifications[i]['type']
             icon: 'lorem-appsum-test',
             ellipsis: 30,
-            iconScale: 0.5
+            iconScale: (t.assetsDPR/4)
           }
         )
       );
@@ -333,7 +333,7 @@ export default class PhoneUI extends Phaser.Scene
 
     t.notificationsArea.setSize(
       t.width * 2,
-      (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (t.game.state['notifications'].length) * 2
+      (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (notifications.length) * 2
     );
     t.notificationsArea.setMask(mask);
   }
@@ -349,8 +349,9 @@ export default class PhoneUI extends Phaser.Scene
     };
 
     if (typeof app !== 'undefined') {
-      t.game.scene.stop(app);
-      t.game.scene.wake('Homescreen')
+      t.game.scene.sleep(app);
+      t.game.scene.wake('Homescreen');
+      t.scene.get('Homescreen').addBalloons();
       t.backButton.setVisible(false);
       t.hideDrawer();
     }
@@ -365,7 +366,7 @@ export default class PhoneUI extends Phaser.Scene
   launchNotification()
   {
     let t = this;
-    let notifications = this.game.state['pendingNotifications'];
+    let notifications = this.game.registry.get('pendingNotifications');
 
     if (!this.notificationOn && notifications !== undefined && notifications.length > 0) {
 
@@ -401,7 +402,7 @@ export default class PhoneUI extends Phaser.Scene
     popup.destroy();
     t.notificationOn = false;
 
-    let notifications = t.game.state['pendingNotifications'];
+    let notifications = t.game.registry.get('pendingNotifications');
     if (notifications.length > 0) {
       notifications.splice(0, 1);
       t.game.save();
@@ -435,22 +436,37 @@ export default class PhoneUI extends Phaser.Scene
       duration : 500
     });
 
-    t.notificationsArea.setInteractive();
-    t.input.setDraggable(t.notificationsArea);
+    //t.notificationsArea.setInteractive({draggable: true});
 
-    const notifications_size = (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (t.game.state['notifications'].length);
+    let notifications = t.game.registry.get('notifications');
+    const notifications_size = (t.elements['notificationBox']['height'] + t.elements['notificationBox']['offset']) * (notifications.length);
     const max_height = notifications_size - drag_zone_height - drag_zone_y;
 
-    t.input.on('drag', function (pointer, gameObject, dragX, dragY) {
-      t.notificationsArea.y = dragY;
-      t.notificationsArea.y = Phaser.Math.Clamp(
-        t.notificationsArea.y,
-        notifications_size >= drag_zone_height ?
-          -max_height :
-          drag_zone_y + t.elements['notificationArea']['y'],
-        drag_zone_y + t.elements['notificationArea']['y']
-      );
-    });
+    if (notifications.length > 0) {
+
+      t.dragZone = new Phaser.GameObjects.Rectangle(
+        t,
+        0,0,
+        t.width,
+        notifications_size
+      )
+      .setOrigin(0,0)
+      .setInteractive({draggable: true})
+      .setName('NotificationDragZone');
+
+      t.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+        if (gameObject.name = 'NotificationDragZone') {
+          t.notificationsArea.y += (pointer.position.y - pointer.prevPosition.y);
+          t.notificationsArea.y = Phaser.Math.Clamp(
+            t.notificationsArea.y,
+            notifications_size >= drag_zone_height ?
+              -max_height :
+              drag_zone_y + t.elements['notificationArea']['y'],
+            drag_zone_y + t.elements['notificationArea']['y']
+          );
+        }
+      });
+    }
   }
 
   hideDrawer() {

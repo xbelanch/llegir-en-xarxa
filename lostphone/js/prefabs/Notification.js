@@ -9,9 +9,13 @@ export default class Notifications extends TextBox
     }
 
     destroyBox() {
-        let index = this.scene.game.state['notifications'].indexOf(this.key);
-        if (index !== -1) this.scene.game.state['notifications'].splice(index, 1);
-        this.scene.game.save();
+        let t = this;
+
+        let notifications = t.scene.game.registry.get('notifications');
+        let index = notifications.indexOf(this.key);
+        if (index !== -1) notifications.splice(index, 1);
+        t.scene.game.registry.set('notifications', notifications);
+        t.scene.game.save();
 
         super.destroy();
     }
