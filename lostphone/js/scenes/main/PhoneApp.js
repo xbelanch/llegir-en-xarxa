@@ -55,6 +55,9 @@ export default class PhoneApp extends Phaser.Scene
 
     t.createDragZone();
     t.addGoBackFunction();
+
+    //Check if this has been woken
+    t.events.on('wake', () => t.addGoBackFunction(t.backFunction));
   }
 
   preload()

@@ -34,7 +34,11 @@ export default class IconApp extends Phaser.GameObjects.Container
     });
 
     t.icon.on('pointerup', function(event) {
-      t.scene.scene.launch(t.config.key);
+      if (t.scene.scene.isSleeping(t.config.key)) {
+        t.scene.scene.wake(t.config.key);
+      } else {
+        t.scene.scene.launch(t.config.key);
+      }
       t.scene.scene.sleep('Homescreen');
       t.scene.scene.get('PhoneUI').homeButton.setVisible(true);
     });

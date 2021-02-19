@@ -349,7 +349,7 @@ export default class PhoneUI extends Phaser.Scene
     };
 
     if (typeof app !== 'undefined') {
-      t.game.scene.stop(app);
+      t.game.scene.sleep(app);
       t.game.scene.wake('Homescreen');
       t.scene.get('Homescreen').addBalloons();
       t.backButton.setVisible(false);
