@@ -147,7 +147,7 @@ export default class PodcastApp extends PhoneApp
       })
     ]);
 
-    t.addRow(buttons.getChildren(),{'y': 14});
+    t.addRow(buttons.getChildren(),{'y': -1});
   }
 
 
