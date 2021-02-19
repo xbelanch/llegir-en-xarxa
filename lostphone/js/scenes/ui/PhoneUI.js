@@ -112,7 +112,7 @@ export default class PhoneUI extends Phaser.Scene
       t.elements['topBar']['height'],
       t.barColor,
       1.0
-    ).setOrigin(0);
+    ).setOrigin(0).setInteractive();
     let bottomBar = t.add.rectangle(
       0,
       t.height - t.elements['bottomBar']['height'],
@@ -120,7 +120,7 @@ export default class PhoneUI extends Phaser.Scene
       t.elements['bottomBar']['height'],
       t.barColor,
       1.0
-    ).setOrigin(0);
+    ).setOrigin(0).setInteractive();
   }
 
   createButtons() {
