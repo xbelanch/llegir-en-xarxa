@@ -52,7 +52,7 @@ export default class MailObject extends Phaser.GameObjects.Container
     ).setOrigin(0,0));
 
     // Add text
-    let text = t.scene.add.text(
+    t.text = t.scene.add.text(
       margin_left + margin_text,
       margin_top + margin_text,
       heading + '\n\n' + content,
@@ -64,12 +64,12 @@ export default class MailObject extends Phaser.GameObjects.Container
       }
     ).setOrigin(0,0).setDepth(100).setInteractive({ draggable: true });
 
-    text.on('drag', function (pointer, dragX, dragY) {
-      text.y = dragY;
+    t.text.on('drag', function (pointer, dragX, dragY) {
+      t.text.y = dragY;
 
-      const text_height = text.getBottomCenter().y - text.getTopCenter().y;
-      text.y = Phaser.Math.Clamp(
-        text.y,
+      const text_height = t.text.getBottomCenter().y - t.text.getTopCenter().y;
+      t.text.y = Phaser.Math.Clamp(
+        t.text.y,
         text_height >= reading_area_height ?
           -text_height + margin_top - margin_text + reading_area_height :
           margin_top + margin_text,
@@ -97,5 +97,11 @@ export default class MailObject extends Phaser.GameObjects.Container
   {
     let t = this;
     t.scene.scene.restart();
+  }
+
+  destroy() {
+    let t = this;
+    t.text.off('drag');
+    super.destroy();
   }
 }

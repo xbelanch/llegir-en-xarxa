@@ -44,12 +44,19 @@ export default class MailApp extends PhoneApp
 
     t.input.on('pointerup', function(pointer, gameObjects) {
       if (gameObjects.length > 0) {
-        if (gameObjects[0].type == 'Container') {
-          t.game.saveState('complete', gameObjects[0].name, true);
-          new MailObject(t, t.config, t.config.mails.find(element => element.id == gameObjects[0].name));
-          t.input.off('pointerup');
-          t.dragZone.off('drag');
-          t.cameras.main.scrollY = 0;
+        for (let i=0; i<gameObjects.length;i++) {
+          if (gameObjects[i].type == 'Container') {
+
+            // Check if pointer moved
+            if (pointer.getDistanceY() > 0) {
+              return;
+            }
+            t.game.saveState('complete', gameObjects[i].name, true);
+            new MailObject(t, t.config, t.config.mails.find(element => element.id == gameObjects[i].name));
+            t.input.off('pointerup');
+            t.input.off('drag');
+            t.cameras.main.scrollY = 0;
+          }
         }
       }
     });

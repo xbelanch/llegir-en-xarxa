@@ -29,6 +29,8 @@ export default class PhoneApp extends Phaser.Scene
   init() {
     let t = this;
 
+    t.input.setTopOnly(false);
+
     t.getConfig();
     t.colors = t.config.colors;
     t.UIelements = t.scene.get('PhoneUI').elements;
@@ -51,6 +53,7 @@ export default class PhoneApp extends Phaser.Scene
     t.x = t.width / 2;
     t.y = t.height / 2;
 
+    t.createDragZone();
     t.addGoBackFunction();
   }
 
@@ -83,11 +86,7 @@ export default class PhoneApp extends Phaser.Scene
     let t = this;
     t.log('Added drag zone!');
 
-    if (t.dragZone !== undefined) {
-      t.dragZone.destroy();
-    }
-
-    t.dragZone = t.add.rectangle(0,0,t.width,t.atRow(t.biggestY+1))
+    t.dragZone = t.add.rectangle(0,0,1,1, 0x0000ff, 0.5)
       .setOrigin(0,0)
       .setInteractive({draggable: true})
       .setName('SceneDragZone');
@@ -103,10 +102,12 @@ export default class PhoneApp extends Phaser.Scene
         t.cameras.main.scrollY = Phaser.Math.Clamp(
           t.cameras.main.scrollY,
           0,
-          t.atRow(t.biggestY+1) - t.height
+          t.biggestY >= t.rowCount ? t.atRow(t.biggestY+1) - t.height : 0
         );
       }
     });
+
+    t.dragZone.input.hitArea.setSize(t.width, t.atRow(t.biggestY+1));
   }
 
   addGoBackFunction(functionName) {
@@ -157,7 +158,7 @@ export default class PhoneApp extends Phaser.Scene
     if (t.lastY > t.biggestY) {
       t.biggestY = t.lastY;
       if (t.biggestY > t.rowCount) {
-        t.createDragZone();
+        t.dragZone.input.hitArea.setSize(t.width, t.atRow(t.biggestY+1));
       }
     }
 
@@ -232,7 +233,7 @@ export default class PhoneApp extends Phaser.Scene
     if (t.lastY > t.biggestY) {
       t.biggestY = t.lastY;
       if (t.biggestY > t.rowCount) {
-        t.createDragZone();
+        t.dragZone.input.hitArea.setSize(t.width, t.atRow(t.biggestY+1));
       }
     }
 
@@ -254,4 +255,10 @@ export default class PhoneApp extends Phaser.Scene
 
     return Math.floor((t.rowHeight() * rowNumber) + t.rowHeight()/2);
   }
+
+/*   destroy() {
+    let t = this;
+    t.dragArea.destroy();
+    super.destroy();
+  } */
 }
