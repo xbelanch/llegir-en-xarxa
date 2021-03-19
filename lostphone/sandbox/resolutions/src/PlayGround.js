@@ -1,4 +1,5 @@
-import Phaser from 'phaser'
+import Phaser from 'phaser';
+import {DPR} from './dpr';
 
 export default class PlayGround extends Phaser.Scene {
   constructor() {
@@ -6,7 +7,7 @@ export default class PlayGround extends Phaser.Scene {
   }
 
   create() {
-
+    console.log(DPR);
   }
 
   update() {}
