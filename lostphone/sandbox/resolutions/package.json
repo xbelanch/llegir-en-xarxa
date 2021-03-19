@@ -1,0 +1,25 @@
+{
+  "name": "phaser-sandbox-resolutions",
+  "version": "0.0.1",
+  "description": "A Phaser 3 sandbox to learn how resolutions and pixel ratio works",
+  "main": "src/index.html",
+  "scripts": {
+    "build": "parcel build src/index.html --public-url ./ --experimental-scope-hoisting -no-source-maps",
+    "start": "parcel serve src/index.html",
+    "clean": "rm -v dist/*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "phaser": "^3.52.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.14",
+    "http-server": "^0.12.3",
+    "parcel": "^1.12.4",
+    "parcel-bundler": "^1.12.3",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.5.0"
+  }
+}
