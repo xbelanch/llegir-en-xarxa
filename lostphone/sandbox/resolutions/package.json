@@ -4,7 +4,7 @@
   "description": "A Phaser 3 sandbox to learn how resolutions and pixel ratio works",
   "main": "src/index.html",
   "scripts": {
-    "build": "parcel build src/index.html --public-url ./ --experimental-scope-hoisting -no-source-maps",
+    "build": "parcel build src/index.html --public-url ./ --experimental-scope-hoisting --no-source-maps",
     "start": "parcel serve src/index.html",
     "clean": "rm -v dist/*"
   },

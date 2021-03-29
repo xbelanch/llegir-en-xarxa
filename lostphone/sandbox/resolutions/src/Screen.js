@@ -1,3 +1,5 @@
+// set game width and height by multiplying window width with devicePixelRatio
+
 var w = window.innerWidth;
 var h = window.innerHeight;
 var pxr = window.devicePixelRatio;
