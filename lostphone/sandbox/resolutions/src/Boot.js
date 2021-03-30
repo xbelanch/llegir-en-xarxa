@@ -7,7 +7,7 @@ export default class Boot extends Phaser.Scene {
   }
 
   create() {
-    window.addEventListener('resize', this.resize.bind(this));
+    // window.addEventListener('resize', this.resize.bind(this));
     this.scene.start('preloader');
   }
 

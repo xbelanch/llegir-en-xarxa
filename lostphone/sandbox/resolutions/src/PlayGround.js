@@ -7,19 +7,32 @@ class PlayGround extends Phaser.Scene {
     this.app = undefined;
   }
 
+  preload() {
+    this.sceneStopped = false;
+    this.width = this.game.screenBaseSize.width;
+    this.height = this.game.screenBaseSize.height;
+    this.handlerScene = this.scene.get('handler');
+    this.handlerScene.sceneRunning = 'playground';
+  }
+
   create() {
-    // console.log("PlayGround is here!");
-    // let progress = this.add.graphics();
-    // progress.clear();
-    // progress.fillStyle(0xe5ffff, 1);
-    // console.log(width);
-    // progress.fillRect(0, (window.innerHeight / 2 * dpr) - 40, width * 0.5, 80 * dpr);
 
     // This will prevent pixels from being drawn at half coordinates. It will also help stick your tilemaps together.
     this.cameras.main.setRoundPixels(true);
 
-    // Add the icon app like any other image
-    this.image = this.add.image(0, 0, 'app').setOrigin(0);
+    // CONFIG SCENE
+    const { width , height } = this;
+    this.handlerScene.updateResize(this);
+    // CONFIG SCENE
+
+    // DEBUG
+    this.add.image(0, 0, 'guide').setOrigin(0).setDepth(1);
+    // DEBUG
+
+
+    // GAME OBJECTS
+    this.app = this.add.image(0, 0, 'app').setOrigin(0);
+    // GAME OBJECTS
 
   }
 
