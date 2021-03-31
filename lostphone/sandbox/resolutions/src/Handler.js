@@ -52,7 +52,7 @@ class Handler extends Phaser.Scene {
 
       camera.setZoom(Math.max(scaleX, scaleY));
       console.log('this.game.screenBaseSize.width: ' + this.game.screenBaseSize.width + '|' +  'this.game.screenBaseSize.height: ' + this.game.screenBaseSize.height);
-      camera.centerOn(this.game.screenBaseSize.width, this.game.screenBaseSize.height / 2);
+      camera.centerOn(this.game.screenBaseSize.width / 2, this.game.screenBaseSize.height / 2);
     }
   }
 
@@ -62,7 +62,7 @@ class Handler extends Phaser.Scene {
       const scaleY = scene.sizer.height / this.game.screenBaseSize.height;
 
       camera.setZoom(Math.max(scaleX, scaleY));
-      camera.centerOn(this.game.screenBaseSize.width, this.game.screenBaseSize.height / 2);
+      camera.centerOn(this.game.screenBaseSize.width / 2, this.game.screenBaseSize.height / 2);
     }
 
 }

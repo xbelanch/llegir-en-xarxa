@@ -1,20 +1,50 @@
 import Phaser from 'phaser';
-import gameConfig from './gameConfig.js';
-import { // What f*cking u doin?
-  MAX_SIZE_WIDTH_SCREEN,
-  MAX_SIZE_HEIGHT_SCREEN,
-  MIN_SIZE_WIDTH_SCREEN,
-  MIN_SIZE_HEIGHT_SCREEN,
-  SIZE_WIDTH_SCREEN,
-  SIZE_HEIGHT_SCREEN
-} from './gameConfig.js';
+import Handler from './Handler.js';
+import Boot from './Boot.js';
+import Preloader from './Preloader.js';
+import PlayGround from './PlayGround.js';
+import {width, height, dpr} from './Screen.js';
 
+// Default Vertical Aspect Ratio: 9:16 (1:1.77)
+const MAX_SIZE_WIDTH_SCREEN = 1920;
+const MAX_SIZE_HEIGHT_SCREEN = 1080;
+const MIN_SIZE_WIDTH_SCREEN = 360;
+const MIN_SIZE_HEIGHT_SCREEN = 640;
+const SIZE_WIDTH_SCREEN = 540;
+const SIZE_HEIGHT_SCREEN = 960;
 
-function newGame() {
+export const config = {
+  type: Phaser.WEBGL,
+  backgroundColor: '#ff00ff',
+  title: 'Phaser 3 Resolution - Pixel Density',
+
+  // Here's the trick
+  scale: {
+    width: SIZE_WIDTH_SCREEN,
+    height: SIZE_HEIGHT_SCREEN,
+    mode: Phaser.Scale.RESIZE,
+    parent: 'game',
+    min: {
+      width: MIN_SIZE_WIDTH_SCREEN,
+      height: MIN_SIZE_HEIGHT_SCREEN
+    },
+    max: {
+      width: MAX_SIZE_WIDTH_SCREEN,
+      height: MAX_SIZE_HEIGHT_SCREEN
+    }
+  },
+  scene: [
+    Handler,
+    Boot,
+    Preloader,
+    PlayGround
+  ],
+};
+
+function newGame(gameConfig) {
   if (game) return;
   game = new Phaser.Game(gameConfig);
 
-  // Globals
   game.screenBaseSize = {
     maxWidth: MAX_SIZE_WIDTH_SCREEN,
     maxHeight: MAX_SIZE_HEIGHT_SCREEN,
@@ -35,4 +65,4 @@ function destroyGame() {
 
 let game;
 
-if (!game) newGame();
+if (!game) newGame(config);
