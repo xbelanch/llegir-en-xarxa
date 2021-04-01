@@ -64,6 +64,18 @@
        width="49.177593"
        height="33.67596"
        id="rect914" />
+    <rect
+       x="55.057523"
+       y="62.541069"
+       width="49.177593"
+       height="33.67596"
+       id="rect905" />
+    <rect
+       x="55.057523"
+       y="62.541069"
+       width="49.177593"
+       height="33.67596"
+       id="rect921" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -72,9 +84,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="769.12006"
-     inkscape:cy="367.2682"
+     inkscape:zoom="0.7"
+     inkscape:cx="1038.9333"
+     inkscape:cy="858.90869"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -92,7 +104,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -195,6 +207,60 @@
          xml:space="preserve"
          id="text910"
          style="font-size:19.05px;line-height:0.75;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect914);fill:#ffffff;"
+         transform="matrix(2.207376,0,0,2.207376,-73.176633,-69.943539)"><tspan
+           x="55.056641"
+           y="75.546304"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Lorem
+</tspan></tspan><tspan
+           x="55.056641"
+           y="90.442223"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Ipsum</tspan></tspan></text>
+    </g>
+    <g
+       id="g903"
+       transform="matrix(0.18348214,0,0,0.18348371,272.73597,182.11191)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="F:\IOC\miniops\llegir-en-xarxa\lostphone\sandbox\resolutions\dist\assets\app@96x.png">
+      <rect
+         style="fill:#666666;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke"
+         id="rect890"
+         width="134.43309"
+         height="134.43309"
+         x="34.226139"
+         y="36.493996"
+         ry="16.570711" />
+      <text
+         xml:space="preserve"
+         id="text901"
+         style="font-size:19.05px;line-height:0.75;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect905);fill:#ffffff;"
+         transform="matrix(2.207376,0,0,2.207376,-73.176633,-69.943539)"><tspan
+           x="55.056641"
+           y="75.546304"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Lorem
+</tspan></tspan><tspan
+           x="55.056641"
+           y="90.442223"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Ipsum</tspan></tspan></text>
+    </g>
+    <g
+       id="g919"
+       transform="matrix(0.36696429,0,0,0.36696742,304.26067,151.10343)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="F:\IOC\miniops\llegir-en-xarxa\lostphone\sandbox\resolutions\dist\assets\app@192x.png">
+      <rect
+         style="fill:#666666;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke"
+         id="rect907"
+         width="134.43309"
+         height="134.43309"
+         x="34.226139"
+         y="36.493996"
+         ry="16.570711" />
+      <text
+         xml:space="preserve"
+         id="text917"
+         style="font-size:19.05px;line-height:0.75;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect921);fill:#ffffff;"
          transform="matrix(2.207376,0,0,2.207376,-73.176633,-69.943539)"><tspan
            x="55.056641"
            y="75.546304"><tspan

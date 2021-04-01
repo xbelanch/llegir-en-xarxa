@@ -6,8 +6,8 @@ import PlayGround from './PlayGround.js';
 import {width, height, dpr} from './Screen.js';
 
 // Default Vertical Aspect Ratio: 9:16 (1:1.77)
-const MAX_SIZE_WIDTH_SCREEN = 1920;
-const MAX_SIZE_HEIGHT_SCREEN = 1080;
+const MAX_SIZE_WIDTH_SCREEN = 1920 * dpr;
+const MAX_SIZE_HEIGHT_SCREEN = 1024 * dpr;
 const MIN_SIZE_WIDTH_SCREEN = 360;
 const MIN_SIZE_HEIGHT_SCREEN = 640;
 const SIZE_WIDTH_SCREEN = 540;
@@ -53,7 +53,7 @@ function newGame(gameConfig) {
     width: SIZE_WIDTH_SCREEN,
     height: SIZE_HEIGHT_SCREEN
   };
-  game.orientation = "portrait";
+  game.orientation = "portrait-primary";
 }
 
 function destroyGame() {

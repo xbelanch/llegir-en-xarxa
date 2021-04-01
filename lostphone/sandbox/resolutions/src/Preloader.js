@@ -8,7 +8,7 @@ class Preloader extends Phaser.Scene {
 
   preload() {
     // load assets here
-    let imageSize = dpr * 128; // 64, 128, 256, 512
+    let imageSize = dpr * 96; // 64, 128, 256, 512
     this.load.image('app', 'assets/app@' + imageSize + 'x.png');
     this.load.image('guide', 'assets/540x960-guide.png');
 
@@ -36,23 +36,7 @@ class Preloader extends Phaser.Scene {
   }
 
   create() {
-    // resize here
   }
-
-  // testing some shitty bind recursive loop
-  // this.onPlay();
-  // This never happened
-  // but...
-  // onPlay(){
-  //   let that = this;
-  //   (function loop() {
-  //       let randomTime = Math.round(Math.random() * 3000) + 500;
-  //       setTimeout(()=> {
-  //         console.log(randomTime);
-  //         loop();
-  //       }, randomTime);
-  //   }());
-  // }
 
 }
 

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Boot from './Boot.js';
+import { dpr, setBackgroundPicture } from './Screen.js';
 
 class Handler extends Phaser.Scene {
 
@@ -48,10 +49,13 @@ class Handler extends Phaser.Scene {
       const scaleX = this.sizer.width / this.game.screenBaseSize.width;
       const scaleY = this.sizer.height / this.game.screenBaseSize.height;
 
-      console.log('this.sizer.width: ' + this.sizer.width + ' | this.sizer.height:' +  this.sizer.height);
+      let zoom = Math.max(scaleX, scaleY);
+      console.log('zoom: ' + zoom);
+      camera.setZoom(zoom);
 
-      camera.setZoom(Math.max(scaleX, scaleY));
-      console.log('this.game.screenBaseSize.width: ' + this.game.screenBaseSize.width + '|' +  'this.game.screenBaseSize.height: ' + this.game.screenBaseSize.height);
+      // Remove background picture if inner width screen is less than base width
+      setBackgroundPicture(this);
+
       camera.centerOn(this.game.screenBaseSize.width / 2, this.game.screenBaseSize.height / 2);
     }
   }
@@ -61,7 +65,14 @@ class Handler extends Phaser.Scene {
       const scaleX = scene.sizer.width / this.game.screenBaseSize.width;
       const scaleY = scene.sizer.height / this.game.screenBaseSize.height;
 
-      camera.setZoom(Math.max(scaleX, scaleY));
+      let zoom = Math.max(scaleX, scaleY);
+      camera.setZoom(zoom);
+      console.log('zoom: ' + zoom);
+
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+      console.log('w: ' +  width + ' h: ' + height);
+
       camera.centerOn(this.game.screenBaseSize.width / 2, this.game.screenBaseSize.height / 2);
     }
 
