@@ -50,7 +50,6 @@ class Handler extends Phaser.Scene {
       const scaleY = this.sizer.height / this.game.screenBaseSize.height;
 
       let zoom = Math.max(scaleX, scaleY);
-      console.log('zoom: ' + zoom);
       camera.setZoom(zoom);
 
       // Remove background picture if inner width screen is less than base width
@@ -67,11 +66,6 @@ class Handler extends Phaser.Scene {
 
       let zoom = Math.max(scaleX, scaleY);
       camera.setZoom(zoom);
-      console.log('zoom: ' + zoom);
-
-      var width = window.innerWidth;
-      var height = window.innerHeight;
-      console.log('w: ' +  width + ' h: ' + height);
 
       camera.centerOn(this.game.screenBaseSize.width / 2, this.game.screenBaseSize.height / 2);
     }

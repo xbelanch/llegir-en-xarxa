@@ -7,16 +7,16 @@ class PlayGround extends Phaser.Scene {
     this.app = undefined;
     this.sampleText;
     this.graphics;
+    this.handlerScene = null;
   }
 
   preload() {
-    this.sceneStopped = false;
+    // this.sceneStopped = true;
     this.width = this.game.screenBaseSize.width;
     this.height = this.game.screenBaseSize.height;
-    this.handlerScene = this.scene.get('handler');
-    this.handlerScene.sceneRunning = 'playground';
-    this.scale.lockOrientation(this.game.orientation);
 
+    this.handlerScene = this.scene.get('handler');
+    // this.handlerScene.sceneRunning = 'playground';
   }
 
   create() {
@@ -38,7 +38,9 @@ class PlayGround extends Phaser.Scene {
     this.graphics = this.add.graphics();
 
     // @BUG: Something weird is happening with text y-position :
-    this.sampleText = this.add.text(this.width / 2, this.height / 2, 'Lorem Ipsum', { fontFamily: 'Arial', fontSize: '14px', color: '#fff', }).setOrigin(0.5);
+    // this.sampleText = this.add.text(this.width / 2, this.height / 2, 'Lorem Ipsum', { fontFamily: 'Arial', fontSize: '14px', color: '#fff', }).setOrigin(0.5);
+    this.sampleText = this.add.text(this.width / 2, this.height / 2, 'Lorem Ipsum dolor est').setOrigin(.5).setBackgroundColor('#ff0000');
+    this.sampleText.setPadding(0, 0, 0, 0);
 
     // Display four app icons in a row
     for (var i = 0; i < 4; i++) {

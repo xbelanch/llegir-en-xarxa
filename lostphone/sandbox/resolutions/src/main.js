@@ -6,15 +6,15 @@ import PlayGround from './PlayGround.js';
 import {width, height, dpr} from './Screen.js';
 
 // Default Vertical Aspect Ratio: 9:16 (1:1.77)
-const MAX_SIZE_WIDTH_SCREEN = 1920 * dpr;
-const MAX_SIZE_HEIGHT_SCREEN = 1024 * dpr;
+const MAX_SIZE_WIDTH_SCREEN = 1920;
+const MAX_SIZE_HEIGHT_SCREEN = 1024;
 const MIN_SIZE_WIDTH_SCREEN = 360;
 const MIN_SIZE_HEIGHT_SCREEN = 640;
 const SIZE_WIDTH_SCREEN = 540;
 const SIZE_HEIGHT_SCREEN = 960;
 
 export const config = {
-  type: Phaser.WEBGL,
+  type: Phaser.AUTO,
   backgroundColor: '#ff00ff',
   title: 'Phaser 3 Resolution - Pixel Density',
 
