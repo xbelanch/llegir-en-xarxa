@@ -36,20 +36,20 @@ class PlayGround extends Phaser.Scene {
 
     // GAME OBJECTS
     this.graphics = this.add.graphics();
-
-    // @BUG: Something weird is happening with text y-position :
-    // this.sampleText = this.add.text(this.width / 2, this.height / 2, 'Lorem Ipsum', { fontFamily: 'Arial', fontSize: '14px', color: '#fff', }).setOrigin(0.5);
-    this.sampleText = this.add.text(this.width / 2, this.height / 2, 'Lorem Ipsum dolor est').setOrigin(.5).setBackgroundColor('#ff0000');
-    this.sampleText.setPadding(0, 0, 0, 0);
-
-    // Display four app icons in a row
-    for (var i = 0; i < 4; i++) {
-      var app = this.add.image(0, 0, 'app');
-      app.setOrigin(0);
-      app.setScale(1 / dpr);
-      var margin = 36;
-      var padding = 28;
-      app.setPosition((i * app.width * (1/dpr) + (i * padding)) + margin, margin);
+    // Display four app icons in a row with its names
+    for (var i = 0; i < 4; i++) { // columns
+      for (var j = 0; j < 3; j++) { // rows
+        if ((i + (4 * j)) < 10) {
+          var app = this.add.image(0, 0, 'app');
+          app.setOrigin(0);
+          app.setScale(1 / dpr);
+          var margin = 50;
+          var hpadding = 36;
+          var vpadding = 64;
+          app.setPosition((i * app.width * (1/dpr) + (i * hpadding)) + margin, (j * app.width * (1/dpr) + (j * vpadding)) + margin);
+          var sampleText = this.add.text(app.x, app.y + (app.height / dpr) + (4 * dpr), 'Lorem ipsum'  , { fontFamily: 'Arial', fontSize: '22px', color: '#fff', }).setOrigin(0);
+        }
+      }
     }
     // GAME OBJECTS
 
@@ -57,9 +57,9 @@ class PlayGround extends Phaser.Scene {
 
   update(){
     // Display text bounds only for testing purpose
-    this.graphics.clear();
-    this.graphics.lineStyle(1, 0xff0000, 1);
-    this.graphics.strokeRectShape(this.sampleText.getBounds());
+    // this.graphics.clear();
+    // this.graphics.lineStyle(1, 0xff0000, 1);
+    // this.graphics.strokeRectShape(this.sampleText.getBounds());
   }
 }
 

@@ -8,9 +8,10 @@ class Preloader extends Phaser.Scene {
 
   preload() {
     // load assets here
-    let imageSize = dpr * 96; // 64, 128, 256, 512
+    let imageSize = dpr * 128; // 64, 128, 256, 512
     this.load.image('app', 'assets/app@' + imageSize + 'x.png');
-    this.load.image('guide', 'assets/540x960-guide.png');
+    // this.load.image('guide', 'assets/540x960-guide.png');
+    this.load.image('guide', 'assets/720x1280-guide.png');
 
 
     // Handler stuff
