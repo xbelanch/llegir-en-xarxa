@@ -35,8 +35,8 @@ class PlayGround extends Phaser.Scene {
 
 
     // GAME OBJECTS
-    this.graphics = this.add.graphics();
-    // Display four app icons in a row with its names
+
+    // Display main icons in a row with its names
     for (var i = 0; i < 4; i++) { // columns
       for (var j = 0; j < 3; j++) { // rows
         if ((i + (4 * j)) < 10) {
@@ -44,12 +44,42 @@ class PlayGround extends Phaser.Scene {
           app.setOrigin(0);
           app.setScale(1 / dpr);
           var margin = 50;
+          var vmarginfromtop = 96;
           var hpadding = 36;
           var vpadding = 64;
-          app.setPosition((i * app.width * (1/dpr) + (i * hpadding)) + margin, (j * app.width * (1/dpr) + (j * vpadding)) + margin);
-          var sampleText = this.add.text(app.x, app.y + (app.height / dpr) + (4 * dpr), 'Lorem ipsum'  , { fontFamily: 'Arial', fontSize: '22px', color: '#fff', }).setOrigin(0);
+          app.setPosition(
+            (i * app.width * (1/dpr) + (i * hpadding)) + margin,
+            (j * app.width * (1/dpr) + (j * vpadding)) + vmarginfromtop);
+
+          var sampleText = this.add.text(
+            app.x,
+            app.y + (app.height / dpr) + (4 * dpr),
+            'Lorem ipsum',
+            { fontFamily: 'Arial', fontSize: '22px', color: '#fff' }
+          ).setOrigin(0);
         }
       }
+    }
+
+    // Display three app icons at the bottom
+    for (var i = 0; i < 3; i++) {
+      var app = this.add.image(0, 0, 'app');
+      app.setOrigin(0);
+      app.setScale(1 / dpr);
+      var hpadding = 48;
+      var margin = (this.width) / 2 - ((app.width * (1 / dpr) * 3) / 2) - (hpadding * 2 / 2);
+      var vpadding = this.height - app.height * (1 / dpr) - 320;
+      app.setPosition(
+        i * app.width * (1 / dpr) + (i * hpadding) +  margin,
+         app.width * (1 / dpr) + vpadding
+      );
+
+      var sampleText = this.add.text(
+        app.x,
+        app.y + (app.height / dpr) + (4 * dpr),
+        'Lorem ipsum',
+        { fontFamily: 'Arial', fontSize: '22px', color: '#fff' }
+      ).setOrigin(0);
     }
     // GAME OBJECTS
 
