@@ -139,6 +139,7 @@ export default class SettingsApp extends PhoneApp
       'yesfunction': function() {
         t.game.deleteState();
         t.scene.get('PhoneUI').backHome();
+        location.reload();
       }
     });
   }
