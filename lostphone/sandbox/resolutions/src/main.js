@@ -7,8 +7,8 @@ import {width, height, dpr} from './Screen.js';
 
 // Default Vertical Aspect Ratio: 9:16 (1:1.77)
 // 0,5625
-const MAX_SIZE_WIDTH_SCREEN = 2560;
-const MAX_SIZE_HEIGHT_SCREEN = 1440;
+const MAX_SIZE_WIDTH_SCREEN = 1920;
+const MAX_SIZE_HEIGHT_SCREEN = 1920;
 const MIN_SIZE_WIDTH_SCREEN = 360;
 const MIN_SIZE_HEIGHT_SCREEN = 640;
 const SIZE_WIDTH_SCREEN = 720;

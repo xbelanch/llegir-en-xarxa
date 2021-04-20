@@ -76,6 +76,42 @@
        width="49.177593"
        height="33.67596"
        id="rect921" />
+    <rect
+       x="55.057523"
+       y="62.541069"
+       width="49.177593"
+       height="33.67596"
+       id="rect929" />
+    <rect
+       x="55.057523"
+       y="62.541069"
+       width="49.177593"
+       height="33.67596"
+       id="rect945" />
+    <rect
+       x="55.057523"
+       y="62.541069"
+       width="49.177593"
+       height="33.67596"
+       id="rect961" />
+    <rect
+       x="55.057523"
+       y="62.541069"
+       width="49.177593"
+       height="33.67596"
+       id="rect977" />
+    <rect
+       x="55.057523"
+       y="62.541069"
+       width="49.177593"
+       height="33.67596"
+       id="rect993" />
+    <rect
+       x="55.057523"
+       y="62.541069"
+       width="49.177593"
+       height="33.67596"
+       id="rect1009" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -85,8 +121,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="1038.9333"
-     inkscape:cy="858.90869"
+     inkscape:cx="1131.6591"
+     inkscape:cy="375.7582"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -261,6 +297,111 @@
          xml:space="preserve"
          id="text917"
          style="font-size:19.05px;line-height:0.75;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect921);fill:#ffffff;"
+         transform="matrix(2.207376,0,0,2.207376,-73.176633,-69.943539)"><tspan
+           x="55.056641"
+           y="75.546304"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Lorem
+</tspan></tspan><tspan
+           x="55.056641"
+           y="90.442223"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Ipsum</tspan></tspan></text>
+    </g>
+    <g
+       id="g927"
+       transform="matrix(0.36696429,0,0,0.36696742,336.38865,236.14807)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="F:\IOC\miniops\llegir-en-xarxa\lostphone\sandbox\resolutions\dist\assets\app@192x.png">
+      <rect
+         style="fill:#666666;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke"
+         id="rect915"
+         width="134.43309"
+         height="134.43309"
+         x="34.226139"
+         y="36.493996"
+         ry="16.570711" />
+      <text
+         xml:space="preserve"
+         id="text925"
+         style="font-size:19.05px;line-height:0.75;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect929);fill:#ffffff;"
+         transform="matrix(2.207376,0,0,2.207376,-73.176633,-69.943539)"><tspan
+           x="55.056641"
+           y="75.546304"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Lorem
+</tspan></tspan><tspan
+           x="55.056641"
+           y="90.442223"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Ipsum</tspan></tspan></text>
+    </g>
+    <g
+       id="g959"
+       transform="matrix(0.73392857,0,0,0.73393485,97.021132,180.02263)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#666666;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke"
+         id="rect947"
+         width="134.43309"
+         height="134.43309"
+         x="34.226139"
+         y="36.493996"
+         ry="16.570711" />
+      <text
+         xml:space="preserve"
+         id="text957"
+         style="font-size:19.05px;line-height:0.75;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect961);fill:#ffffff;"
+         transform="matrix(2.207376,0,0,2.207376,-73.176633,-69.943539)"><tspan
+           x="55.056641"
+           y="75.546304"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Lorem
+</tspan></tspan><tspan
+           x="55.056641"
+           y="90.442223"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Ipsum</tspan></tspan></text>
+    </g>
+    <g
+       id="g975"
+       transform="matrix(0.61160714,0,0,0.61161237,204.15058,208.4325)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#666666;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke"
+         id="rect963"
+         width="134.43309"
+         height="134.43309"
+         x="34.226139"
+         y="36.493996"
+         ry="16.570711" />
+      <text
+         xml:space="preserve"
+         id="text973"
+         style="font-size:19.05px;line-height:0.75;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect977);fill:#ffffff;"
+         transform="matrix(2.207376,0,0,2.207376,-73.176633,-69.943539)"><tspan
+           x="55.056641"
+           y="75.546304"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Lorem
+</tspan></tspan><tspan
+           x="55.056641"
+           y="90.442223"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.05px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#ffffff">Ipsum</tspan></tspan></text>
+    </g>
+    <g
+       id="g1007"
+       transform="matrix(0.67276786,0,0,0.67277361,354.50401,1.0817384)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#666666;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke"
+         id="rect995"
+         width="134.43309"
+         height="134.43309"
+         x="34.226139"
+         y="36.493996"
+         ry="16.570711" />
+      <text
+         xml:space="preserve"
+         id="text1005"
+         style="font-size:19.05px;line-height:0.75;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect1009);fill:#ffffff;"
          transform="matrix(2.207376,0,0,2.207376,-73.176633,-69.943539)"><tspan
            x="55.056641"
            y="75.546304"><tspan
