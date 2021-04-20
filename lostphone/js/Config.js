@@ -45,8 +45,9 @@ const roundHalf = num => Math.round(num * 2) / 2;
 export const DPR = window.devicePixelRatio;
 const { width, height } = viewport(DPR);
 // Determinem els valors de les mides d'amplada i alçada del mòbil
-const WIDTH = height > width ? width : Math.min(width, Math.round(360 * height / 640));
-const HEIGHT = height > width ? height : Math.round(height);
+const HEIGHT = height;
+const WIDTH = height * 9 / 16;
+
 export const assetsDPR = DPR;
 
 // Loading scenes order
@@ -69,7 +70,7 @@ export default {
   backgroundColor : '#000',   // Purlple as a debug color
   dom : { createContainer : true },
   render: { // https://www.html5gamedevs.com/topic/36343-disable-antialias-in-phaser-3/
-    antialias: false,
+    antialias: true,
     clearBeforeRender: true
   },
   scale: {
@@ -77,8 +78,8 @@ export default {
     mode : Phaser.Scale.FIT,
     autoCenter : Phaser.Scale.CENTER_BOTH,
     orientation: Phaser.Scale.Orientation.PORTRAIT,
-    width: 900,
-    height: 900 * (HEIGHT/WIDTH)
+    width: WIDTH,
+    height: HEIGHT
   },
   scene: scenes,
   plugins: {
